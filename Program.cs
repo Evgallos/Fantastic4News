@@ -1,4 +1,5 @@
 using Fantastic4News.Data;
+using Fantastic4News.Helper;
 using Fantastic4News.Models.Db;
 using Fantastic4News.Services;
 using Microsoft.AspNetCore.Identity;
@@ -25,9 +26,10 @@ namespace Fantastic4News
 
 			builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IArticleService, ArticleService>();
+			builder.Services.AddScoped<IArticleService, ArticleService>();
 			builder.Services.AddScoped<IcategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+		
 
             var app = builder.Build();
 
@@ -55,7 +57,38 @@ builder.Services.AddScoped<IArticleService, ArticleService>();
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 			app.MapRazorPages();
 
-			app.Run();
+            //creates a new scope using the application's service provider. Scopes, for managing the lifetime of services.
+            using (var scope = app.Services.CreateScope())
+            {
+                //This retrieves the service provider for the current scope.
+                var services = scope.ServiceProvider;
+
+                //This gets an instance of ApplicationDbContext from the service provider. GetRequiredService<T>()
+				//ensures that the service is available and throws an exception if it's not.
+                var context = services.GetRequiredService<ApplicationDbContext>();
+
+				//it will delete whole db and migrate every time while running
+				//context.Database.EnsureDeleted();
+				context.Database.Migrate();
+
+				if (!context.Articles.Any())
+				{
+                    try
+                    {
+                        SeedData.InitializeDataSeeding(context, services).Wait(); // Seed the database
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log errors or handle exceptions
+                        Console.WriteLine("An error occurred while seeding the database.", ex); throw;
+                    }
+
+                }
+
+				
+			}
+
+            app.Run();
 		}
 	}
 }
