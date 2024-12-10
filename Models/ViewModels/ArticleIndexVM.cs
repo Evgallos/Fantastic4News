@@ -1,6 +1,6 @@
-﻿using Fantastic4News.Models;
+﻿using Fantastic4News.Models.Db;
 
-namespace Fantastic4News.ViewModels
+namespace Fantastic4News.Models.ViewModels
 {
     public class ArticleIndexVM
     {

@@ -1,5 +1,5 @@
 ﻿using Fantastic4News.Data;
-using Fantastic4News.Models;
+using Fantastic4News.Models.Db;
 
 namespace Fantastic4News.Services
 {

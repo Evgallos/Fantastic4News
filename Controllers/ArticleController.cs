@@ -1,5 +1,5 @@
 ﻿using Fantastic4News.Services;
-using Fantastic4News.ViewModels;
+using Fantastic4News.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fantastic4News.Controllers
