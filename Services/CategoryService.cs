@@ -1,8 +1,9 @@
 ﻿using Fantastic4News.Data;
+using Fantastic4News.Models;
 
 namespace Fantastic4News.Services
 {
-    public class CategoryService : IcategoryService
+    public class CategoryService : ICategoryService
     {
         // Injections
 
@@ -15,6 +16,14 @@ namespace Fantastic4News.Services
 
         // Methods
 
+public IEnumerable<Category> GetCategories()
+        {
+            return _db.Categories;
+        }
 
+        public Category GetCategoryById(int id)
+        {
+            return _db.Categories.Find(id);
+        }
     }
 }

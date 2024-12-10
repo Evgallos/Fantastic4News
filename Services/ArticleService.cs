@@ -1,4 +1,5 @@
 ﻿using Fantastic4News.Data;
+using Fantastic4News.Models;
 
 namespace Fantastic4News.Services
 {
@@ -14,6 +15,16 @@ namespace Fantastic4News.Services
         }
 
         // Methods
+
+public IEnumerable<Article> GetArticles()
+        {
+            return _db.Articles;
+        }
+
+        public Article GetArticleById(int id)
+        {
+            return _db.Articles.Find(id);
+        }
 
 
     }
