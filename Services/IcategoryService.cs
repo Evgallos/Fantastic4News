@@ -1,6 +1,11 @@
-﻿namespace Fantastic4News.Services
+﻿using Fantastic4News.Models;
+
+namespace Fantastic4News.Services
 {
-    public interface IcategoryService
+    public interface ICategoryService
     {
+        IEnumerable<Category> GetCategories();
+
+        Category GetCategoryById(int id);
     }
 }
