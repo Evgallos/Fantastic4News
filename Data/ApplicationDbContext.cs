@@ -1,5 +1,4 @@
-﻿using Fantastic4News.Models;
-using Fantastic4News.Models.Db;
+﻿using Fantastic4News.Models.Db;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
