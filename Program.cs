@@ -1,5 +1,6 @@
 using Fantastic4News.Data;
 using Fantastic4News.Models.Db;
+using Fantastic4News.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,8 +25,11 @@ namespace Fantastic4News
 
 			builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IArticleService, ArticleService>();
+			builder.Services.AddScoped<IcategoryService, CategoryService>();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
 
-			var app = builder.Build();
+            var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
