@@ -1,0 +1,95 @@
+﻿@model Fantastic4News.ViewModels.ArticleIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().DateStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().LinkText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().HeadLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ContentSummary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Views)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Like)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().DisLike)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ImageLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().IsArhived)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Articles) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HeadLine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentSummary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Views)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Like)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisLike)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsArhived)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

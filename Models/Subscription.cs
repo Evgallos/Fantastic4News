@@ -15,6 +15,6 @@ namespace Fantastic4News.Models
 
         public User User { get; set; }
 
-        
+
     }
 }
