@@ -1,4 +1,4 @@
-﻿@model Fantastic4News.ViewModels.ArticleIndexVM
+﻿@model Fantastic4News.Models.ViewModels.ArticleIndexVM
 
 @{
     ViewData["Title"] = "Index";
@@ -33,9 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Like)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().DisLike)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ImageLink)
             </th>
@@ -72,9 +70,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Like)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisLike)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.ImageLink)
             </td>
