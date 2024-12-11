@@ -15,7 +15,9 @@ namespace Fantastic4News.Models.Db
         public DateTime LastLogin { get; set; }
 
 		//Nav
-		IEnumerable<Subscription> Subscriptions { get; set; }
+		IEnumerable<Subscription>? Subscriptions { get; set; }
+
+        IEnumerable<Article>? Articles { get; set; }
 
     }
 }

@@ -26,6 +26,10 @@ namespace Fantastic4News.Models.Db
 
         public bool IsArhived { get; set; } = false;
 
+        public bool EditorsChoice { get; set; } = false;
+
+        public string UserId { get; set; } = string.Empty;
+        public User User { get; set; }
         //Nav
 
         public int CategoryId { get; set; }
