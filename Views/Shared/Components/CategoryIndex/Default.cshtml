@@ -1,0 +1,7 @@
+﻿@using Fantastic4News.Models.Db
+@model IEnumerable<Fantastic4News.Models.Db.Category>
+
+@foreach (Category category in Model)
+{
+    <a class="btn btn-sm btn-dark mb-2 mx-1" asp-controller="Article" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a>
+}

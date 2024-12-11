@@ -1,10 +1,19 @@
-﻿@model Fantastic4News.Models.ViewModels.ArticleIndexVM
+﻿@model Fantastic4News.ViewModels.ArticleIndexVM
 
 @{
     ViewData["Title"] = "Index";
-}
 
-<h1>Index</h1>
+    string categoryName = ViewBag.CategoryName;
+}
+@if (categoryName == null || categoryName == "")
+{
+    <h1>Articles (@Model.Articles.Count())</h1>
+}
+else
+{
+    <h1>Articles (@Model.Articles.Count())</h1>
+    <h4>Category: @categoryName</h4>
+}
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -24,9 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ContentSummary)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Content)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Views)
             </th>
@@ -61,9 +68,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ContentSummary)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Views)
             </td>
