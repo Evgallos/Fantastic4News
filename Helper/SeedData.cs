@@ -28,30 +28,28 @@ namespace Fantastic4News.Helper
             if (userManager is null) throw new NullReferenceException(nameof(UserManager<User>));
 
 
-            var roleNames = new[] { "Admin", "Customer", "Publisher" };
+            var roleNames = new[] { "Admin", "Customer", "Journalist","Editor" };
             await CreateRoles(roleNames);
 
+            // User admin = await CreateAdmin();
 
-
-            User admin = await CreateAdmin();
-
-            await userManager.AddToRoleAsync(admin, "Admin");
+            await CreateUserwithRole();
+            
 
             var cateGories = new[] { "National", "International", "Politics","Local" };
             await CreateCategoies(cateGories);
 
+
             var subscritionsNames = new[] { "Free", "Standard", "Primium" };
             await CreateSubsciptionsType(subscritionsNames);
 
+
             await CreateArticles();
 
-
-
-
-
-
-
         }
+
+
+
 
         private static async Task CreateArticles()
         {
@@ -65,6 +63,7 @@ namespace Fantastic4News.Helper
             art.ImageLink = "https://8sidor.se/wp-content/uploads/2024/12/Syrien.jpg";
             art.ContentSummary = art.Content.Substring(0, art.Content.IndexOf("."));
             art.CategoryId = _db.Categories.Where(c => c.Name == "International").Select(c=> c.Id).FirstOrDefault();
+            art.UserId = _db.Users.Where(u => u.FirstName == "Fantastic").Select(u => u.Id).FirstOrDefault();
             
             articles.Add(art);
 
@@ -77,6 +76,8 @@ namespace Fantastic4News.Helper
             art1.ContentSummary = art1.Content.Substring(0, art1.Content.IndexOf("."));
             art1.DateStamp = DateTime.Now;
             art1.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
+            art1.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
+
 
             articles.Add(art1);
 
@@ -88,6 +89,7 @@ namespace Fantastic4News.Helper
             art2.ContentSummary = art2.Content.Substring(0, art2.Content.IndexOf("."));
             art2.DateStamp = DateTime.Now;
             art2.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
+            art2.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
 
             articles.Add(art2);
 
@@ -99,6 +101,7 @@ namespace Fantastic4News.Helper
             art3.ContentSummary = art3.Content.Substring(0, art3.Content.IndexOf("."));
             art3.DateStamp = DateTime.Now;
             art3.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
+            art3.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
 
             articles.Add(art3);
 
@@ -110,18 +113,16 @@ namespace Fantastic4News.Helper
             art4.ContentSummary = art4.Content.Substring(0, art4.Content.IndexOf("."));
             art4.DateStamp = DateTime.Now;
             art4.CategoryId = _db.Categories.Where(c => c.Name == "Local").Select(c => c.Id).FirstOrDefault();
+            art4.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
 
             articles.Add(art4);
 
 
-            
-                await _db.AddRangeAsync(articles);
+            await _db.AddRangeAsync(articles);
             await _db.SaveChangesAsync();
-
-
-
-
         }
+
+
 
 
         private static async Task CreateSubsciptionsType(string[] subscritionsNames)
@@ -144,15 +145,15 @@ namespace Fantastic4News.Helper
                     pris += 75;
                     st.Price = pris;
 
-
                 }
 
                 await _db.AddAsync(st);
                 await _db.SaveChangesAsync();
 
-
             }
         }
+
+
 
         private static async Task CreateCategoies(string[] cateGories)
         {
@@ -169,8 +170,9 @@ namespace Fantastic4News.Helper
 
         }
 
-        private static async Task<User> CreateAdmin()
+        private static async Task CreateUserwithRole()
         {
+            List<User> newUsersList = new();
 
             var user = new User
             {
@@ -180,15 +182,52 @@ namespace Fantastic4News.Helper
                 LastLogin = DateTime.Now,
                 UserName = "admin@new.se",
                 Email = "admin@new.se"
-            };
 
-            var result = await userManager.CreateAsync(user, "S3cr3t!");
+            };
+            newUsersList.Add(user);
+
+            var user1 = new User
+            {
+                FirstName = "John",
+                LastName = "Smith",
+                CreatedAt = DateTime.Now,
+                LastLogin = DateTime.Now,
+                UserName = "journalist@new.se",
+                Email = "journalist@new.se"
+            };
+            newUsersList.Add(user1);
+
+            var user2 = new User
+            {
+                FirstName = "Edith",
+                LastName = "Smith",
+                CreatedAt = DateTime.Now,
+                LastLogin = DateTime.Now,
+                UserName = "editor@new.se",
+                Email = "editor@new.se"
+            };
+            newUsersList.Add(user2);
+
+            foreach(var usr in newUsersList)
+            {
+                var result=await userManager.CreateAsync(usr, "S3cr3t!");
+                if (!result.Succeeded) throw new Exception("Cant create user");
+            }
+
+            await userManager.AddToRoleAsync(user, "Admin");
+            await userManager.AddToRoleAsync(user1, "Journalist");
+            await userManager.AddToRoleAsync(user2, "Editor");
+            
             await _db.SaveChangesAsync();
 
-            if (!result.Succeeded) throw new Exception("Cant create user");
 
-            return user;
+            //var result = await userManager.CreateAsync(user, "S3cr3t!");
+
+
+           
         }
+
+
 
         private static async Task CreateRoles(string[] roleNames)
         {
@@ -198,7 +237,6 @@ namespace Fantastic4News.Helper
                 var role = new IdentityRole { Name = roleName };
                 var result = await roleManager.CreateAsync(role);
                 await _db.SaveChangesAsync();
-
 
                 if (!result.Succeeded) throw new Exception("Cant create roles");
             }
