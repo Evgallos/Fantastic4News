@@ -1,0 +1,74 @@
+﻿@using Fantastic4News.Models.Db
+
+@model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
+@{
+	ViewData["Title"] = "Index";
+}
+
+@{
+	List<Article> articles = new();
+	foreach (var item in Model.DailyNews)
+	{
+		articles.Add(item); 
+	}
+
+}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#linkTextModal"> Show Articles </button>
+@await Component.InvokeAsync("LintTextNewsList")
+
+<div class="row mb-2 ">
+	<div class="h3">
+		Daily News
+	</div>
+	<div class="col-sm-3">
+		<div class="row" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
+		</div>
+		<div class="row" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="@articles[1]" />
+		</div>
+
+	</div>
+	<div class="col-sm-6 contentcenter" style="height:800px">
+		<partial name="_ArticlePartialDetailPartial" model="@articles[2]" />
+	</div>
+	<div class="col-sm-3">
+		<div class="row" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
+		</div>
+		<div class="row" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="@articles[4]" />
+		</div>
+	</div>
+
+</div>
+<hr />
+<div class="row mb-2 m-auto">
+	<div class="h3">
+		Popular News
+	</div>
+
+	@foreach (var item in Model.PopularNews)
+	{
+		<div class="col-sm-3" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="item" />
+		</div>
+
+
+	}
+</div>
+
+<hr />
+
+<div class="row mb-2 m-auto">
+	<div class="h3 mt-2">
+		Editors Choice
+	</div>
+	@foreach (var item in Model.EditorsChoice)
+	{
+		<div class="col-sm-3" style="height:400px">
+			<partial name="_ArticlePartialDetailPartial" model="item" />
+		</div>
+
+	}
+</div>

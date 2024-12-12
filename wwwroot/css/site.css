@@ -20,3 +20,42 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*for displaying modal side*/
+
+/* Custom styles for sidebar modal */
+.modal.sidebar-modal .modal-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px; /* Adjust width as needed */
+    height: 100%;
+    margin: 0;
+}
+
+.modal.sidebar-modal .modal-content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+}
+
+.modal.sidebar-modal .modal-header,
+.modal.sidebar-modal .modal-body,
+.modal.sidebar-modal .modal-footer {
+    height: auto;
+    overflow-y: auto;
+}
+
+
+/* content at center */
+
+.contentcenter {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */ 
+    height: 100%; /* Ensure the card takes full height if necessary */
+}
+
+.cardcenter .card-body {
+        text-align: center; /* Centers the text within the card */
+    }

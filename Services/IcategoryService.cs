@@ -5,7 +5,10 @@ namespace Fantastic4News.Services
     public interface ICategoryService
     {
         IEnumerable<Category> GetCategories();
+        IEnumerable<Category> GetCategoriesWithAritcles();
 
-        Category GetCategoryById(int id);
+
+
+		Category GetCategoryById(int id);
     }
 }

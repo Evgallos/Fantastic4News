@@ -1,5 +1,6 @@
 ﻿using Fantastic4News.Data;
 using Fantastic4News.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Services
 {
@@ -21,6 +22,10 @@ public IEnumerable<Article> GetArticles()
             return _db.Articles;
         }
 
+        public IEnumerable<Article> GetArticlesWithJournalist()
+        {
+            return _db.Articles.Include(a=>a.User).ToList();
+        }
         public Article GetArticleById(int id)
         {
             return _db.Articles.Find(id);

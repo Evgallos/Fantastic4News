@@ -1,0 +1,92 @@
+﻿@model Fantastic4News.Models.Db.Article
+
+@* <div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateStamp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateStamp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LinkText)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LinkText)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HeadLine)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HeadLine)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContentSummary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContentSummary)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Views)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Views)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Like)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Like)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageLink)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImageLink)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsArhived)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsArhived)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EditorsChoice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EditorsChoice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.Id)
+        </dd>
+    </dl>
+</div> *@
+@* <div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+<div class="card border-0 py-2 mb-2" style="width: 100%;">
+    <img src="@Model.ImageLink" class="card-img-top img-fluid cardcenter" alt="...">
+    <div class="card-body">
+        <h4 class="card-title"> <a href="#">@Model.HeadLine</a></h4>
+        <p class="card-text align-content-end justify-content-end">- @Model.User.FirstName @Model.User.LastName</p>
+    </div>
+</div>
