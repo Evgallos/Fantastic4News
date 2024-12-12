@@ -1,5 +1,6 @@
 ﻿using Fantastic4News.Data;
 using Fantastic4News.Models.Db;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Services
 {
@@ -16,9 +17,16 @@ namespace Fantastic4News.Services
 
         // Methods
 
-public IEnumerable<Category> GetCategories()
+        public IEnumerable<Category> GetCategories()
         {
             return _db.Categories;
+        }
+
+        public IEnumerable<Category> GetCategoriesWithAritcles()
+        {
+            var categories= _db.Categories.Include(c=> c.Articles).ToList();
+
+            return categories;
         }
 
         public Category GetCategoryById(int id)
