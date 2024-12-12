@@ -15,11 +15,23 @@
 			<div class="modal-body">
 				@foreach (var item in Model)
 				{
-					@item.CategoryName <br />
-					@foreach(var article in item.Articles)
-					{
-						<a href="#">@article.LinkText</a> <br />
-					}
+					<div mb-2>
+						<div class="mb-2 h4">							
+								@item.CategoryName
+						</div>
+						<div>
+							@foreach (var article in item.Articles)
+							{
+								<p class="mb-1"><a href="#">@article.LinkText</a></p> 
+							}
+
+						</div>
+
+					</div>
+
+
+
+
 
 				}
 			</div>
