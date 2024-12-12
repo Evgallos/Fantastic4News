@@ -41,6 +41,12 @@ namespace Fantastic4News.Controllers
 
         }
 
-        
+        public IActionResult SubscriptionType()
+        {
+            var subscription = _subscriptionService.GetSubscriptionTypes().ToList();
+            return View(subscription); 
+
+        }
+
     }
 }
