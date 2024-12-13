@@ -1,4 +1,23 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Function for like articles
 
-// Write your JavaScript code.
+function likeArticle(id) {
+    
+    $.ajax({
+        type: 'post',
+        url: '/Article/LikeArticle',
+        dataType: 'json',
+        data: { id: id },
+
+        success: function (data) {
+            const el = document.getElementById('likes')
+            if (el) {
+                el.textContent = data;
+            }
+            
+        },
+
+        error: function (err) {
+            console.log('Error: ' + err);
+        }
+    });
+}

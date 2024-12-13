@@ -44,7 +44,20 @@ namespace Fantastic4News.Controllers
         {
             var obj = _articleService.GetArticleById(id);
 
+            obj.Views++;
+            _articleService.UpdateArticle(obj);
+
             return View(obj);
+        }
+
+
+        public IActionResult LikeArticle(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+            obj.Like++;
+            _articleService.UpdateArticle(obj);
+
+            return Json(obj.Like);
         }
     }
 }
