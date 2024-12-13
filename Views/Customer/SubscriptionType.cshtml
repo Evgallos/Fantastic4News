@@ -3,48 +3,76 @@
 <p>
     @* <a asp-action="Create">Create New</a> *@
 </p>
-<table class="table">
+@* <table class="table">
     <thead>
         <tr>
+
             <th>
                 @Html.DisplayNameFor(model => model.TypeName)
             </th>
+
             <th>
                 @* @Html.DisplayNameFor(model => model.Id) *@
-            </th>
+@*  </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+
+
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
-        </tr>
+
+            <th></th> *@
+@*  </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.TypeName)
+            <td> *@
+@*  @Html.DisplayFor(modelItem => item.TypeName)
             </td>
             <td>
                 @* @Html.DisplayFor(modelItem => item.Id) *@
-            </td>
+@*             </td>
             <td>
                     @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
+            </td> *@
+@*   <td>
                     <div class="btn-group btn-group-sm">
                         <button type="button" class="btn btn-primary">Choose</button>
                    </div>
                @*  <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-            </td>
+@*   </td>
         </tr>
 }
     </tbody>
 </table>
+ *@
 
+<div class="row mt-5">
+    @foreach (var item in Model)
+    {
+
+
+        <div class="col-md-4">
+            <div class="card py-2 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TypeName</h5>
+                    @item.Description
+                    @item.Price
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-primary">Choose</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>
