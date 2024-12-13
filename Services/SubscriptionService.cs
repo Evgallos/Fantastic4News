@@ -1,5 +1,6 @@
 ﻿using Fantastic4News.Data;
 using Fantastic4News.Models.Db  ;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Services
 {
@@ -26,6 +27,14 @@ namespace Fantastic4News.Services
             return _db.Subscriptions.Find(id);
         }
 
+        public IEnumerable<Subscription> GetSubscriptionById(string id)
+        {
+            var Subscription = _db.Subscriptions                            
+                            .Include(s => s.SubscriptionType)
+                            .Where(s=>s.UserId==id).ToList();
+
+            return Subscription;
+        }
         public IEnumerable<SubscriptionType> GetSubscriptionTypes()
         {
             return _db.SubscriptionTypes;
