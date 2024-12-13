@@ -26,6 +26,12 @@ public IEnumerable<Article> GetArticles()
             return _db.Articles.Find(id);
         }
 
+        public void UpdateArticle(Article obj)
+        {
+            _db.Articles.Update(obj);
+            _db.SaveChanges();
+        }
+
 
     }
 }
