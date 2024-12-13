@@ -32,11 +32,7 @@ namespace Fantastic4News.Controllers
                 EditorsChoice = articles.Where(a=>a.EditorsChoice==true).ToList(),
 
             };
-
-
-       
-
-
+            
             return View(cusIndexVm);
 
         }
@@ -48,11 +44,13 @@ namespace Fantastic4News.Controllers
 
         }
 
+
         public IActionResult GetSubscriptionFor(string id)
         {
             var subscription = _subscriptionService.GetSubscriptionById(id);
             return View(subscription);
         }
+
 
     }
 }
