@@ -14,6 +14,8 @@ namespace Fantastic4News
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,6 +32,8 @@ namespace Fantastic4News
 
 
             builder.Services.AddControllersWithViews();
+			builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor(); // Register IHttpContextAccessor
 
 
             builder.Services.AddScoped<IArticleService, ArticleService>();
@@ -53,6 +57,7 @@ namespace Fantastic4News
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession(); // Add this line to enable session middleware
 
             app.UseRouting();
 
@@ -60,7 +65,7 @@ namespace Fantastic4News
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Customer}/{action=Index}/{id?}");
             app.MapRazorPages();
 
 
@@ -74,11 +79,11 @@ namespace Fantastic4News
 				//ensures that the service is available and throws an exception if it's not.
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
-				//it will delete whole db and migrate every time while running
-				//context.Database.EnsureDeleted();
-				//context.Database.Migrate();
+                //it will delete whole db and migrate every time while running
+                context.Database.EnsureDeleted();
+                context.Database.Migrate();
 
-				if (!context.Articles.Any())
+                if (!context.Articles.Any())
 				{
                     try
                     {

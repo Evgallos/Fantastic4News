@@ -3,6 +3,10 @@
 @model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
 @{
 	ViewData["Title"] = "Index";
+	TempData["Customer"] = true;
+	TempData.Keep("Customer");
+	Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+
 }
 
 @{
