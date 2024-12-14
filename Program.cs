@@ -3,6 +3,7 @@ using Fantastic4News.Helper;
 using Fantastic4News.Models.Db;
 using Fantastic4News.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News
@@ -17,7 +18,7 @@ namespace Fantastic4News
 
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
+            var connectionString1 = builder.Configuration.GetConnectionString("ServerConnection") ?? throw new InvalidOperationException("Connection string 'ServerConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -25,7 +26,7 @@ namespace Fantastic4News
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = true;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -34,14 +35,17 @@ namespace Fantastic4News
             builder.Services.AddControllersWithViews();
 			builder.Services.AddSession();
             builder.Services.AddHttpContextAccessor(); // Register IHttpContextAccessor
+			builder.Services.AddDistributedMemoryCache(); // Required for session state
 
 
-            builder.Services.AddScoped<IArticleService, ArticleService>();
+			builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-            var app = builder.Build();
+			builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -80,8 +84,8 @@ namespace Fantastic4News
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
                 //it will delete whole db and migrate every time while running
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
+                //context.Database.EnsureDeleted();
+                //context.Database.Migrate();
 
                 if (!context.Articles.Any())
 				{
