@@ -1,25 +1,49 @@
 ﻿@model IEnumerable<Fantastic4News.Models.Db.SubscriptionType>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 
 @* <partail name="_SubscriptionTypePartial" model="@Model"/>
  *@
-<div class="row mt-5">
-    @foreach (var item in Model)
-    {
+
+@{
+	string userId;
+	if (HttpContextAccessor.HttpContext.Session.GetString("UserId") != null)
+	{
+		userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+
+	}
+	HttpContextAccessor.HttpContext.Session.GetString("UserId");
+	<p>userId</p>
+
+	<div class="row mt-5">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-4">
+				<div class="card py-2 mb-4" style="width: 18rem;">
+					<div class="card-body">
+						<h5 class="card-title">@item.TypeName</h5>
+						@item.Description <br />
+						@item.Price kr/month<br />
+						@{
+							if (@item.TypeName.ToLower() == "free")
+							{
+								<div class="btn-group btn-group-sm">
+									<button type="button" onclick='chooseFreeSubscription(@item.Id)' class="btn btn-primary">Choose</button>
+								</div>
+							}
+							else
+							{
+
+								<div class="btn-group btn-group-sm">
+									<button type="button" onclick='chooseOtherSubscription(@item.Id)' class="btn btn-primary">Choose</button>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
 
 
-        <div class="col-md-4">
-            <div class="card py-2 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@item.TypeName</h5>
-                    @item.Description <br />
-                    @item.Price kr/month<br />
-                    <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-primary">Choose</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    }
-</div>
+		}
+	</div>
+}

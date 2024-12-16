@@ -8,7 +8,7 @@
 
         public DateTime Created { get; set; }
 
-        public DateTime Expired { get; set; }
+        public DateTime? Expired { get; set; }= DateTime.MaxValue;
 
         //Nav
         public int SubscriptionTypeId { get; set; }

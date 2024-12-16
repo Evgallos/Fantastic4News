@@ -1,5 +1,27 @@
 ﻿// Function for like articles
 
+function chooseFreeSubscription(subsId) {
+    console.log(subsId);
+    $.ajax({
+        url: '/Customer/ChooseFreeSubscription',
+        data: { id: subsId},
+        dataType: 'json',
+
+        success: function (data) {
+            if (data.success) {
+                window.location.href = data.redirectToUrl;
+            }
+        },
+
+        error: function (err) {
+            console.log(err);
+        }
+
+
+    });
+}
+
+
 function likeArticle(id) {
     
     $.ajax({

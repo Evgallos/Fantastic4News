@@ -2,6 +2,7 @@
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg;
 
 namespace Fantastic4News.Controllers
 {
@@ -10,8 +11,8 @@ namespace Fantastic4News.Controllers
         private readonly ICustomerService _customerService;
         private readonly ISubscriptionService _subscriptionService;
         private readonly IArticleService _articleService;
-        
-        public CustomerController(ICustomerService customerService , ISubscriptionService subscriptionService, IArticleService articleService)
+
+        public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService)
         {
             _customerService = customerService;
             _subscriptionService = subscriptionService;
@@ -19,30 +20,60 @@ namespace Fantastic4News.Controllers
 
         }
 
-       
+
 
         public IActionResult Index()
         {
-            var articles=_articleService.GetArticlesWithJournalist().ToList();
+            var articles = _articleService.GetArticlesWithJournalist().ToList();
 
             var cusIndexVm = new CustomerIndexViewModel()
             {
                 DailyNews = articles.OrderBy(a => a.DateStamp).Take(5).ToList(),
-                PopularNews=articles.OrderByDescending(a=>a.Views).Take(4).ToList(),
-                EditorsChoice = articles.Where(a=>a.EditorsChoice==true).ToList(),
+                PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
+                EditorsChoice = articles.Where(a => a.EditorsChoice == true).ToList(),
 
             };
-            
+
             return View(cusIndexVm);
 
         }
 
+
+        public IActionResult ChooseFreeSubscription(int id)
+        {
+            string userID="";
+            var subsc = _subscriptionService.GetSubscriptionTypeById(id);
+            if (HttpContext.Session.GetString("UserId") != null)
+            {
+                userID = HttpContext.Session.GetString("UserId");
+
+            }
+
+            var subs = new Subscription
+            {
+                SubscriptionTypeId = id,
+                Created = DateTime.Now,
+                Price = subsc.Price,
+                UserId = userID
+
+
+			};
+            _subscriptionService.AddSubscription(subs);        
+
+            return Json(new { success = true, redirectToUrl = Url.Action("index") });
+
+        }
+
+
         public IActionResult SubscriptionType()
         {
             var subscription = _subscriptionService.GetSubscriptionTypes().ToList();
-            return View(subscription); 
+            return View(subscription);
 
         }
+
+
+
 
 
         public IActionResult GetSubscriptionFor(string id)

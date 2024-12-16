@@ -44,5 +44,18 @@ namespace Fantastic4News.Services
         {
             return _db.SubscriptionTypes.Find(id);
         }
+
+        public void AddSubscription(Subscription subscription)
+        {
+            
+            if (subscription != null) { 
+
+                var res = _db.Subscriptions.Add(subscription);
+                _db.SaveChanges();
+               //todo check for success
+                    }
+
+            
+        }
     }
 }
