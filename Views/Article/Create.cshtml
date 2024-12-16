@@ -1,0 +1,88 @@
+﻿@model Fantastic4News.ViewModels.ArticleIndexVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Article.UserId"/>
+
+            <div class="form-group">
+                <label asp-for="Article.CategoryId" class="control-label"></label>
+                <select id="drpCategory" asp-for="Article.CategoryId" asp-items="@Model.CategoriesSelectList">
+                    <option value="0" selected disabled>-- Select category --</option>
+                </select>
+            </div>
+
+            <div id="createArticleForm">
+                <div class="form-group">
+                    <label asp-for="Article.LinkText" class="control-label"></label>
+                    <input asp-for="Article.LinkText" class="form-control" />
+                    <span asp-validation-for="Article.LinkText" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Article.HeadLine" class="control-label"></label>
+                    <input asp-for="Article.HeadLine" class="form-control" />
+                    <span asp-validation-for="Article.HeadLine" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Article.ContentSummary" class="control-label"></label>
+                    <input asp-for="Article.ContentSummary" class="form-control" />
+                    <span asp-validation-for="Article.ContentSummary" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Article.Content" class="control-label"></label>
+                    <input asp-for="Article.Content" class="form-control" />
+                    <span asp-validation-for="Article.Content" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Article.ImageLink" class="control-label"></label>
+                    <input asp-for="Article.ImageLink" class="form-control" />
+                    <span asp-validation-for="Article.ImageLink" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Article.IsArhived" /> @Html.DisplayNameFor(model => model.Article.IsArhived)
+                    </label>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Article.EditorsChoice" /> @Html.DisplayNameFor(model => model.Article.EditorsChoice)
+                    </label>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

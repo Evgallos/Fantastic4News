@@ -35,14 +35,6 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ContentSummary)
             </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Views)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Like)
-            </th>
-           
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ImageLink)
             </th>
@@ -70,19 +62,12 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.ContentSummary)
             </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Like)
-            </td>
-            
+           
             <td>
                 @Html.DisplayFor(modelItem => item.ImageLink)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsArhived)
