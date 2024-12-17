@@ -12,16 +12,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Fantastic4News.Data.Migrations;
 
 namespace Fantastic4News.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+		private readonly SignInManager<User> _signInManager;
 
-        public ConfirmEmailModel(UserManager<User> userManager)
+		public ConfirmEmailModel(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -50,10 +53,17 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 StatusMessage = "Thank you for confirming your email.";
-            }
-            else
-            {
-                TempData["UsrErr"] = "Error";
+
+				//SignInAsync method on a confirmation mail page to sign in the user without requiring them to go through an external sign-in process again.
+				await _signInManager.SignInAsync(user, isPersistent: false);
+
+                //return RedirectToAction("Index", "Home")
+
+
+			}
+			else
+			{
+				TempData["UsrErr"] = "Error";
                 StatusMessage = "Error confirming your email.";
             }
            // StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
