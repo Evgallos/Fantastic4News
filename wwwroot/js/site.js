@@ -1,61 +1,27 @@
 ﻿
 
 
-function calculateExpiresDate() {
-
-    var monthNum = parseInt($('#monthnum').val(), 10);  // Parse the month number as an integer ,10 tells that it is decimal num containin 2 nums only
+function ChooseSubs(MonthNum) {
+    console.log(MonthNum);
+    var monthNum = MonthNum;
     var startDate = new Date($('#startDate').val());    // Parse the start date
-    if (monthNum == 1) {
-        $('#errmsg').text("Month value cannot be 0");
-    }
-    else if (monthNum >= 12) {
-        $('#errmsg').text("max value is a year");
+    var expiresDate = new Date();
 
-    }
-    else {
-
-        console.log("monthnum " + monthnum);
+        console.log("monthnum " + monthNum);
         console.log("startdate " + startDate);
+        
+    var expiresDate = new Date(startDate);
+    expiresDate.setMonth(startDate.getMonth() + monthNum);
+    console.log(expiresDate);
 
-        var expiresDate = new Date(startDate);
-        expiresDate.setMonth(startDate.getMonth() + monthNum);
-        $('#ExpiresDate').val(expiresDate);
-    }
+    var formattedExpiresDate = expiresDate.toISOString().split('T')[0];
+    console.log("formattedExpiresDate: ", formattedExpiresDate);
+    $('#ExpiresDate').val(formattedExpiresDate);
+    $('#errmsg').text("");
 
-}
+    console.log("this is exp date " + $('#ExpiresDate').val());
 
-
-
-//plus and minus month
-
-
-function minusval() {
-    var monthNum = $('#monthnum').val();
-    var startdate = new Date($('#startDate').val());
-    if (monthNum <= 1) {
-        $('#errmsg').text("Month value cannot be 0");
-    }
-    else {
-        monthNum--;
-        $('#monthnum').val(monthNum);
-        calculateExpiresDate();
-    }
-}
-
-
-function plusval() {
-    var monthNum = $('#monthnum').val();
-    if (monthNum >= 12) {
-        $('#errmsg').text("max value is a year");
-
-    }
-    else {
-        monthNum++;
-        $('#monthnum').val(monthNum);
-        calculateExpiresDate();
-    }
-}
-
+ }
 
 
 //show hide the choose subscription form
