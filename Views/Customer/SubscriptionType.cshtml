@@ -55,24 +55,4 @@
 </table>
  *@
 
-<div class="row mt-5">
-    @foreach (var item in Model)
-    {
-
-
-        <div class="col-md-4">
-            <div class="card py-2 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@item.TypeName</h5>
-                    @item.Description
-                    @item.Price
-                    <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-primary">Choose</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    }
-</div>
+<partial name="_SubscriptionTypePartial" model="@Model"/>
