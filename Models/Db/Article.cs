@@ -17,22 +17,25 @@ namespace Fantastic4News.Models.Db
         public string ContentSummary { get; set; } = string.Empty;
 
         public string Content { get; set; } = string.Empty;
+
         public int Views { get; set; }
 
         public int Like { get; set; }
 
         public string ImageLink { get; set; } = string.Empty;
-      
 
         public bool IsArhived { get; set; } = false;
 
         public bool EditorsChoice { get; set; } = false;
 
         public string UserId { get; set; } = string.Empty;
-        public User User { get; set; }
+
+        public User? User { get; set; }
+
         //Nav
 
         public int CategoryId { get; set; }
+
         public Category Category { get; set; }
 
     }

@@ -1,17 +1,17 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
 
-
 //	Layout = "_Layout";
 
-	if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Customer")
-	{
-		Layout = "_CustomerLayout";
-	}
-	else
+	if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Employee")
 	{
 		Layout = "_EmployeeLayout";
 	}
+	else
+	{
+				Layout = "_CustomerLayout";
+	}
+
 }

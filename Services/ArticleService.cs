@@ -19,7 +19,7 @@ namespace Fantastic4News.Services
 
 public IEnumerable<Article> GetArticles()
         {
-            return _db.Articles;
+            return _db.Articles.Include(c => c.Category);
         }
 
         public IEnumerable<Article> GetArticlesWithJournalist()
@@ -28,7 +28,14 @@ public IEnumerable<Article> GetArticles()
         }
         public Article GetArticleById(int id)
         {
-            return _db.Articles.Find(id);
+            return _db.Articles.Include(c => c.Category).FirstOrDefault(a => a.Id == id);
+        }
+
+        public void CreateArticle(Article obj)
+        {
+            obj.DateStamp = DateTime.Now;
+            _db.Articles.Add(obj);
+            _db.SaveChanges();
         }
 
         public void UpdateArticle(Article obj)

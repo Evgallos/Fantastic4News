@@ -9,6 +9,8 @@ namespace Fantastic4News.Services
 
         Article GetArticleById(int id);
 
+        void CreateArticle(Article obj);
+
         void UpdateArticle(Article obj);
     }
 }
