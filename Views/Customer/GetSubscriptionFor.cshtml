@@ -4,16 +4,15 @@
     ViewData["Title"] = "GetSubscriptionFor";
 }
 
-<h1>GetSubscriptionFor</h1>
+<h1>Subscription</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
+            
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.SubscriptionType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Created)
@@ -22,7 +21,7 @@
                 @Html.DisplayNameFor(model => model.Expired)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SubscriptionType)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
@@ -34,19 +33,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @item.SubscriptionType.TypeName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
+                    @item.Created
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Expired)
+                    @item.Expired
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SubscriptionType.Id)
+                    @item.Price
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                    @item.User
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
