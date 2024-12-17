@@ -10,7 +10,7 @@ namespace Fantastic4News
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,12 @@ namespace Fantastic4News
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -103,8 +108,9 @@ namespace Fantastic4News
 
                 }
 
-				
 			}
+
+            await Seed.TemporarySeedFredrik.Seed(app);
 
             app.Run();
 		}
