@@ -1,6 +1,7 @@
 ﻿using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
+using Fantastic4News.ViewComponents;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Bcpg;
 
@@ -41,7 +42,8 @@ namespace Fantastic4News.Controllers
 
         public IActionResult ChooseFreeSubscription(int id)
         {
-            string userID="";
+
+			string userID="";
             var subsc = _subscriptionService.GetSubscriptionTypeById(id);
             if (HttpContext.Session.GetString("UserId") != null)
             {
@@ -56,7 +58,6 @@ namespace Fantastic4News.Controllers
                 Price = subsc.Price,
                 UserId = userID
 
-
 			};
             _subscriptionService.AddSubscription(subs);        
 
@@ -64,8 +65,42 @@ namespace Fantastic4News.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult chooseOtherSubscription(Subscription subs)
+        {
+			string userID = "";
 
-        public IActionResult SubscriptionType()
+			var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
+			if (HttpContext.Session.GetString("UserId") != null)
+			{
+				userID = HttpContext.Session.GetString("UserId");
+
+			}
+			if (subs == null) { return Content("subs is null"); }
+            else
+            {
+				var subscription = new Subscription
+				{
+					SubscriptionTypeId = subs.SubscriptionTypeId,
+					Created = subs.Created,
+                    Expired=subs.Expired,
+					Price = subsTpc.Price,
+					UserId = userID
+
+				};
+			    
+				_subscriptionService.AddSubscription(subscription);
+
+
+			}
+
+
+			return RedirectToAction("Index");
+        }
+
+
+
+		public IActionResult SubscriptionType()
         {
             var subscription = _subscriptionService.GetSubscriptionTypes().ToList();
             return View(subscription);

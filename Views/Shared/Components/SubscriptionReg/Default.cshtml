@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Fantastic4News.Models.Db.SubscriptionType>
+﻿@model Fantastic4News.Models.ViewModels.SubscroptionChooseCustomer
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
@@ -6,7 +6,7 @@
  *@
 
 @{
-	string userId;
+	string userId; int subtpid=0;
 	if (HttpContextAccessor.HttpContext.Session.GetString("UserId") != null)
 	{
 		userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
@@ -16,7 +16,7 @@
 	<p>userId</p>
 
 	<div class="row mt-5">
-		@foreach (var item in Model)
+		@foreach (var item in Model.SubsType)
 		{
 			<div class="col-md-4">
 				<div class="card py-2 mb-4" style="width: 18rem;">
@@ -33,17 +33,60 @@
 							}
 							else
 							{
-
 								<div class="btn-group btn-group-sm">
-									<button type="button" onclick='chooseOtherSubscription(@item.Id)' class="btn btn-primary">Choose</button>
+									<button type="button" onclick='chooseDateTimepartial(@item.Id)' class="btn btn-primary">Choose</button>
 								</div>
+								subtpid = item.Id;
 							}
 						}
 					</div>
+
+					
 				</div>
+
+
+				
 			</div>
-
-
 		}
+	</diV>
+
+
+	<div id="chooseDate" class="mt-3" style="display:none">
+
+
+			<form asp-action="chooseOtherSubscription" asp-controller="Customer" method="post">
+
+					<div class="row pb-3">
+			
+						<div class="col-sm-8 pt-2">
+							<label asp-for="Subs.Created">From Date:</label>
+							<input asp-for="Subs.Created" type="date"  required />
+							<span asp-validation-for="Subs.Created" class="text-danger"></span>
+						</div>
+
+						<div class="col-sm-8 pt-2">
+							<label asp-for="Subs.Expired">To Date:</label>
+							<input asp-for="Subs.Expired" type="date"  required />
+							<span asp-validation-for="Subs.Expired" class="text-danger"></span>
+						</div>
+						<div class="col-sm-8 pt-2">
+							<input asp-for="Subs.SubscriptionTypeId" id="forsubtyid" type="number" style="width:95%" value="" hidden />
+						</div>
+
+						<div class="col-sm-4 mt-1">
+							<button type="submit" class="btn btn-primary btn-block"> Choose </button>
+							<button  class="btn btn-danger btn-block" onclick="cancelSubscription()"> Cancel </button>
+						</div>
+
+					</div>
+
+
+
+
+			</form>
+
+		<script src="~/js/validations.js"></script>
+
 	</div>
 }
+		

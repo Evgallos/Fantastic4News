@@ -1,5 +1,47 @@
-﻿// Function for like articles
+﻿//function chooseDateTimepartial(subId) {
+//    console.log(subId);
+//    $("#chooseDate").show();
+//}
+function chooseDateTimepartial(subtpId) {
+    console.log("its here" + subtpId);
+    $('#forsubtyid').val(subtpId);
 
+    $('#chooseDate').show();
+}
+function cancelSubscription() {
+    $('#chooseDate').hide();
+}
+
+////for other Subscription
+
+
+
+//function chooseOtherSubscription(subId) {
+//    consoe.log(subId);
+//    $.ajax({
+//        url: '/Customer/ChooseOtherSubscription',
+//        data: { id: subsId },
+//        dataType: 'json',
+
+//        success: function (data) {
+//            if (data.success) {
+//                window.location.href = data.redirectToUrl;
+//            }
+//        },
+
+//        error: function (err) {
+//            console.log(err);
+//        }
+
+
+//    });
+
+//}
+
+
+
+
+//for free subscription
 function chooseFreeSubscription(subsId) {
     console.log(subsId);
     $.ajax({
@@ -21,6 +63,7 @@ function chooseFreeSubscription(subsId) {
     });
 }
 
+// Function for like articles
 
 function likeArticle(id) {
     

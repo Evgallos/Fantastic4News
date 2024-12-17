@@ -16,9 +16,10 @@ namespace Fantastic4News.ViewComponents
 
 		public IViewComponentResult Invoke()
 		{
-			var subscritionstp = _iss.GetSubscriptionTypes();
-
-			return View(subscritionstp);
+			SubscroptionChooseCustomer scc = new SubscroptionChooseCustomer();
+			scc.SubsType = _iss.GetSubscriptionTypes();
+			scc.Subs = null;
+			return View(scc);
 		}
 	}
 }
