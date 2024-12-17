@@ -1,5 +1,6 @@
 ﻿
 
+
 function calculateExpiresDate() {
 
     var monthNum = parseInt($('#monthnum').val(), 10);  // Parse the month number as an integer ,10 tells that it is decimal num containin 2 nums only
@@ -30,15 +31,17 @@ function calculateExpiresDate() {
 
 function minusval() {
     var monthNum = $('#monthnum').val();
-    var startdate = $('#startDate').val();
-    if (monthNum == 1) {
+    var startdate = new Date($('#startDate').val());
+    if (monthNum <= 1) {
         $('#errmsg').text("Month value cannot be 0");
     }
     else {
         monthNum--;
         $('#monthnum').val(monthNum);
+        calculateExpiresDate();
     }
 }
+
 
 function plusval() {
     var monthNum = $('#monthnum').val();
@@ -49,6 +52,7 @@ function plusval() {
     else {
         monthNum++;
         $('#monthnum').val(monthNum);
+        calculateExpiresDate();
     }
 }
 
