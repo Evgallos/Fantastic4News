@@ -1,8 +1,4 @@
-
-﻿@{
-    Layout = "_CustomerLayout";
-
-﻿	@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
 @{
@@ -10,13 +6,13 @@
 
 //	Layout = "_Layout";
 
-	if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Customer")
+	if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Employee")
 	{
-		Layout = "_CustomerLayout";
+		Layout = "_EmployeeLayout";
 	}
 	else
 	{
-		Layout = "_EmployeeLayout";
+				Layout = "_CustomerLayout";
 	}
 
 }
