@@ -87,6 +87,7 @@ namespace Fantastic4News
                 //context.Database.EnsureDeleted();
                 //context.Database.Migrate();
 
+
                 if (!context.Articles.Any())
 				{
                     try

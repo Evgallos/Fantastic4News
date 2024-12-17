@@ -2,6 +2,7 @@
 using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Fantastic4News.Models.Db;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fantastic4News.Controllers
 {
@@ -50,7 +51,33 @@ namespace Fantastic4News.Controllers
             return View(obj);
         }
 
+public IActionResult Create()
+        {
+            Article obj = new Article();
+            obj.UserId = "860bc1f6-c6ed-4304-a1b5-326ae59afb20";
 
+            SelectList categoriesSl = new SelectList(
+                _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+                "Id",
+                "Name"
+                );
+
+            ArticleIndexVM vmObj = new ArticleIndexVM()
+            {
+                Article = obj,
+                CategoriesSelectList = categoriesSl
+            };
+
+            return View(vmObj);
+        }
+
+        [HttpPost]
+        public IActionResult Create(ArticleIndexVM vmObj)
+        {
+            _articleService.CreateArticle(vmObj.Article);
+
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult LikeArticle(int id)
         {
             Article obj = _articleService.GetArticleById(id);
