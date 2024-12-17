@@ -60,13 +60,20 @@
 			
 						<div class="col-sm-8 pt-2">
 							<label asp-for="Subs.Created">From Date:</label>
-							<input asp-for="Subs.Created" type="date"  required />
+							<input asp-for="Subs.Created" id="startDate" type="date"  required />
 							<span asp-validation-for="Subs.Created" class="text-danger"></span>
+						</div>
+						<div class="col-sm-8">
+						<button onclick="minusval() " style="color:red">-</button>
+						<input value="1" id="monthnum" onkeypress="calculateExpiresDate()" style="width:40px" />
+						<button onclick="plusval() " style="color:red">+</button>
+						<span id="errmsg"></span>
+
 						</div>
 
 						<div class="col-sm-8 pt-2">
 							<label asp-for="Subs.Expired">To Date:</label>
-							<input asp-for="Subs.Expired" type="date"  required />
+							<input asp-for="Subs.Expired" id="ExpiresDate" type="date" hidden />
 							<span asp-validation-for="Subs.Expired" class="text-danger"></span>
 						</div>
 						<div class="col-sm-8 pt-2">
