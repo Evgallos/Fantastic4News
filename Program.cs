@@ -3,19 +3,22 @@ using Fantastic4News.Helper;
 using Fantastic4News.Models.Db;
 using Fantastic4News.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString1 = builder.Configuration.GetConnectionString("ServerConnection") ?? throw new InvalidOperationException("Connection string 'ServerConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -24,20 +27,30 @@ namespace Fantastic4News
             builder.Services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             builder.Services.AddControllersWithViews();
+			builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor(); // Register IHttpContextAccessor
+			builder.Services.AddDistributedMemoryCache(); // Required for session state
 
 
-            builder.Services.AddScoped<IArticleService, ArticleService>();
+			builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-            var app = builder.Build();
+			builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -53,14 +66,16 @@ namespace Fantastic4News
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession(); // Add this line to enable session middleware
 
             app.UseRouting();
 
             app.UseAuthorization();
+            //app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Customer}/{action=Index}/{id?}");
             app.MapRazorPages();
 
 
@@ -75,8 +90,11 @@ namespace Fantastic4News
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
                 //it will delete whole db and migrate every time while running
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
+
+
+                //context.Database.EnsureDeleted();
+                //context.Database.Migrate();
+
 
                 if (!context.Articles.Any())
 				{
@@ -92,8 +110,9 @@ namespace Fantastic4News
 
                 }
 
-				
 			}
+
+            await Seed.TemporarySeedFredrik.Seed(app);
 
             app.Run();
 		}

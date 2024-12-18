@@ -71,10 +71,12 @@
                     </ul>
                 </div>
             </div>
+
         </nav>
 
         <partial name="_CustomerLayoutPartial" />
         <partial name="_EmployeeLayoutPartial" />
+
     </header>
 
     @* <div class="container-fluid background">
@@ -86,6 +88,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
     <div class="container-fluid background">
@@ -93,6 +96,7 @@
             @RenderBody()
         </main>
     </div>
+
 </body>
 </html>
 @*Evangelos - Keep it outside of the body for now Until see how i can fix the issue with the others partials views*@

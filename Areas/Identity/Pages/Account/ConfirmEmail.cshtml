@@ -1,0 +1,21 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<h1>@ViewData["Title"]</h1>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+@{
+    if(TempData["UsrErr"]!= "Error" )
+    {
+        <h1>Choose your Subscription</h1>
+
+        <div>
+            @await Component.InvokeAsync("SubscriptionReg")
+
+        </div>
+    }
+}
+

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Fantastic4News.Models.Db;
+using System.Security.Claims;
 
 namespace Fantastic4News.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,12 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
-        public RegisterModel(
+		public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,7 +44,10 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-        }
+
+
+
+		}
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -134,9 +137,19 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+					var userRole = HttpContext.Session.GetString("UserRole");
+					if (!string.IsNullOrEmpty(userRole) && userRole == "Customer")
+					{
+						await _userManager.AddToRoleAsync(user, "Customer");
+					}
+                    // Adding custom claims
+                    //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, Input.Email));
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name,Input.FirstName+" "+Input.LastName));
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    HttpContext.Session.SetString("UserId", userId);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

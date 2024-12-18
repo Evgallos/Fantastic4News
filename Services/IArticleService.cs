@@ -8,5 +8,9 @@ namespace Fantastic4News.Services
         IEnumerable<Article> GetArticlesWithJournalist();
 
         Article GetArticleById(int id);
+
+        void CreateArticle(Article obj);
+
+        void UpdateArticle(Article obj);
     }
 }

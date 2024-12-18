@@ -2,6 +2,13 @@
 using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Fantastic4News.Models.Db;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Microsoft.AspNetCore.Authorization;
+
+using NuGet.Protocol;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Fantastic4News.Controllers
 {
@@ -13,10 +20,13 @@ namespace Fantastic4News.Controllers
 
         private readonly ICategoryService _categoryService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService)
+        private readonly UserManager<User> _userManager;
+
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
         {
             _articleService = articleService;
             _categoryService = categoryService;
+            _userManager = userManager;
         }
 
         // Actions
@@ -39,12 +49,89 @@ namespace Fantastic4News.Controllers
 
             return View(articlesVM);
         }
-
+        [Authorize]
         public IActionResult Details(int id)
         {
+            //If the user is not not logged in, it will redirect them to the login page
+            //and set the ReturnUrl parameter to ensure they are redirected back to the
+            //originally requested page after a successful login.n
+            if (User.Identity == null || !User.Identity.IsAuthenticated) 
+            { 
+                return RedirectToAction("Login", "Account", new { ReturnUrl = Url.Action("Details","Article", new { id }) });
+            }
+
             var obj = _articleService.GetArticleById(id);
 
+            obj.Views++;
+            _articleService.UpdateArticle(obj);
+            
+
             return View(obj);
+        }
+        [Authorize(Roles ="Journalist,Admin")]
+        public IActionResult Create()
+        {
+            Article obj = new Article();
+            obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";
+            // obj.UserId = HttpContext.User.Identity.
+
+            SelectList categoriesSl = new SelectList(
+                _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+                "Id",
+                "Name"
+                );
+
+            ArticleIndexVM vmObj = new ArticleIndexVM()
+            {
+                Article = obj,
+                CategoriesSelectList = categoriesSl
+            };
+
+            return View(vmObj);
+        }
+
+        [HttpPost]
+        public IActionResult Create(ArticleIndexVM vmObj)
+        {
+            _articleService.CreateArticle(vmObj.Article);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+
+            SelectList categoriesSl = new SelectList(
+    _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+    "Id",
+    "Name"
+    );
+
+            ArticleIndexVM vmObj = new ArticleIndexVM()
+            {
+                Article = obj,
+                CategoriesSelectList = categoriesSl
+            };
+
+            return View(vmObj);
+                    }
+
+        [HttpPost]
+        public IActionResult Edit(ArticleIndexVM vmObj)
+        {
+                _articleService.UpdateArticle(vmObj.Article);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult LikeArticle(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+            obj.Like++;
+            _articleService.UpdateArticle(obj);
+
+            return Json(obj.Like);
         }
     }
 }
