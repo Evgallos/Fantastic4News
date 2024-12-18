@@ -186,8 +186,12 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    text-align: center;
     margin: 6px 0;
 }
 
+
+.contentcenter{
+    align-content:center;
+    justify-content:center;
+}
 
