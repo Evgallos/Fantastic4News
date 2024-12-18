@@ -1,6 +1,20 @@
 ﻿
 
 
+// Write your JavaScript code.
+
+//var $img = $('#mirror-image');
+//var imgHeight = $img.height() / 2;
+//function placeCursor(x, y) {
+//    $img.css({ top: y + 'px', left: x + 'px', position: 'absolute' });
+//}
+
+//$(".top-half-black").mousemove(function (event) {
+//    var newY = $(this).height() - event.pageY - imgHeight;
+//    placeCursor(event.pageX, newY);
+//});
+
+
 function ChooseSubs(MonthNum) {
     console.log(MonthNum);
     var monthNum = MonthNum;
@@ -70,8 +84,8 @@ function chooseFreeSubscription(subsId) {
 // Function for like articles
 
 function likeArticle(id) {
-
-    $.ajax({
+    
+        $.ajax({
         type: 'post',
         url: '/Article/LikeArticle',
         dataType: 'json',
@@ -82,7 +96,6 @@ function likeArticle(id) {
             if (el) {
                 el.textContent = data;
             }
-
         },
 
         error: function (err) {
@@ -90,3 +103,4 @@ function likeArticle(id) {
         }
     });
 }
+
