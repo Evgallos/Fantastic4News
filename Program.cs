@@ -74,11 +74,11 @@ namespace Fantastic4News
 				//ensures that the service is available and throws an exception if it's not.
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
-				//it will delete whole db and migrate every time while running
-				//context.Database.EnsureDeleted();
-				//context.Database.Migrate();
+                //it will delete whole db and migrate every time while running
+                context.Database.EnsureDeleted();
+                context.Database.Migrate();
 
-				if (!context.Articles.Any())
+                if (!context.Articles.Any())
 				{
                     try
                     {

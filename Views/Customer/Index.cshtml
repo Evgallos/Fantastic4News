@@ -1,4 +1,4 @@
-﻿@using Fantastic4News.Models.Db
+﻿@* @using Fantastic4News.Models.Db
 
 @model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
 @{
@@ -72,3 +72,212 @@
 
 	}
 </div>
+ *@
+
+@* 	@using Fantastic4News.Models.Db
+@model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    List<Article> articles = new();
+    foreach (var item in Model.DailyNews)
+    {
+        articles.Add(item);
+    }
+}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#linkTextModal">Show Articles</button>
+@await Component.InvokeAsync("LintTextNewsList")
+
+<div class="container mt-4">
+    <!-- Daily News Section -->
+    <div class="row mb-4">
+        <div class="col-sm-12">
+            <h3>Daily News</h3>
+        </div>
+    </div>
+
+    <!-- Flex container for Daily News cards -->
+    <div class="row mb-2 d-flex align-items-stretch">
+        <!-- Left Side Articles -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+            <div class="mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
+            </div>
+            <div class="mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="@articles[1]" />
+            </div>
+        </div>
+
+        <!-- Center Article (Middle) -->
+        <div class="col-lg-6 col-md-12 mb-3 d-flex">
+            <div class="mb-3 flex-fill">
+                <partial name="_ArticlePartialDetailPartial" model="@articles[2]" />
+            </div>
+        </div>
+
+        <!-- Right Side Articles -->
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+            <div class="mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
+            </div>
+            <div class="mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="@articles[4]" />
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Popular News Section -->
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <h3>Popular News</h3>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        @foreach (var item in Model.PopularNews)
+        {
+            <div class="col-lg-3 col-md-6 mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="item" />
+            </div>
+        }
+    </div>
+
+    <hr />
+
+    <!-- Editors Choice Section -->
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <h3>Editors Choice</h3>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        @foreach (var item in Model.EditorsChoice)
+        {
+            <div class="col-lg-3 col-md-6 mb-3">
+                <partial name="_ArticlePartialDetailPartial" model="item" />
+            </div>
+        }
+    </div>
+</div> *@
+
+@using Fantastic4News.Models.Db
+@model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    List<Article> articles = new();
+    foreach (var item in Model.DailyNews)
+    {
+        articles.Add(item);
+    }
+}
+
+
+
+<!-- Button to Show Articles placed on the right side with shadow effect - Evangelos -->
+<div class="row mb-4 justify-content-end">
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary shadow-btn" data-bs-toggle="modal" data-bs-target="#linkTextModal">
+            Show Articles
+        </button>
+    </div>
+</div>
+
+@await Component.InvokeAsync("LintTextNewsList")
+
+<body>
+        <div class="container mt-4">
+            <!-- Evangelos - Fixed Daily News Section -->
+            <div class="row mb-4">
+                <div class="col-sm-12">
+                    <h3>Daily News</h3>
+                </div>
+            </div>
+
+            <!-- Evangelos - Flex container for Daily News cards -->
+            <div class="row mb-2 d-flex align-items-stretch" style="border-top: none; padding-top: 0;">
+                <!-- Evangelos - Left Side Articles -->
+                <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+                    <div class="mb-3">
+                        <partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
+                    </div>
+                    <div class="mb-3">
+                        <partial name="_ArticlePartialDetailPartial" model="@articles[1]" />
+                    </div>
+                </div>
+
+                <!-- Evangelos - Center Article (Middle) -->
+                <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex" style="border: none;">
+                    <div class="mb-3 flex-fill">
+                    <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />
+                       
+                    </div>
+                </div>
+
+                <!-- Evangelos - Right Side Articles -->
+                <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+                    <div class="mb-3">
+                        <partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
+                    </div>
+                    <div class="mb-3">
+                        <partial name="_ArticlePartialDetailPartial" model="@articles[4]" />
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- Evangelos - Popular News Section -->
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h3>Popular News</h3>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                @foreach (var item in Model.PopularNews)
+                {
+                    <div class="col-lg-3 col-md-6 mb-3 popular-news-card">
+                        <partial name="_ArticlePartialDetailPartial" model="item" />
+                    </div>
+                }
+            </div>
+
+            <hr />
+
+            <!-- Evangelos - Editors Choice Section -->
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h3>Editors Choice</h3>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                @foreach (var item in Model.EditorsChoice)
+                {
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <partial name="_ArticlePartialDetailPartial" model="item" />
+                    </div>
+                }
+            </div>
+        </div>
+</body>
+
+<!-- Evangelos - Footer placed outside the article sections -->
+<footer class="border-top footer text-muted mt-4">
+    <div class="container text-center">
+        &copy; 2024 - <strong>Logo</strong> -
+        <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+
+
