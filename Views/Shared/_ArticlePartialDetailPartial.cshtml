@@ -3,9 +3,13 @@
 
 
 <div class="card border-0 py-2 mb-2" style="width: 100%;">
-    <img src="@Model.ImageLink" class="card-img-top img-fluid cardcenter" alt="...">
-    <div class="card-body">
-        <h4 class="card-title"> <a href="#">@Model.HeadLine</a></h4>
-        <p class="card-text align-content-end justify-content-end">- @Model.User.FirstName @Model.User.LastName</p>
-    </div>
+	<img src="@Model.ImageLink" class="card-img-top img-fluid cardcenter" alt="...">
+	<div class="card-body">
+		<h4 class="card-title">
+			<a asp-action="Details" asp-controller="Article" asp-route-id="@Model.Id">
+				@Model.HeadLine
+			</a>
+		</h4>
+		<p class="card-text align-content-end justify-content-end">- @Model.User.FirstName @Model.User.LastName</p>
+	</div>
 </div>

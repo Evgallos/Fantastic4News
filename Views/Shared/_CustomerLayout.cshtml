@@ -1,4 +1,10 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿@using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject SignInManager<User> SignInManager 
+@using Fantastic4News.Models.Db
+@inject UserManager<User> UserManager
+
+
 
 @{
 	HttpContextAccessor.HttpContext.Session.SetString("UserRole", "Customer");
@@ -25,24 +31,35 @@
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				
+
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Home</a>
 						</li>
+						@if (SignInManager.IsSignedIn(User)&& User.IsInRole("Customer"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionType">Our Subscriptions</a>
+							</li>
+							<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionDetailCustomer">Our Subscriptions</a>
+							</li>
+
+						}
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionType">Subscription</a>
+							<a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="Details">Home</a>
 						</li>
+ 
 
 					</ul>
 
 					<partial name="_LoginPartial" />
 
 				</div>
-				
 
-				
+
+
 
 			</div>
 		</nav>
@@ -50,7 +67,7 @@
 			@await Component.InvokeAsync("CategoryIndex")
 
 		</nav>
-		
+
 	</header>
 	<div class="container-fluid">
 		<main role="main" class="pb-3">

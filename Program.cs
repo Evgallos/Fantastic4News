@@ -71,7 +71,7 @@ namespace Fantastic4News
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
@@ -90,8 +90,8 @@ namespace Fantastic4News
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
                 //it will delete whole db and migrate every time while running
-                context.Database.EnsureDeleted();
-                context.Database.Migrate();
+                //context.Database.EnsureDeleted();
+                //context.Database.Migrate();
 
 
                 if (!context.Articles.Any())
