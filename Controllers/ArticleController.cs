@@ -3,7 +3,12 @@ using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Fantastic4News.Models.Db;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 using Microsoft.AspNetCore.Authorization;
+
+using NuGet.Protocol;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Fantastic4News.Controllers
 {
@@ -15,10 +20,13 @@ namespace Fantastic4News.Controllers
 
         private readonly ICategoryService _categoryService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService)
+        private readonly UserManager<User> _userManager;
+
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
         {
             _articleService = articleService;
             _categoryService = categoryService;
+            _userManager = userManager;
         }
 
         // Actions
@@ -56,6 +64,7 @@ namespace Fantastic4News.Controllers
 
             obj.Views++;
             _articleService.UpdateArticle(obj);
+            
 
             return View(obj);
         }
@@ -63,7 +72,8 @@ namespace Fantastic4News.Controllers
         public IActionResult Create()
         {
             Article obj = new Article();
-            obj.UserId = "860bc1f6-c6ed-4304-a1b5-326ae59afb20";
+            obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";
+            // obj.UserId = HttpContext.User.Identity.
 
             SelectList categoriesSl = new SelectList(
                 _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
@@ -87,6 +97,34 @@ namespace Fantastic4News.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Edit(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+
+            SelectList categoriesSl = new SelectList(
+    _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+    "Id",
+    "Name"
+    );
+
+            ArticleIndexVM vmObj = new ArticleIndexVM()
+            {
+                Article = obj,
+                CategoriesSelectList = categoriesSl
+            };
+
+            return View(vmObj);
+                    }
+
+        [HttpPost]
+        public IActionResult Edit(ArticleIndexVM vmObj)
+        {
+                _articleService.UpdateArticle(vmObj.Article);
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult LikeArticle(int id)
         {
             Article obj = _articleService.GetArticleById(id);
