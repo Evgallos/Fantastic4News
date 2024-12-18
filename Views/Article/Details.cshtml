@@ -3,83 +3,34 @@
 @{
     ViewData["Title"] = "Details";
 
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+
 
 }
 
+<div class="m-4 p-4" style="border:1px solid gray;  border-radius: 15px">
+    <div class="row">
+        <div class="col-4">
+            <span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
+        </div>
+        <div class="col-4 text-center">
+            Views: @Model.Views, Likes: @Model.Like
+        </div>
 
-<h1>Details</h1>
+        <div class="col-4 text-end">
+            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        </div>
+    </div>
+    <h1>@Model.HeadLine</h1>
+    <h4>Category: @Model.Category.Name</h4>
+    <img src="@Model.ImageLink" class="mb-3" style="border:1px solid gray; border-radius:10px" alt="@Model.LinkText" />
 
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateStamp)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateStamp)
-        </dd>
+    <p><b>@Model.ContentSummary</b></p>
 
-        <dd class="col-sm-10">
-            <img src="@Model.ImageLink" alt="@Model.LinkText"/>
-        </dd>
+    <p>@Model.Content</p>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HeadLine)
-        </dt>
-        <dd class="col-sm-10">
-            <h3>@Model.HeadLine</h3>
-        </dd>
+    <button onclick="likeArticle(@Model.Id)">Like</button>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ContentSummary)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ContentSummary)
-        </dd>
+    <br /><br />
+    <a class="mt-5" asp-action="Index">Back to List</a>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Like)
-        </dt>
-        <dd class="col-sm-10">
-            <span id="likes">@Html.DisplayFor(model => model.Like)</span>
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsArhived)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsArhived)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-
-    </dl>
-</div>
-
-<button onclick="likeArticle(@Model.Id)">Like</button>
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

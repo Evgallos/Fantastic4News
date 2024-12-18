@@ -28,7 +28,7 @@ public IEnumerable<Article> GetArticles()
         }
         public Article GetArticleById(int id)
         {
-            return _db.Articles.Include(c => c.Category).FirstOrDefault(a => a.Id == id);
+            return _db.Articles.Include(c => c.Category).Include(u => u.User).FirstOrDefault(a => a.Id == id);
         }
 
         public void CreateArticle(Article obj)
