@@ -3,8 +3,12 @@ using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Fantastic4News.Models.Db;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Microsoft.AspNetCore.Authorization;
+
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
+
 
 namespace Fantastic4News.Controllers
 {
@@ -45,9 +49,17 @@ namespace Fantastic4News.Controllers
 
             return View(articlesVM);
         }
-
+        [Authorize]
         public IActionResult Details(int id)
         {
+            //If the user is not not logged in, it will redirect them to the login page
+            //and set the ReturnUrl parameter to ensure they are redirected back to the
+            //originally requested page after a successful login.n
+            if (User.Identity == null || !User.Identity.IsAuthenticated) 
+            { 
+                return RedirectToAction("Login", "Account", new { ReturnUrl = Url.Action("Details","Article", new { id }) });
+            }
+
             var obj = _articleService.GetArticleById(id);
 
             obj.Views++;
@@ -56,8 +68,8 @@ namespace Fantastic4News.Controllers
 
             return View(obj);
         }
-
-public IActionResult Create()
+        [Authorize(Roles ="Journalist,Admin")]
+        public IActionResult Create()
         {
             Article obj = new Article();
             obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Fantastic4News.Models.Db;
+using System.Security.Claims;
 
 namespace Fantastic4News.Areas.Identity.Pages.Account
 {
@@ -141,9 +142,11 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
 					{
 						await _userManager.AddToRoleAsync(user, "Customer");
 					}
+                    // Adding custom claims
+                    //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, Input.Email));
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name,Input.FirstName+" "+Input.LastName));
 
-
-					_logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     HttpContext.Session.SetString("UserId", userId);
