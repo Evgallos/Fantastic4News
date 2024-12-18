@@ -40,17 +40,13 @@
 						@if (SignInManager.IsSignedIn(User)&& User.IsInRole("Customer"))
 						{
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionType">Our Subscriptions</a>
+								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionType">Available Subscriptions</a>
 							</li>
 							<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionDetailCustomer">Our Subscriptions</a>
+									<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionDetailCustomer">My Subscriptions</a>
 							</li>
 
 						}
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="Details">Home</a>
-						</li>
- 
 
 					</ul>
 
@@ -64,8 +60,9 @@
 			</div>
 		</nav>
 		<nav class="border-bottom box-shadow mb-3 text-center">
-			@await Component.InvokeAsync("CategoryIndex")
-
+		@await Component.InvokeAsync("CategoryIndex")
+ 
+			@* <vc:category-index></vc:category-index> *@
 		</nav>
 
 	</header>

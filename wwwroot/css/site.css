@@ -59,3 +59,14 @@ body {
 .cardcenter .card-body {
         text-align: center; /* Centers the text within the card */
     }
+
+.glass2 {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 15px 0 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    margin: 6px 0;
+}
