@@ -12,9 +12,16 @@ namespace Fantastic4News.Services
 
         SubscriptionType GetSubscriptionTypeById(int id);
 
+        bool updateSubscription(int customerId);
+        bool subscriptionexists(int id, int SubscriptionTypeId);
+        bool ExpiredTime(int expiredId, int createdId, int customerId);
+
+
         void AddSubscription(Subscription subscription);
 
 
         public IEnumerable<Subscription> GetSubscriptionById(string id);
+
     }
 }
+ 

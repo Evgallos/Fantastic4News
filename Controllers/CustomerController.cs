@@ -4,8 +4,11 @@ using Fantastic4News.Services;
 using Fantastic4News.ViewComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Linq.Expressions;
 using Org.BouncyCastle.Bcpg;
 using System.Security.Claims;
+
 
 namespace Fantastic4News.Controllers
 {
@@ -14,6 +17,11 @@ namespace Fantastic4News.Controllers
         private readonly ICustomerService _customerService;
         private readonly ISubscriptionService _subscriptionService;
         private readonly IArticleService _articleService;
+
+        private bool isUpdated;
+
+        public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService)
+
         private readonly UserManager<User> _userManager;
         public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager)
         {
@@ -34,13 +42,17 @@ namespace Fantastic4News.Controllers
             {
                 DailyNews = articles.OrderBy(a => a.DateStamp).Take(5).ToList(),
                 PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
-                EditorsChoice = articles.Where(a => a.EditorsChoice == true).ToList(),
+
+                EditorsChoice = articles.Where(a => a.EditorsChoice == true).Take(3).ToList(),
+
 
             };
 
             return View(cusIndexVm);
 
+
         }
+
 
 
         public IActionResult ChooseFreeSubscription(int id)
@@ -113,6 +125,22 @@ namespace Fantastic4News.Controllers
 
 
 
+        public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
+        {
+            bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
+
+            if (isUpdated)
+            {
+                return RedirectToAction("Subscription Updated", new { customerId });
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
+                return View();
+            }
+        }
+
+
 
         public IActionResult SubscriptionDetailCustomer()
         {
@@ -135,6 +163,7 @@ namespace Fantastic4News.Controllers
 
 
         }
+
 
 
     }
