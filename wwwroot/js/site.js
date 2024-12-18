@@ -84,8 +84,8 @@ function chooseFreeSubscription(subsId) {
 // Function for like articles
 
 function likeArticle(id) {
-
-    $.ajax({
+    
+        $.ajax({
         type: 'post',
         url: '/Article/LikeArticle',
         dataType: 'json',
@@ -96,7 +96,6 @@ function likeArticle(id) {
             if (el) {
                 el.textContent = data;
             }
-
         },
 
         error: function (err) {

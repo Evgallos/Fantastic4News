@@ -110,7 +110,12 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
 			public DateTime DOB { get; set; }
 			public DateTime CreatedAt { get; set; }
 			public DateTime LastLogin { get; set; }
-		}
+
+            [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
+        }
 
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -129,19 +134,22 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName=Input.LastName;
                 user.DOB=Input.DOB;
-                
+                user.UserName = Input.UserName;
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-					var userRole = HttpContext.Session.GetString("UserRole");
-					if (!string.IsNullOrEmpty(userRole) && userRole == "Customer")
-					{
-						await _userManager.AddToRoleAsync(user, "Customer");
-					}
+                    await _userManager.AddToRoleAsync(user, "Customer");
+
+					//var userRole = HttpContext.Session.GetString("UserRole");
+					//if (!string.IsNullOrEmpty(userRole) && userRole == "Customer")
+					//{
+					//	await _userManager.AddToRoleAsync(user, "Customer");
+					//}
+
                     // Adding custom claims
                     //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, Input.Email));
                     await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name,Input.FirstName+" "+Input.LastName));
