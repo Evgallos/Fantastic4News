@@ -79,7 +79,7 @@ namespace Fantastic4News.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("Fantastic4News.Models.Db.Category", b =>
@@ -97,7 +97,7 @@ namespace Fantastic4News.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Fantastic4News.Models.Db.Subscription", b =>
@@ -130,7 +130,7 @@ namespace Fantastic4News.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Fantastic4News.Models.Db.SubscriptionType", b =>
@@ -154,7 +154,7 @@ namespace Fantastic4News.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionTypes");
+                    b.ToTable("SubscriptionTypes", (string)null);
                 });
 
             modelBuilder.Entity("Fantastic4News.Models.Db.User", b =>
