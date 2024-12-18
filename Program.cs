@@ -26,7 +26,7 @@ namespace Fantastic4News
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false;
@@ -92,8 +92,8 @@ namespace Fantastic4News
                 //it will delete whole db and migrate every time while running
 
 
-                //context.Database.EnsureDeleted();
-                //context.Database.Migrate();
+                context.Database.EnsureDeleted();
+                context.Database.Migrate();
 
 
                 if (!context.Articles.Any())

@@ -20,7 +20,6 @@ namespace Fantastic4News.Controllers
 
         private bool isUpdated;
 
-        public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService)
 
         private readonly UserManager<User> _userManager;
         public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager)

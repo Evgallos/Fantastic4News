@@ -198,79 +198,85 @@
 @await Component.InvokeAsync("LintTextNewsList")
 
 <body>
-        <div class="container mt-4">
-            <!-- Evangelos - Fixed Daily News Section -->
-            <div class="row mb-4">
-                <div class="col-sm-12">
-                    <h3>Daily News</h3>
+    <div class="container mt-4">
+        <!-- Evangelos - Fixed Daily News Section -->
+        <div class="row mb-4">
+            <div class="col-sm-12">
+                <h3>Daily News</h3>
+            </div>
+        </div>
+
+        <!-- Evangelos - Flex container for Daily News cards -->
+        <div class="row mb-2 d-flex align-items-stretch" style="border-top: none; padding-top: 0;">
+            <!-- Evangelos - Left Side Articles -->
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+                <div class="mb-3">
+                    <partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
+                </div>
+                <div class="mb-3">
+                    <partial name="_ArticlePartialDetailPartial" model="@articles[1]" />
                 </div>
             </div>
 
-            <!-- Evangelos - Flex container for Daily News cards -->
-            <div class="row mb-2 d-flex align-items-stretch" style="border-top: none; padding-top: 0;">
-                <!-- Evangelos - Left Side Articles -->
-                <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
-                    <div class="mb-3">
-                        <partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
-                    </div>
-                    <div class="mb-3">
-                        <partial name="_ArticlePartialDetailPartial" model="@articles[1]" />
-                    </div>
-                </div>
-
-                <!-- Evangelos - Center Article (Middle) -->
-                <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex" style="border: none;">
-                    <div class="mb-3 flex-fill">
+            <!-- Evangelos - Center Article (Middle) -->
+            <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex" style="border: none;">
+                <div class="mb-3 flex-fill">
                     <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />
-                       
-                    </div>
-                </div>
 
-                <!-- Evangelos - Right Side Articles -->
-                <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
-                    <div class="mb-3">
-                        <partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
-                    </div>
-                    <div class="mb-3">
-                        <partial name="_ArticlePartialDetailPartial" model="@articles[4]" />
-                    </div>
                 </div>
             </div>
 
-            <hr />
-
-            <!-- Evangelos - Popular News Section -->
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h3>Popular News</h3>
+            <!-- Evangelos - Right Side Articles -->
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+                <div class="mb-3">
+                    <partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
+                </div>
+                <div class="mb-3">
+                    <partial name="_ArticlePartialDetailPartial" model="@articles[4]" />
                 </div>
             </div>
+        </div>
 
-            <div class="row mb-2">
-                @foreach (var item in Model.PopularNews)
-                {
-                    <div class="col-lg-3 col-md-6 mb-3 popular-news-card">
-                        <partial name="_ArticlePartialDetailPartial" model="item" />
-                    </div>
-                }
+        <hr />
+
+        <!-- Evangelos - Popular News Section -->
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h3>Popular News</h3>
             </div>
+        </div>
 
-            <hr />
-
-            <!-- Evangelos - Editors Choice Section -->
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h3>Editors Choice</h3>
+        <div class="row mb-2">
+            @foreach (var item in Model.PopularNews)
+            {
+                <div class="col-lg-3 col-md-6 mb-3 popular-news-card">
+                    <partial name="_ArticlePartialDetailPartial" model="item" />
                 </div>
-            </div>
+            }
+        </div>
 
-            <div class="row mb-2">
+        <hr />
+
+        <!-- Evangelos - Editors Choice Section -->
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h3>Editors Choice</h3>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            @{int i =0;
                 @foreach (var item in Model.EditorsChoice)
                 {
-                    <div class="col-lg-3 col-md-6 mb-3">
-                        <partial name="_ArticlePartialDetailPartial" model="item" />
+                    i++;
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                      
+                        <div class="row">                        
+                            <partial name="_ArticlePartialDetailPartial" model="item" />
+                        </div>
+                        <h2 class="text-info-emphasis">@i</h2>
                     </div>
-                }
+                }}
             </div>
         </div>
 </body>
