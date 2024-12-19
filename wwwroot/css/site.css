@@ -163,12 +163,15 @@ footer {
         transform: translateY(-2px); /* Lift effect on hover - Evangelos */
     }
 
+
+
 /* Evangelos - Popular News Section - 10px margin between cards*/
 /*.popular-news-card {
     margin-right: 1px !important;
     margin-left: 1px !important;
     transform: scale(0.);
 }*/
+
 
 
 /* -Evangelos - Modal */
@@ -256,3 +259,23 @@ footer {
     bottom: 0px;
     left: 5px;
 }
+
+
+
+.glass2 {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 15px 0 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 6px 0;
+}
+
+
+.contentcenter{
+    align-content:center;
+    justify-content:center;
+}
+
+

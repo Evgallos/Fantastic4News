@@ -39,8 +39,10 @@ function ChooseSubs(MonthNum) {
 
 
 //show hide the choose subscription form
-function chooseDateTimepartial(subtpId) {
+function chooseDateTimepartial(subtpId, typName) {
     console.log("its here" + subtpId);
+    console.log("tyname" + typName);
+    $('#subsTp').text(typName);
     $('#forsubtyid').val(subtpId);
 
     $('#chooseDate').show();
@@ -77,8 +79,8 @@ function chooseFreeSubscription(subsId) {
 // Function for like articles
 
 function likeArticle(id) {
-
-    $.ajax({
+    
+        $.ajax({
         type: 'post',
         url: '/Article/LikeArticle',
         dataType: 'json',
@@ -89,7 +91,6 @@ function likeArticle(id) {
             if (el) {
                 el.textContent = data;
             }
-
         },
 
         error: function (err) {

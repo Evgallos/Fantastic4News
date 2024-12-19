@@ -18,8 +18,7 @@ namespace Fantastic4News.Data
 
 		public DbSet<Subscription> Subscriptions { get; set; }
 		public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
-
-		
-
+		public DbSet<User> Users { get; set; }
+        public object Customers { get; internal set; }
     }
 }

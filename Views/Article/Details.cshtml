@@ -13,7 +13,7 @@
             <span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
         </div>
         <div class="col-4 text-center">
-            Views: @Model.Views, Likes: @Model.Like
+            Views: @Model.Views, Likes: <span id="likes">@Model.Like</span>
         </div>
 
         <div class="col-4 text-end">
