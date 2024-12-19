@@ -54,70 +54,21 @@ namespace Fantastic4News.Services
         }
 
 
-        //Subscription Exists
-
-        public bool subscriptionexists(int id)
-        {
-            var customer = _db.Subscriptions.FirstOrDefault(c => c.Id == id);
-            return customer != null;
-        }
-
-        // Update Subscription
-
-        public bool UpdateSubscription(int customerId, int newSubscriptionTypeId)
-        {
-                var customer = _db.Subscriptions
-                               .FirstOrDefault(c => c.Id == customerId);
-
-                if (customer != null)
-                {
-                    customer.SubscriptionTypeId = newSubscriptionTypeId;
-
-                    var subscriptionType = _db.SubscriptionTypes
-                                               .FirstOrDefault(st => st.Id == newSubscriptionTypeId);
-
-                    if (subscriptionType != null)
-                    {
-                        customer.Price = subscriptionType.Price;
-                    }
+		public Subscription? DateBeforeExpiresDate(DateTime givenDate, string usrId)
+		{
+			
+			Subscription? subs= _db.Subscriptions.Include(s=>s.SubscriptionType)
+                                    .Where(s=>s.UserId== usrId && s.SubscriptionType.TypeName.ToLower()!="free")
+                                    .FirstOrDefault(s => givenDate < s.Expired);
+            return subs;
+			
+		}
 
 
-                    _db.SaveChanges();
-                    return true;
-                }
 
-                return false;
+       
 
-
-        }
-
-        // expired Time Subscription
-
-        public bool ExpiredTime(int expiredId, int createdId, int customerId)
-        {
-            var subscription = _db.Subscriptions.FirstOrDefault(s => s.Id == customerId);
-
-            if (subscription != null)
-            {
-                if (subscription.Expired <= DateTime.Now)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool updateSubscription(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool subscriptionexists(int id, int SubscriptionTypeId)
-        {
-            throw new NotImplementedException();
-            }
-
+      
         public void AddSubscription(Subscription subscription)
         {
             
@@ -125,12 +76,13 @@ namespace Fantastic4News.Services
 
                 var res = _db.Subscriptions.Add(subscription);
                 _db.SaveChanges();
-               //todo check for success
                     }
 
             
 
         }
-    }
+
+		
+	}
 }
 
