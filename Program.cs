@@ -10,7 +10,7 @@ namespace Fantastic4News
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,11 @@ namespace Fantastic4News
             builder.Services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -66,6 +71,7 @@ namespace Fantastic4News
             app.UseRouting();
 
             app.UseAuthorization();
+            //app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
@@ -84,25 +90,29 @@ namespace Fantastic4News
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
                 //it will delete whole db and migrate every time while running
+
+
                 //context.Database.EnsureDeleted();
                 //context.Database.Migrate();
 
-                if (!context.Articles.Any())
-				{
-                    try
-                    {
-                        SeedData.InitializeDataSeeding(context, services).Wait(); // Seed the database
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log errors or handle exceptions
-                        Console.WriteLine("An error occurred while seeding the database.", ex); throw;
-                    }
 
-                }
+    //            if (!context.Articles.Any())
+				//{
+    //                try
+    //                {
+    //                    SeedData.InitializeDataSeeding(context, services).Wait(); // Seed the database
+    //                }
+    //                catch (Exception ex)
+    //                {
+    //                    // Log errors or handle exceptions
+    //                    Console.WriteLine("An error occurred while seeding the database.", ex); throw;
+    //                }
 
-				
+    //            }
+
 			}
+
+            await Seed.TemporarySeedFredrik.Seed(app);
 
             app.Run();
 		}

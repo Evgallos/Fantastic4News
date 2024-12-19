@@ -1,0 +1,25 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="row mt-5">
+    @foreach (var item in Model)
+    {
+
+
+        <div class="col-md-4">
+            <div class="card py-2 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TypeName</h5>
+                    @item.Description <br />
+                    @item.Price kr/month<br />
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-primary">Choose</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>

@@ -1,92 +1,65 @@
 ﻿@model Fantastic4News.Models.Db.Article
 
-@* <div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateStamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LinkText)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LinkText)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeadLine)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeadLine)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContentSummary)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContentSummary)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Like)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Like)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageLink)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageLink)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsArhived)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsArhived)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EditorsChoice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EditorsChoice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Id)
-        </dd>
-    </dl>
-</div> *@
-@* <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+
+
+
+@* <div class="card-container">
+    <!-- Evangelos - Card Front -->
+    <div class="card" data-id="@Model.Id">
+        <div class="card-face front">
+            <img src="@Model.ImageLink" class="card-img-top img-fluid" alt="@Model.HeadLine" />
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="#">@Model.HeadLine</a>
+                </h4>
+                <p class="card-text">
+                    - @Model.User.FirstName @Model.User.LastName;
+                </p>
+                <button class="speaker-icon" aria-label="Read this article aloud">
+                    <i class="fa fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Evangelos - Card Back (Initially Hidden) -->
+        <div class="card-face back">
+            <h5>Article Description</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
 </div> *@
 
-<div class="card border-0 py-2 mb-2" style="width: 100%;">
-    <img src="@Model.ImageLink" class="card-img-top img-fluid cardcenter" alt="...">
-    <div class="card-body">
-        <h4 class="card-title"> <a href="#">@Model.HeadLine</a></h4>
-        <p class="card-text align-content-end justify-content-end">- @Model.User.FirstName @Model.User.LastName</p>
+<div class="card-container">
+    <!-- Evangelos - Card Front -->
+    <a asp-action="Details" asp-controller="Article">
+    <div class="card shadow-sm" data-id="@Model.Id" style="border: 2px solid #ddd;">
+        <div class="card-face front">
+            <img src="@Model.ImageLink" class="card-img-top img-fluid" alt="@Model.HeadLine" />
+            <div class="card-body">
+                <!-- Evangelos - Card Title -->
+                <h4 class="card-title">
+                   @Model.HeadLine
+                </h4>
+                <!-- Evangelos - Card Text -->
+                <p class="card-text">
+                    - @Model.User.FirstName @Model.User.LastName;
+                </p>
+                <!-- Evangelos - Read Aloud Button -->
+                <button  type="button" class="speaker-icon" aria-label="Read this article aloud">
+                    <i class="fa fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+   
+            @* 
+        <!-- Evangelos - Card Back (Initially Hidden) -->
+        <div class="card-face back">
+            <h5>Article Description</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div> *@
     </div>
+
+    </a>
+
 </div>

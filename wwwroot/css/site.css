@@ -1,61 +1,197 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+﻿/* Base body styling - Evangelos */
 body {
-  margin-bottom: 60px;
+    font-family: 'Times New Roman', serif;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #f0f8ff;
+    /*background-image: url('images/gid confetti.gif') */
+    /*background-image: image-rendering:pixelated;*/
 }
 
-/*for displaying modal side*/
+/* Background Gradient (No stripes, smooth transition from cyan to white on hover) - Evangelos */
+body {
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));
+    background-size: cover;
+}
 
-/* Custom styles for sidebar modal */
-.modal.sidebar-modal .modal-dialog {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px; /* Adjust width as needed */
+/* Evangelos - Glass effect for cards */
+.card {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white - Evangelos */
+    backdrop-filter: blur(10px); /* Glass effect - Evangelos */
+    border-radius: 8px;
+    transition: background-color 0.8s ease, transform 0.3s ease; /* Slower color transformation - Evangelos */
+    border: 2px solid #ddd;
+    margin-bottom: 20px;
     height: 100%;
-    margin: 0;
+    width:98%;
+    margin: auto;
 }
 
-.modal.sidebar-modal .modal-content {
-    height: 100%;
-    border: 0;
-    border-radius: 0;
-}
-
-.modal.sidebar-modal .modal-header,
-.modal.sidebar-modal .modal-body,
-.modal.sidebar-modal .modal-footer {
-    height: auto;
-    overflow-y: auto;
-}
-
-
-/* content at center */
-
-.contentcenter {
-    display: flex;
-    justify-content: center; /* Centers the content horizontally */
-    align-items: center; /* Centers the content vertically */ 
-    height: 100%; /* Ensure the card takes full height if necessary */
-}
-
-.cardcenter .card-body {
-        text-align: center; /* Centers the text within the card */
+    /* Evangelos - Hover effect for cards (Color transition from white to grey, then to orange) */
+    .card:hover {
+        background-color: rgba(211, 211, 211, 0.6); /* Light grey - Evangelos */
+        transform: translateY(-5px); /* Lift effect - Evangelos */
     }
+
+/* Evangelos - Color transitions for hover effect (from white to grey to orange) */
+.card {
+    background-color: rgba(255, 255, 255, 1); /* Starts as white - Evangelos */
+    transition: background-color 0.8s ease;
+}
+
+    .card:hover {
+        background-color: rgba(211, 211, 211, 0.3); /* Light grey at 30% - Evangelos */
+        transition: background-color 0.4s ease-in-out;
+    }
+
+    .card:hover {
+        background-color: rgba(211, 211, 211, 0.5); /* Light grey at 50% - Evangelos */
+        transition: background-color 0.5s ease-in-out;
+    }
+
+    .card:hover {
+        background-color: rgba(211, 211, 211, 0.7); /* Light grey at 70% - Evangelos */
+        transition: background-color 0.6s ease-in-out;
+    }
+
+    .card:hover {
+        background-color: rgba(255, 140, 0, 0.8); /* Orange at the end - Evangelos */
+    }
+
+/* Evangelos - Card shadow effect */
+.card-shadow-sm {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Evangelos - Accessibility: Focus outline */
+.card:focus {
+    outline: 2px solid rgba(0, 255, 255, 0.8); /* Cyan color on focus - Evangelos */
+}
+
+/* Evangelos - Logo Styling */
+.logo-title {
+    border: 2px solid #000;
+    padding: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan, 0px 0px 40px cyan, 0px 0px 80px cyan;
+}
+
+/* Mobile Specific Styling - Evangelos */
+@media (max-width: 767px) {
+    .logo-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .logo-title {
+        font-size: 1.5rem;
+    }
+
+    .card {
+    /*    margin-bottom: 20px;*/
+        margin:0 10px 0 0;
+    }
+
+    .row.mb-2 {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Center article - Evangelos */
+    .col-lg-6 {
+        margin-top: 0 !important;
+    }
+
+    /* Cards section */
+    .col-lg-3, .col-md-4, .col-sm-6 {
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* Large screen (Desktop) Styling - Evangelos */
+@media (min-width: 768px) {
+    .logo-container {
+        text-align: center;
+    }
+
+    .logo-title {
+        font-size: 2rem;           
+    }
+}
+
+/* Mobile specific adjustments - Evangelos */
+@media (max-width: 576px) {
+    .card {
+        margin-bottom: 10px;
+    }
+
+    .col-lg-3, .col-md-6 {
+        margin-bottom: 10px !important;
+    }
+}
+
+/* Article Layout Adjustments - Evangelos */
+.container {
+    border: none !important;
+    padding: 0 !important;
+}
+
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.card, .card-body, .col-lg-3, .col-md-4, .col-sm-6 {
+    border: none !important;
+    padding: 0 !important;
+}
+
+.d-flex.align-items-stretch {
+    border-top: none !important;
+    margin-top: 0 !important;
+}
+
+/* Footer Styling - Evangelos */
+footer {
+    margin-top: 20px;
+}
+
+/* Button styling and shadow effect - Evangelos */
+.shadow-btn {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+    .shadow-btn:hover {
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover - Evangelos */
+        transform: translateY(-2px); /* Lift effect on hover - Evangelos */
+    }
+
+
+
+/* Evangelos - Popular News Section - 10px margin between cards*/
+/*.popular-news-card {
+    margin-right: 1px !important;
+    margin-left: 1px !important;
+    transform: scale(0.);
+}*/
+
+
+
+
+.glass2 {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 15px 0 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 6px 0;
+}
+
+
+.contentcenter{
+    align-content:center;
+    justify-content:center;
+}
+

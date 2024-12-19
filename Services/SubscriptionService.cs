@@ -1,6 +1,14 @@
 ﻿using Fantastic4News.Data;
+
+using Fantastic4News.Models.Db;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using SQLitePCL;
+
 using Fantastic4News.Models.Db  ;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Fantastic4News.Services
 {
@@ -44,5 +52,37 @@ namespace Fantastic4News.Services
         {
             return _db.SubscriptionTypes.Find(id);
         }
-    }
+
+
+		public Subscription? DateBeforeExpiresDate(DateTime givenDate, string usrId)
+		{
+			
+			Subscription? subs= _db.Subscriptions.Include(s=>s.SubscriptionType)
+                                    .Where(s=>s.UserId== usrId && s.SubscriptionType.TypeName.ToLower()!="free")
+                                    .FirstOrDefault(s => givenDate < s.Expired);
+            return subs;
+			
+		}
+
+
+
+       
+
+      
+        public void AddSubscription(Subscription subscription)
+        {
+            
+            if (subscription != null) { 
+
+                var res = _db.Subscriptions.Add(subscription);
+                _db.SaveChanges();
+                    }
+
+            
+
+        }
+
+		
+	}
 }
+
