@@ -54,13 +54,6 @@ function cancelSubscription() {
 
 
 
-
-
-
-
-
-
-
 //for free subscription
 function chooseFreeSubscription(subsId) {
     console.log(subsId);

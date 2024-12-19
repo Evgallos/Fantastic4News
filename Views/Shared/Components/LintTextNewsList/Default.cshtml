@@ -1,41 +1,39 @@
 ﻿@model IEnumerable<Fantastic4News.Models.ViewModels.LinkTextNewsVm>
 
-
 <div class="modal fade sidebar-modal" id="linkTextModal" tabindex="-1" role="dialog" aria-labelledby="linkTextModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-scrollable" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="linkTextModalLabel">
-					Link News
-				</h5>
-				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				@foreach (var item in Model)
-				{
-					<div mb-2>
-						<div class="mb-2 h4">							
-								@item.CategoryName
-						</div>
-						<div>
-							@foreach (var article in item.Articles)
-							{
-								<p class="mb-1"><a href="#">@article.LinkText</a></p> 
-							}
-
-						</div>
-
-					</div>
-
-				}
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-					Close
-				</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-scrollable modal-right" role="document">
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkTextModalLabel">
+                    Link News
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var item in Model)
+                {
+                    <div class="category-container mb-3">
+                        
+                        <div class="category-title mb-2 h4">
+                            @item.CategoryName
+                        </div>
+                        <div class="category-links">
+                            @foreach (var article in item.Articles)
+                            {
+                                <p class="mb-1"><a href="#">@article.LinkText</a></p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
