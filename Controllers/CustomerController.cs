@@ -43,11 +43,9 @@ namespace Fantastic4News.Controllers
                 PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
                 EditorsChoice = articles.Where(a => a.EditorsChoice == true).Take(3).ToList(),
 
-
             };
 
             return View(cusIndexVm);
-
 
         }
 
@@ -125,7 +123,7 @@ namespace Fantastic4News.Controllers
                     Created = subs.Created,
                     Expired = subs.Expired,
                     Price = subsTpc.Price,
-                    UserId = userId //change here if userId
+                    UserId = userId 
 
 				};
 
