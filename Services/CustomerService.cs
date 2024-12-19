@@ -1,4 +1,6 @@
 ﻿using Fantastic4News.Data;
+using Fantastic4News.Models.Db;
+using SQLitePCL;
 
 namespace Fantastic4News.Services
 {
@@ -14,6 +16,19 @@ namespace Fantastic4News.Services
         }
 
         // Methods
+
+        public User GetCustmerbyId(string id)
+        {
+            var user = _db.Users.FirstOrDefault(u => u.Id == id);
+            return user;
+        }
+        public void updateCustomer(User user)
+        {
+			_db.Users.Update(user);
+			_db.SaveChanges();
+			
+			
+		}
 
 
     }
