@@ -39,9 +39,8 @@ namespace Fantastic4News.Controllers
 
             var cusIndexVm = new CustomerIndexViewModel()
             {
-                DailyNews = articles.OrderBy(a => a.DateStamp).Take(5).ToList(),
+                DailyNews = articles.OrderByDescending(a => a.DateStamp).Take(5).ToList(),
                 PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
-
                 EditorsChoice = articles.Where(a => a.EditorsChoice == true).Take(3).ToList(),
 
 
@@ -53,8 +52,34 @@ namespace Fantastic4News.Controllers
         }
 
 
+		[HttpGet]
+		public IActionResult CheckDate(string date)
+		{
+            string userId = "", res = "";
+			if (User.Identity != null && User.Identity.IsAuthenticated)
+			{ // Get the user by their ID
+				userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
-        public IActionResult ChooseFreeSubscription(int id)
+			}
+			if (DateTime.TryParse(date, out DateTime parsedDate))
+			{
+                var availablesubs = _subscriptionService.DateBeforeExpiresDate(parsedDate, userId);
+                if (availablesubs != null)
+                {
+                    res = $"Your {availablesubs.SubscriptionType.TypeName} is not over till {availablesubs.Expired} ";
+                }
+                else res = "na";
+			}
+			else
+			{
+				return Json(new { error = "Invalid date format" });
+			}
+
+			return Json(res);
+		}
+
+
+		public IActionResult ChooseFreeSubscription(int id)
         {
 
             string userID = "";
@@ -124,20 +149,20 @@ namespace Fantastic4News.Controllers
 
 
 
-        public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
-        {
-            bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
+        //public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
+        //{
+        //    bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
 
-            if (isUpdated)
-            {
-                return RedirectToAction("Subscription Updated", new { customerId });
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
-                return View();
-            }
-        }
+        //    if (isUpdated)
+        //    {
+        //        return RedirectToAction("Subscription Updated", new { customerId });
+        //    }
+        //    else
+        //    {
+        //        TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
+        //        return View();
+        //    }
+        //}
 
 
 
