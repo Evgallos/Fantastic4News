@@ -13,6 +13,8 @@ namespace Fantastic4News.Models.Db
         public DateTime DOB { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastLogin { get; set; }
+       
+
 
 		//Nav
 		IEnumerable<Subscription>? Subscriptions { get; set; }
