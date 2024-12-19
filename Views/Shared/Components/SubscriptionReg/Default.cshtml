@@ -13,13 +13,12 @@
 
 	}
 	HttpContextAccessor.HttpContext.Session.GetString("UserId");
-	<p>userId</p>
 
-	<div class="row mt-5">
+	<div class="row mt-4">
 		@foreach (var item in Model.SubsType)
 		{
-			<div class="col-md-4">
-				<div class="card py-2 mb-4" style="width: 18rem;">
+			<div class="col-sm-4">
+				<div  class="card py-2 mb-4" >
 					<div class="card-body">
 						<h5 class="card-title">@item.TypeName</h5>
 						@item.Description <br />
@@ -34,7 +33,7 @@
 							else
 							{
 								<div class="btn-group btn-group-sm">
-									<button type="button" onclick='chooseDateTimepartial(@item.Id)' class="btn btn-primary">Choose</button>
+									<button type="button" onclick="chooseDateTimepartial(@item.Id ,'@item.TypeName')" class="btn btn-primary">Choose</button>
 								</div>
 								subtpid = item.Id;
 							}
@@ -57,7 +56,8 @@
 			<form asp-action="chooseOtherSubscription" asp-controller="Customer" method="post">
 
 					<div class="row pb-3">
-			
+						<div id="subsTp" class="h4 text-info-emphasis"></div>
+						<span id="errmsg" class="h5 text-danger"></span>
 						<div class="col-sm-8 pt-2">
 							<label asp-for="Subs.Created">From Date:</label>
 							<input asp-for="Subs.Created" id="startDate" type="date"  required />
@@ -84,8 +84,8 @@
 						</div>
 
 						<div class="col-sm-4 mt-1">
-							<button type="submit" class="btn btn-primary btn-block"> Choose </button>
-							<button  class="btn btn-danger btn-block" onclick="cancelSubscription()"> Cancel </button>
+							<button type="submit" class="btn btn-primary btn-block " id="submitbtn" disabled> Choose </button>
+							<button type="button" class="btn btn-danger btn-block" onclick="cancelSubscription()"> Cancel </button>
 						</div>
 
 					</div>
@@ -95,7 +95,13 @@
 
 			</form>
 
-		<script src="~/js/validations.js"></script>
+		
+				<script src="~/lib/jquery/dist/jquery.min.js"></script> 
+				<script src="~/js/Validation.js"></script>
+			
+
+		
+
 
 	</div>
 }

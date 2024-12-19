@@ -2,34 +2,37 @@
 
 
 <div class="card-container">
-    <!-- Evangelos - Card Front -->
-    <div class="card shadow-sm" data-id="@Model.Id" style="border: 2px solid #ddd;  ">
-        <div class="card-face front">
-            <img src="@Model.ImageLink" class="card-img-top img-fluid" alt="@Model.HeadLine" />
-            <div class="card-body" >
-                <!-- Evangelos - Card Title -->
-                <h4 class="card-title">
-                    <a href="#">@Model.HeadLine</a>
-                </h4>
-                <!-- Evangelos - Card Text -->
-                <div style="height:110px; border:ridge; box-shadow:inset;">
-                    <p class="card-text">
-                        - @Model.User.FirstName @Model.User.LastName
-                        @Model.ContentSummary
-                    </p>
-                </div>
-                
-                <!-- Evangelos - Read Aloud Button -->
-                <button class="speaker-icon" aria-label="Read this article aloud">
-                    <i class="fa fa-volume-up"></i>
-                </button>
-            </div>
-        </div>
-        @* 
-        <!-- Evangelos - Card Back (Initially Hidden) -->
-        <div class="card-face back">
-            <h5>Article Description</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div> *@
-    </div>
+	<a asp-action="Details" asp-controller="Article">
+
+		<!-- Evangelos - Card Front -->
+		<div class="card shadow-sm" data-id="@Model.Id" style="border: 2px solid #ddd;  ">
+			<div class="card-face front">
+				<img src="@Model.ImageLink" class="card-img-top img-fluid" alt="@Model.HeadLine" />
+				<div class="card-body">
+					<!-- Evangelos - Card Title -->
+					<h4 class="card-title">
+						@Model.HeadLine
+					</h4>
+					<!-- Evangelos - Card Text -->
+					<div style="height:110px; border:ridge; box-shadow:inset;">
+						<p class="card-text">
+							- @Model.User.FirstName @Model.User.LastName
+							@Model.ContentSummary
+						</p>
+					</div>
+
+					<!-- Evangelos - Read Aloud Button -->
+					<button class="speaker-icon" aria-label="Read this article aloud">
+						<i class="fa fa-volume-up"></i>
+					</button>
+				</div>
+			</div>
+			@*
+			<!-- Evangelos - Card Back (Initially Hidden) -->
+			<div class="card-face back">
+			<h5>Article Description</h5>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div> *@
+		</div>
+	</a>
 </div>

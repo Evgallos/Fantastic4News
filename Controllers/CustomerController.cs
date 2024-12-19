@@ -4,10 +4,14 @@ using Fantastic4News.Services;
 using Fantastic4News.ViewComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
+using System.Security.Claims;
+
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Linq.Expressions;
 using Org.BouncyCastle.Bcpg;
 using System.Security.Claims;
+
 
 
 namespace Fantastic4News.Controllers
@@ -18,11 +22,14 @@ namespace Fantastic4News.Controllers
         private readonly ISubscriptionService _subscriptionService;
         private readonly IArticleService _articleService;
 
+
+        public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService)
         private bool isUpdated;
 
 
         private readonly UserManager<User> _userManager;
         public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager)
+
         {
             _customerService = customerService;
             _subscriptionService = subscriptionService;
@@ -39,9 +46,10 @@ namespace Fantastic4News.Controllers
 
             var cusIndexVm = new CustomerIndexViewModel()
             {
-                DailyNews = articles.OrderBy(a => a.DateStamp).Take(5).ToList(),
-                PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
 
+           
+                DailyNews = articles.OrderByDescending(a => a.DateStamp).Take(5).ToList(),
+                PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
                 EditorsChoice = articles.Where(a => a.EditorsChoice == true).Take(3).ToList(),
 
 
@@ -49,12 +57,37 @@ namespace Fantastic4News.Controllers
 
             return View(cusIndexVm);
 
-
         }
 
 
+		[HttpGet]
+		public IActionResult CheckDate(string date)
+		{
+            string userId = "", res = "";
+			if (User.Identity != null && User.Identity.IsAuthenticated)
+			{ // Get the user by their ID
+				userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
-        public IActionResult ChooseFreeSubscription(int id)
+			}
+			if (DateTime.TryParse(date, out DateTime parsedDate))
+			{
+                var availablesubs = _subscriptionService.DateBeforeExpiresDate(parsedDate, userId);
+                if (availablesubs != null)
+                {
+                    res = $"Your {availablesubs.SubscriptionType.TypeName} is not over till {availablesubs.Expired} ";
+                }
+                else res = "na";
+			}
+			else
+			{
+				return Json(new { error = "Invalid date format" });
+			}
+
+			return Json(res);
+		}
+
+
+		public IActionResult ChooseFreeSubscription(int id)
         {
 
             string userID = "";
@@ -100,7 +133,7 @@ namespace Fantastic4News.Controllers
                     Created = subs.Created,
                     Expired = subs.Expired,
                     Price = subsTpc.Price,
-                    UserId = userId //change here if userId
+                    UserId = userId 
 
 				};
 
@@ -124,20 +157,20 @@ namespace Fantastic4News.Controllers
 
 
 
-        public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
-        {
-            bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
+        //public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
+        //{
+        //    bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
 
-            if (isUpdated)
-            {
-                return RedirectToAction("Subscription Updated", new { customerId });
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
-                return View();
-            }
-        }
+        //    if (isUpdated)
+        //    {
+        //        return RedirectToAction("Subscription Updated", new { customerId });
+        //    }
+        //    else
+        //    {
+        //        TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
+        //        return View();
+        //    }
+        //}
 
 
 
@@ -163,6 +196,24 @@ namespace Fantastic4News.Controllers
 
         }
 
+        [HttpGet]
+        public  IActionResult EditUser()
+        { string userId = "";
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            { // Get the user by their ID
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
+            }
+				var customer = _customerService.GetCustmerbyId(userId);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public IActionResult EditUser(User user)
+        {
+			// Save the data 
+             _customerService.updateCustomer(user);
+			return Redirect("index");
+        }
 
 
     }

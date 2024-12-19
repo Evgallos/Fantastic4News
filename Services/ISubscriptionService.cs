@@ -11,13 +11,9 @@ namespace Fantastic4News.Services
         IEnumerable<SubscriptionType> GetSubscriptionTypes();
 
         SubscriptionType GetSubscriptionTypeById(int id);
+        Subscription DateBeforeExpiresDate(DateTime givenDate, string usrId);
 
-        bool updateSubscription(int customerId);
-        bool subscriptionexists(int id, int SubscriptionTypeId);
-        bool ExpiredTime(int expiredId, int createdId, int customerId);
-
-
-        void AddSubscription(Subscription subscription);
+		void AddSubscription(Subscription subscription);
 
 
         public IEnumerable<Subscription> GetSubscriptionById(string id);

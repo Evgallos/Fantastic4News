@@ -5,17 +5,25 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row contentcenter">
+    <div class="col-md-8 glass2">
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
 
-@{
-    if(TempData["UsrErr"]!= "Error" )
-    {
-        <h1>Choose your Subscription</h1>
+        @{
+            if (TempData["UsrErr"] != "Error")
+            {
+                <h1>Choose your Subscription</h1>
 
-        <div>
-            @await Component.InvokeAsync("SubscriptionReg")
+                <div>
+                    @await Component.InvokeAsync("SubscriptionReg")
 
-        </div>
-    }
-}
+                </div>
+            }
+        }
 
+    </div>
+
+
+
+
+</div>

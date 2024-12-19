@@ -39,8 +39,10 @@ function ChooseSubs(MonthNum) {
 
 
 //show hide the choose subscription form
-function chooseDateTimepartial(subtpId) {
+function chooseDateTimepartial(subtpId, typName) {
     console.log("its here" + subtpId);
+    console.log("tyname" + typName);
+    $('#subsTp').text(typName);
     $('#forsubtyid').val(subtpId);
 
     $('#chooseDate').show();

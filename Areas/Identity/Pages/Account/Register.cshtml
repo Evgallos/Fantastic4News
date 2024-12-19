@@ -10,37 +10,33 @@
 
 
 
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
 
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Énter your first name" />
-                <label asp-for="Input.FirstName">First Name</label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Énter your Last name" />
-                <label asp-for="Input.LastName">Lastname</label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <label asp-for="Input.DOB">DateOfBirth</label>
-                <input asp-for="Input.DOB" class="form-control" autocomplete="lastname" aria-required="true" type="date" placeholder="DateOfBirth " />
-                <span asp-validation-for="Input.DOB" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
+<div class="row contentcenter">
+	<div class="col-md-6 pe-2 glass2">
+		<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+			<h2>Create a new account.</h2>
+			<hr />
+			<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+			<div class="form-floating mb-3">
+				<input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Énter your first name" />
+				<label asp-for="Input.FirstName">First Name</label>
+				<span asp-validation-for="Input.FirstName" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-3">
+				<input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Énter your Last name" />
+				<label asp-for="Input.LastName">Lastname</label>
+				<span asp-validation-for="Input.LastName" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label asp-for="Input.DOB">DateOfBirth</label>
+				<input asp-for="Input.DOB" class="form-control" autocomplete="lastname" aria-required="true" type="date" placeholder="DateOfBirth " />
+				<span asp-validation-for="Input.DOB" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-3">
                 <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
                 <label asp-for="Input.UserName"></label>
                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
+            </div> 
             
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -62,30 +58,31 @@
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
+	</div>
+	<div class="row">
+		<section>
 
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+			@{
+				if ((Model.ExternalLogins?.Count ?? 0) == 0)
+				{
+				}
+				else
+				{
+					<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+						<div>
+							<p>
+								@foreach (var provider in Model.ExternalLogins!)
+								{
+									<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+								}
+							</p>
+						</div>
+					</form>
+				}
+			}
+		</section>
+	</div>
+            
 </div>
 
 @section Scripts {
