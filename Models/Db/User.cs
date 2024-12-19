@@ -11,10 +11,7 @@ namespace Fantastic4News.Models.Db
         [StringLength(50)]
         public required string LastName { get; set; }
         public DateTime DOB { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastLogin { get; set; }
-       
+    
 
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
