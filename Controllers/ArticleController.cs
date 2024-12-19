@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 
 namespace Fantastic4News.Controllers
@@ -17,10 +18,9 @@ namespace Fantastic4News.Controllers
         // Injections
 
         private readonly IArticleService _articleService;
-
         private readonly ICategoryService _categoryService;
-
         private readonly UserManager<User> _userManager;
+
 
         public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
         {
@@ -46,6 +46,13 @@ namespace Fantastic4News.Controllers
             {
                 Articles = articles
             };
+
+            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!string.IsNullOrEmpty(usrId))
+            {
+                ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
 
             return View(articlesVM);
         }
@@ -116,6 +123,20 @@ namespace Fantastic4News.Controllers
         {
             _articleService.UpdateArticle(vmObj.Article);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin, Journalist")]
+        public IActionResult Delete(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Article obj)
+        {
+            _articleService.DeleteArticle(obj.Id);
             return RedirectToAction(nameof(Index));
         }
 
