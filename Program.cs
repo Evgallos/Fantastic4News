@@ -91,24 +91,22 @@ namespace Fantastic4News
 
                 //it will delete whole db and migrate every time while running
 
-
                 //context.Database.EnsureDeleted();
-                //context.Database.Migrate();
+                // context.Database.Migrate();
 
+                if (!context.Articles.Any())
+				{
+                    try
+                    {
+                        SeedData.InitializeDataSeeding(context, services).Wait(); // Seed the database
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log errors or handle exceptions
+                        Console.WriteLine("An error occurred while seeding the database.", ex); throw;
+                    }
 
-    //            if (!context.Articles.Any())
-				//{
-    //                try
-    //                {
-    //                    SeedData.InitializeDataSeeding(context, services).Wait(); // Seed the database
-    //                }
-    //                catch (Exception ex)
-    //                {
-    //                    // Log errors or handle exceptions
-    //                    Console.WriteLine("An error occurred while seeding the database.", ex); throw;
-    //                }
-
-    //            }
+                }
 
 			}
 
