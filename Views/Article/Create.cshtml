@@ -19,7 +19,7 @@
             <input type="hidden" asp-for="Article.UserId"/>
 
             <div class="form-group">
-                <label asp-for="Article.CategoryId" class="control-label"></label>
+                <label asp-for="Article.CategoryId" class="control-label">Category</label>
                 <select id="drpCategory" asp-for="Article.CategoryId" asp-items="@Model.CategoriesSelectList">
                     <option value="0" selected disabled>-- Select category --</option>
                 </select>
