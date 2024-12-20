@@ -1,20 +1,5 @@
 ﻿
 
-
-// Write your JavaScript code.
-
-//var $img = $('#mirror-image');
-//var imgHeight = $img.height() / 2;
-//function placeCursor(x, y) {
-//    $img.css({ top: y + 'px', left: x + 'px', position: 'absolute' });
-//}
-
-//$(".top-half-black").mousemove(function (event) {
-//    var newY = $(this).height() - event.pageY - imgHeight;
-//    placeCursor(event.pageX, newY);
-//});
-
-
 function ChooseSubs(MonthNum) {
     console.log(MonthNum);
     var monthNum = MonthNum;
@@ -45,16 +30,10 @@ function chooseDateTimepartial(subtpId) {
 
     $('#chooseDate').show();
 }
+
 function cancelSubscription() {
     $('#chooseDate').hide();
 }
-
-
-
-
-
-
-
 
 
 
