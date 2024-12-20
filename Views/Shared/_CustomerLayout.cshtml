@@ -53,12 +53,21 @@
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="SubscriptionDetailCustomer">My Subscriptions</a>
 							</li>
+
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="index">Articles</a>
 							</li>
 
 						}
+						@if (SignInManager.IsSignedIn(User) && User.IsInRole("Journalist"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Article" asp-action="index">Articles</a>
+							</li>
+						}
 
+						
+						
 
 
 					</ul>
