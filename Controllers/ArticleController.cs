@@ -21,7 +21,6 @@ namespace Fantastic4News.Controllers
         private readonly ICategoryService _categoryService;
         private readonly UserManager<User> _userManager;
 
-
         public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
         {
             _articleService = articleService;
@@ -65,6 +64,13 @@ namespace Fantastic4News.Controllers
 
             obj.Views = obj.Views + 1;
             _articleService.UpdateArticle(obj);
+
+            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!string.IsNullOrEmpty(usrId))
+            {
+                ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
 
             return View(obj);
         }
