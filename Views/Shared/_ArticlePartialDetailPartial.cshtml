@@ -32,17 +32,17 @@
 
 <div class="card-container">
     <!-- Evangelos - Card Front -->
-    <a asp-action="Details" asp-controller="Article">
+    <a asp-action="Details" asp-controller="Article" asp-route-id="@Model.Id" >
     <div class="card shadow-sm" data-id="@Model.Id" style="border: 2px solid #ddd;">
         <div class="card-face front">
             <img src="@Model.ImageLink" class="card-img-top img-fluid" alt="@Model.HeadLine" />
             <div class="card-body">
                 <!-- Evangelos - Card Title -->
-                <h4 class="card-title">
+                <h4 class="card-title m-1">
                    @Model.HeadLine
                 </h4>
                 <!-- Evangelos - Card Text -->
-                <p class="card-text">
+                <p class="card-text ms-2">
                     - @Model.User.FirstName @Model.User.LastName;
                 </p>
                 <!-- Evangelos - Read Aloud Button -->

@@ -4,6 +4,7 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     background-color: #f0f8ff;
+    width:100%
     /*background-image: url('images/gid confetti.gif') */
     /*background-image: image-rendering:pixelated;*/
 }
@@ -140,6 +141,8 @@ body {
 .card, .card-body, .col-lg-3, .col-md-4, .col-sm-6 {
     border: none !important;
     padding: 0 !important;
+    
+
 }
 
 .d-flex.align-items-stretch {
@@ -261,7 +264,7 @@ footer {
 }
 
 
-
+/* form glass effect and content center */
 .glass2 {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
@@ -272,10 +275,16 @@ footer {
     margin: 6px 0;
 }
 
-
 .contentcenter{
     align-content:center;
     justify-content:center;
 }
+
+/*-------*/
+
+ a {
+    text-decoration: none;     
+}
+
 
 

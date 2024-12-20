@@ -93,7 +93,7 @@ namespace Fantastic4News
                 //it will delete whole db and migrate every time while running
 
                 //context.Database.EnsureDeleted();
-                // context.Database.Migrate();
+                //context.Database.Migrate();
 
                 if (!context.Articles.Any())
 				{

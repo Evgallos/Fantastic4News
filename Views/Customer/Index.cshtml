@@ -198,7 +198,7 @@
 @await Component.InvokeAsync("LintTextNewsList")
 
 <body>
-    <div class="container mt-4">
+    <div class="row mx-5 mt-4">
         <!-- Evangelos - Fixed Daily News Section -->
         <div class="row mb-4">
             <div class="col-sm-12">
@@ -209,7 +209,7 @@
         <!-- Evangelos - Flex container for Daily News cards -->
         <div class="row mb-2 d-flex align-items-stretch" style="border-top: none; padding-top: 0;">
             <!-- Evangelos - Left Side Articles -->
-            <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-3 d-flex flex-column" style="border: none;">
                 <div class="mb-3">
                     <partial name="_ArticlePartialDetailPartial" model="@articles[0]" />
                 </div>
@@ -219,15 +219,12 @@
             </div>
 
             <!-- Evangelos - Center Article (Middle) -->
-            <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex" style="border: none;">
-                <div class="mb-3 flex-fill">
-                    <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />
-
-                </div>
+            <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex flex-column h-100" style="border: none;">                
+                    <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />               
             </div>
 
             <!-- Evangelos - Right Side Articles -->
-            <div class="col-lg-3 col-md-4 col-sm-12 mb-3" style="border: none;">
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-3 d-flex flex-column" style="border: none;">
                 <div class="mb-3">
                     <partial name="_ArticlePartialDetailPartial" model="@articles[3]" />
                 </div>

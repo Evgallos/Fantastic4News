@@ -164,7 +164,7 @@ namespace Fantastic4News.Helper
                 if (subscription == "Free")
                 {
                     st.TypeName = subscription;
-                    st.Description = $"This{subscription} pakage is free package. ";
+                    st.Description = $"This {subscription} pakage is free package. ";
                     st.Price = 0;
                 }
                 else
@@ -210,7 +210,9 @@ namespace Fantastic4News.Helper
                 CreatedAt = DateTime.Now,
                 LastLogin = DateTime.Now,
                 UserName = "admin@new.se",
-                Email = "admin@new.se"
+                Email = "admin@new.se",
+                EmailConfirmed=true
+                
 
             };
             newUsersList.Add(user);
@@ -222,7 +224,9 @@ namespace Fantastic4News.Helper
                 CreatedAt = DateTime.Now,
                 LastLogin = DateTime.Now,
                 UserName = "journalist@new.se",
-                Email = "journalist@new.se"
+                Email = "journalist@new.se",
+                EmailConfirmed = true
+
             };
             newUsersList.Add(user1);
 
@@ -233,9 +237,26 @@ namespace Fantastic4News.Helper
                 CreatedAt = DateTime.Now,
                 LastLogin = DateTime.Now,
                 UserName = "editor@new.se",
-                Email = "editor@new.se"
+                Email = "editor@new.se",
+                EmailConfirmed = true
+
             };
+
             newUsersList.Add(user2);
+
+
+            var user3 = new User
+            {
+                FirstName = "Cust",
+                LastName = "Smith",
+                CreatedAt = DateTime.Now,
+                LastLogin = DateTime.Now,
+                UserName = "cust@new.se",
+                Email = "cust@new.se",
+                EmailConfirmed = true
+
+            };
+            newUsersList.Add(user3);
 
             foreach(var usr in newUsersList)
             {
@@ -246,6 +267,7 @@ namespace Fantastic4News.Helper
             await userManager.AddToRoleAsync(user, "Admin");
             await userManager.AddToRoleAsync(user1, "Journalist");
             await userManager.AddToRoleAsync(user2, "Editor");
+            await userManager.AddToRoleAsync(user3, "Customer");
             
             await _db.SaveChangesAsync();
 
