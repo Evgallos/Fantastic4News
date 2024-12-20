@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Fantastic4News.Models.ViewModels.EmployeesWithRoleViewModel>
+@{
+	ViewData["Title"] = "Index";
+}
+
+<table class="table">
+	<thead>
+		<tr>
+
+			<th>
+				@Html.DisplayNameFor(model => model.EmployeeName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Email)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Role)
+			</th>
+
+
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@item.EmployeeName
+				</td>
+				<td>
+					@item.Email
+				</td>
+				<td>
+					@item.Role
+				</td>
+
+				<td>
+					<a class="btn btn-outline-primary disabled-link" asp-action="edit" asp-controller="admin" asp-route-itemid="@item.empId">Edit </a> |
+					<a class="btn btn-outline-info disabled-link" asp-action="Detail" asp-controller="admin" asp-route-itemid="@item.empId">Detail </a> |
+					<a class="btn btn-outline-danger disabled-link" asp-action="Delete" asp-controller="admin" asp-route-itemid="@item.empId">Delete </a> 
+				</td>
+
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="row contentcenter">
+	<div class="col-md-8 glass2 ">
+
+		@await Component.InvokeAsync("RegisterEmployee")
+		
+@* 		 todo: regisconfirmation
+ *@
+	</div>
+</div>
