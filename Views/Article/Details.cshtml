@@ -1,5 +1,11 @@
 ﻿@model Fantastic4News.Models.Db.Article
 
+@using Fantastic4News.Models.Db
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
 @{
     ViewData["Title"] = "Details";
 
@@ -17,7 +23,13 @@
         </div>
 
         <div class="col-4 text-end">
-            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            @if ((User.IsInRole("Journalist") && (@Model.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+            {
+                <span>
+                     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.Id"> Delete </a>
+                </span>
+            }
         </div>
     </div>
     <h1>@Model.HeadLine</h1>

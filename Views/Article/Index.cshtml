@@ -1,7 +1,6 @@
 ﻿@model Fantastic4News.ViewModels.ArticleIndexVM
 @using Fantastic4News.Models.Db
 @using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -20,10 +19,13 @@ else
     <h1>Articles (@Model.Articles.Count())</h1>
     <h4>Category: @categoryName</h4>
 }
-
+@if (User.IsInRole("Journalist"))
+{
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -86,8 +88,7 @@ else
                             | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                             <a asp-action = "Delete" asp-route-id = "@item.Id" > Delete </a >
                         </span>
-
-                    }
+                                            }
 
                 </td>
             </tr>
