@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Linq.Expressions;
 using Org.BouncyCastle.Bcpg;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -194,20 +195,26 @@ namespace Fantastic4News.Controllers
 
 
         }
+        [HttpGet,Authorize]
 
-        [HttpGet]
         public  IActionResult EditUser()
-        { string userId = "";
-            if (User.Identity != null && User.Identity.IsAuthenticated)
-            { // Get the user by their ID
-                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
-            }
-				var customer = _customerService.GetCustmerbyId(userId);
-            return View(customer);
+        {
+            // string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
+
+            var customer = _userManager.GetUserAsync(User).Result;
+            var vmCustomer = new EditUserVM
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email
+            };
+           
+            return View(vmCustomer);
         }
 
         [HttpPost]
-        public IActionResult EditUser(User user)
+        public IActionResult EditUser(EditUserVM user)
         {
 			// Save the data 
              _customerService.updateCustomer(user);

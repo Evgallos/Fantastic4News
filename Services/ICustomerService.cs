@@ -1,4 +1,5 @@
 ﻿using Fantastic4News.Models.Db;
+using Fantastic4News.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fantastic4News.Services
@@ -8,7 +9,7 @@ namespace Fantastic4News.Services
         //object GetType(string id);
          
 
-        public void updateCustomer(User user);
+        public void updateCustomer(EditUserVM user);
 
         public User GetCustmerbyId(string id);
 	}
