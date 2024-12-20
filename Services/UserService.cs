@@ -1,5 +1,6 @@
 ﻿using Fantastic4News.Data;
 using Fantastic4News.Models.Db;
+using Fantastic4News.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,7 @@ namespace Fantastic4News.Services
 		public IEnumerable<User> ListEmployees()
 		{
 			var res = _db.Users.ToList();
+			
 			return res;
 		}
 

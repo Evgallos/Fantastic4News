@@ -59,7 +59,8 @@ namespace Fantastic4News.Services
 			
 			Subscription? subs= _db.Subscriptions.Include(s=>s.SubscriptionType)
                                     .Where(s=>s.UserId== usrId && s.SubscriptionType.TypeName.ToLower()!="free")
-                                    .FirstOrDefault(s => givenDate < s.Expired);
+                                    .OrderBy(s=> s.Expired)
+                                    .LastOrDefault(s => givenDate < s.Expired);
             return subs;
 			
 		}

@@ -31,7 +31,11 @@ namespace Fantastic4News.Controllers
                     empId=user.Id
                    
                 };
+                if(employee.Role!="Customer")
+                {
                 employeeswithrole.Add(employee);
+
+                }
             }
             return View(employeeswithrole.OrderByDescending(e=>e.EmployeeName));
         }

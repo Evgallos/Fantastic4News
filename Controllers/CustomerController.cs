@@ -89,20 +89,22 @@ namespace Fantastic4News.Controllers
 		public IActionResult ChooseFreeSubscription(int id)
         {
 
-            string userID = "";
+            string userId = "";
             var subsc = _subscriptionService.GetSubscriptionTypeById(id);
-            if (HttpContext.Session.GetString("UserId") != null)
-            {
-                userID = HttpContext.Session.GetString("UserId");
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            { // Get the user by their ID
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
             }
+
+            
 
             var subs = new Subscription
             {
                 SubscriptionTypeId = id,
                 Created = DateTime.Now,
                 Price = subsc.Price,
-                UserId = userID
+                UserId = userId
 
             };
             _subscriptionService.AddSubscription(subs);
@@ -141,7 +143,7 @@ namespace Fantastic4News.Controllers
             }
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("RegisterConfirmation");
         }
 
 
@@ -212,6 +214,12 @@ namespace Fantastic4News.Controllers
 			// Save the data 
              _customerService.updateCustomer(user);
 			return Redirect("index");
+        }
+
+        public IActionResult RegisterConfirmation()
+        {
+           
+            return View();
         }
 
 
