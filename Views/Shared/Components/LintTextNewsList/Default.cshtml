@@ -23,7 +23,7 @@
                         <div class="category-links">
                             @foreach (var article in item.Articles)
                             {
-                                <p class="mb-1"><a href="#">@article.LinkText</a></p>
+                                <p class="mb-1"><a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id">@article.LinkText</a></p>
                             }
                         </div>
                     </div>
