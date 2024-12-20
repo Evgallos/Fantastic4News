@@ -1,7 +1,11 @@
 ﻿@model Fantastic4News.ViewModels.ArticleIndexVM
+@using Fantastic4News.Models.Db
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
-    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 
 
@@ -48,36 +52,45 @@ else
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Articles) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LinkText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HeadLine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentSummary)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsArhived)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Articles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LinkText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HeadLine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentSummary)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageLink)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsArhived)
+                </td>
+                <td>
+                    <a asp-action = "Details" asp-route-id = "@item.Id" > Details </a>
+
+                    @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+                    {
+                        <span>
+                            | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action = "Delete" asp-route-id = "@item.Id" > Delete </a >
+                        </span>
+
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

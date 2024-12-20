@@ -49,13 +49,9 @@ body {
         transition: background-color 0.5s ease-in-out;
     }
 
-    .card:hover {
-        background-color: rgba(211, 211, 211, 0.7); /* Light grey at 70% - Evangelos */
-        transition: background-color 0.6s ease-in-out;
-    }
 
     .card:hover {
-        background-color: rgba(255, 140, 0, 0.8); /* Orange at the end - Evangelos */
+        background-color: rgba(173, 216, 230, 0.6); /*rgba(248, 215, 185, 0.8)*/ /*rgba(255, 140, 0, 0.8);*/ /*  - Evangelos */
     }
 
 /* Evangelos - Card shadow effect */
@@ -73,7 +69,7 @@ body {
     border: 2px solid #000;
     padding: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    color: white;
+    color: blue;
     text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan, 0px 0px 40px cyan, 0px 0px 80px cyan;
 }
 
@@ -178,6 +174,93 @@ footer {
 
 
 
+/* -Evangelos - Modal */
+.modal-right {
+    position: fixed;
+    top: 0;
+    right: -100%; 
+    width: 350px; 
+    height: 100%;
+    overflow-y: auto; 
+    transition: right 0.5s ease-in-out;
+}
+
+
+.sidebar-modal.show .modal-dialog.modal-right {
+    right: 15px; 
+}
+
+/* -Evangelos - Style for the category container with borders and shadows */
+.category-container {
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease; 
+}
+
+    /* - Evangelos - Hover effect for categories */
+    .category-container:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+    }
+
+/* Evangelos-  Style for category title */
+.category-title {
+    font-weight: bold;
+    color: #333; 
+    border-bottom: 2px solid #ccc; 
+    padding-bottom: 5px;
+}
+
+/* - Evangelos - Style for category links */
+.category-links a {
+    color: #007bff; 
+    text-decoration: none; 
+    transition: color 0.2s ease;
+}
+
+    /* - Evangelos - Hover effect for links */
+    .category-links a:hover {
+        color: #0056b3; 
+    }
+
+
+.modal-header {
+    background-color: #f0f8ff;
+    border-bottom: 1px solid #ddd;
+}
+
+/* - Evangelos- Modal body styling */
+.modal-body {
+    padding: 10px;
+    background-color: /*#F8D7B9;*/ /*#D8BFD8;*/ rgba(173, 216, 230, 0.4);
+}
+
+/* -Evangelos - Modal footer styling */
+.modal-footer {
+    background-color: #f0f8ff;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+
+/*-Evangelos - Style for the Editors Choice Section */
+
+.number-circle {
+    background-color: white;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    bottom: 0px;
+    left: 5px;
+}
+
+
 
 .glass2 {
     background: rgba(255, 255, 255, 0.2);
@@ -194,4 +277,5 @@ footer {
     align-content:center;
     justify-content:center;
 }
+
 

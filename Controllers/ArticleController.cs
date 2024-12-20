@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 
 namespace Fantastic4News.Controllers
@@ -17,10 +18,9 @@ namespace Fantastic4News.Controllers
         // Injections
 
         private readonly IArticleService _articleService;
-
         private readonly ICategoryService _categoryService;
-
         private readonly UserManager<User> _userManager;
+
 
         public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
         {
@@ -47,28 +47,29 @@ namespace Fantastic4News.Controllers
                 Articles = articles
             };
 
+            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!string.IsNullOrEmpty(usrId))
+            {
+                ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+
             return View(articlesVM);
         }
+
         [Authorize]
         public IActionResult Details(int id)
         {
-            //If the user is not not logged in, it will redirect them to the login page
-            //and set the ReturnUrl parameter to ensure they are redirected back to the
-            //originally requested page after a successful login.n
-            if (User.Identity == null || !User.Identity.IsAuthenticated) 
-            { 
-                return RedirectToAction("Login", "Account", new { ReturnUrl = Url.Action("Details","Article", new { id }) });
-            }
 
             var obj = _articleService.GetArticleById(id);
 
-            obj.Views++;
+            obj.Views = obj.Views + 1;
             _articleService.UpdateArticle(obj);
-            
 
             return View(obj);
         }
-        [Authorize(Roles ="Journalist,Admin")]
+
+        [Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
         {
             Article obj = new Article();
@@ -115,13 +116,27 @@ namespace Fantastic4News.Controllers
             };
 
             return View(vmObj);
-                    }
+        }
 
         [HttpPost]
         public IActionResult Edit(ArticleIndexVM vmObj)
         {
-                _articleService.UpdateArticle(vmObj.Article);
+            _articleService.UpdateArticle(vmObj.Article);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin, Journalist")]
+        public IActionResult Delete(int id)
+        {
+            Article obj = _articleService.GetArticleById(id);
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Article obj)
+        {
+            _articleService.DeleteArticle(obj.Id);
             return RedirectToAction(nameof(Index));
         }
 
