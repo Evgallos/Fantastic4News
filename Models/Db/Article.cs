@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Fantastic4News.Helper;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
 
 namespace Fantastic4News.Models.Db
@@ -28,11 +29,16 @@ namespace Fantastic4News.Models.Db
 
         public bool EditorsChoice { get; set; } = false;
 
-        public string UserId { get; set; } = string.Empty;
+        public bool IsPublished { get; set; } = false;
+
+        public ArticlePriority Priority { get; set; } = ArticlePriority.Low;
+
+		//Nav
+		public string UserId { get; set; } = string.Empty;
 
         public User? User { get; set; }
 
-        //Nav
+      
 
         public int CategoryId { get; set; }
 

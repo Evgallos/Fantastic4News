@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using SQLitePCL;
-
 using Fantastic4News.Models.Db  ;
 using Microsoft.EntityFrameworkCore;
 
+//todo : generativeAI models for rendering speech
 
 namespace Fantastic4News.Services
 {
@@ -37,7 +37,8 @@ namespace Fantastic4News.Services
 
         public IEnumerable<Subscription> GetSubscriptionById(string id)
         {
-            var Subscription = _db.Subscriptions                            
+            //multipleactiveresulsset to true 
+            var Subscription =_db.Subscriptions                            
                             .Include(s => s.SubscriptionType)
                             .Where(s=>s.UserId==id).ToList();
 

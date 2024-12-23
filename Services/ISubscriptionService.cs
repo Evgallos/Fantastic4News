@@ -16,7 +16,7 @@ namespace Fantastic4News.Services
 		void AddSubscription(Subscription subscription);
 
 
-        public IEnumerable<Subscription> GetSubscriptionById(string id);
+        IEnumerable<Subscription> GetSubscriptionById(string id);
 
     }
 }

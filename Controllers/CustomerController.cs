@@ -175,7 +175,7 @@ namespace Fantastic4News.Controllers
         //}
 
 
-
+        [Authorize]
         public IActionResult SubscriptionDetailCustomer()
         {
             string userId = "";
@@ -185,12 +185,12 @@ namespace Fantastic4News.Controllers
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//claims are set in register or singin page
 
                 // Find the user by their email (or username)
-                var user = _userManager.FindByEmailAsync(User.Identity.Name); 
-                if (user != null)
-                { 
-                    // Retrieve the user ID
-                     var userId1 = user.Id;
-                }
+                //var user = _userManager.FindByEmailAsync(User.Identity.Name); 
+                //if (user != null)
+                //{ 
+                //    // Retrieve the user ID
+                //     var userId1 = user.Id;
+                //}
             }
             var subscription = _subscriptionService.GetSubscriptionById(userId);
             return View(subscription);
