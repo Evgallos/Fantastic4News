@@ -41,9 +41,9 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ContentSummary)
             </th>
-            <th>
+          @*   <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ImageLink)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Category)
             </th>
@@ -70,9 +70,9 @@ else
                     @Html.DisplayFor(modelItem => item.ContentSummary)
                 </td>
 
-                <td>
+               @*  <td>
                     @Html.DisplayFor(modelItem => item.ImageLink)
-                </td>
+                </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
