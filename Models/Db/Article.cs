@@ -1,5 +1,6 @@
 ﻿using Fantastic4News.Helper;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Principal;
 
 namespace Fantastic4News.Models.Db
@@ -24,6 +25,9 @@ namespace Fantastic4News.Models.Db
         public int Like { get; set; }
 
         public string ImageLink { get; set; } = string.Empty;
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
 
         public bool IsArhived { get; set; } = false;
 

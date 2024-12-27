@@ -100,6 +100,27 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public IActionResult Create(ArticleIndexVM vmObj)
         {
+            string uniqueFileName = null;
+            string imagePath = null;
+            string pathAndFile = null;
+
+            if (!string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
+            {
+
+                uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
+            }
+
+            // Logic for finding path on disc and save to variable imagePath
+
+            if (uniqueFileName != null && imagePath != null)
+            {
+                pathAndFile = imagePath + "." + uniqueFileName;
+            }
+
+            // Logic for sending image to Azure blob storage
+
+            // Adding address to blob storage into vmObj.article.ImageLink
+
             _articleService.CreateArticle(vmObj.Article);
 
             return RedirectToAction(nameof(Index));
@@ -153,6 +174,18 @@ namespace Fantastic4News.Controllers
             _articleService.UpdateArticle(obj);
 
             return Json(obj.Like);
+        }
+
+        // Private actions
+
+        private string AddGuidToFile(string fileName)
+        {
+            string extention = Path.GetExtension(fileName);
+            string fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
+            string uniqueFileName = fileNameWithoutExtention + "_" + Guid.NewGuid().ToString() + extention;
+            uniqueFileName = uniqueFileName.Replace(" ", "_");
+
+            return uniqueFileName;
         }
     }
 }
