@@ -30,7 +30,7 @@ namespace Fantastic4News.Controllers
 
         // Actions
 
-        public IActionResult Index(int categoryId)
+        public IActionResult Index(int categoryId, string search)
         {
             var articles = _articleService.GetArticles();
 
@@ -39,6 +39,12 @@ namespace Fantastic4News.Controllers
                 articles = articles.Where(a => a.CategoryId == categoryId);
 
                 ViewBag.CategoryName = _categoryService.GetCategoryById(categoryId).Name;
+            }
+
+            if (search != null)
+            {
+                search = search.Trim();
+                articles = articles.Where(a => a.Content.ToUpper().Contains(search.ToUpper()));
             }
 
             var articlesVM = new ArticleIndexVM()
