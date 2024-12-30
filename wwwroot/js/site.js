@@ -1,4 +1,9 @@
-﻿
+﻿// Function to show create form when selected category
+
+document.getElementById('drpCategory').addEventListener('change', function () {
+    document.getElementById('createArticleForm').style.display = 'block';
+});
+
 
 function ChooseSubs(MonthNum) {
     console.log(MonthNum);
@@ -6,9 +11,9 @@ function ChooseSubs(MonthNum) {
     var startDate = new Date($('#startDate').val());    // Parse the start date
     var expiresDate = new Date();
 
-        console.log("monthnum " + monthNum);
-        console.log("startdate " + startDate);
-        
+    console.log("monthnum " + monthNum);
+    console.log("startdate " + startDate);
+
     var expiresDate = new Date(startDate);
     expiresDate.setMonth(startDate.getMonth() + monthNum);
     console.log(expiresDate);
@@ -20,7 +25,7 @@ function ChooseSubs(MonthNum) {
 
     console.log("this is exp date " + $('#ExpiresDate').val());
 
- }
+}
 
 
 //show hide the choose subscription form
@@ -65,8 +70,8 @@ function chooseFreeSubscription(subsId) {
 // Function for like articles
 
 function likeArticle(id) {
-    
-        $.ajax({
+
+    $.ajax({
         type: 'post',
         url: '/Article/LikeArticle',
         dataType: 'json',
