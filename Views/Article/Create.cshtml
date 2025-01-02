@@ -19,7 +19,7 @@
             <input type="hidden" asp-for="Article.UserId" />
 
             <div class="form-group mb-3">
-                <select id="drpCategory" asp-for="Article.CategoryId" asp-items="@Model.CategoriesSelectList">
+                <select id="drpCategory" asp-for="Article.CategoryId" asp-items="@Model.CategoriesSelectList" onchange="showArticleForm()">
                     <option value="0" selected disabled>-- Select category --</option>
                 </select>
             </div>
@@ -45,23 +45,30 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="Article.Content" class="control-label"></label>
-                    <input asp-for="Article.Content" class="form-control" />
+                    <textarea asp-for="Article.Content" class="form-control" ></textarea>
                     <span asp-validation-for="Article.Content" class="text-danger"></span>
                 </div>
 
+                <script>
+                    // Replace the <textarea> with CKEditor
+                    CKEDITOR.replace('Article_Content');
+                </script>
+                <div> 
+                    <label>Select a file to upload:</label>
+                    <input type="file" id="imageFile" name="imageFile" onchange="uploadImg()" />
+                </div>
+                <br />
+@*                 <div id="uploadedImg">here: <br /></div>
+ *@
+
                 <div class="form-group mb-3">
-                    <label asp-for="Article.ImageLink" class="control-label"></label>
-                    <input asp-for="Article.ImageLink" class="form-control" />
+                    <input asp-for="Article.ImageLink" class="form-control" id="uploadedImg" value=""  />
                     <span asp-validation-for="Article.ImageLink" class="text-danger"></span>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="Article.ImageFile" class="control-label"></label>
-                    <input asp-for="Article.ImageFile" type="file" class="form-control" />
-                    <span asp-validation-for="Article.ImageFile" class="text-danger"></span>
-                </div>
+             
 
-                <div class="form-group form-check mb-3">
+               @*  <div class="form-group form-check mb-3">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="Article.IsArhived" /> @Html.DisplayNameFor(model => model.Article.IsArhived)
                     </label>
@@ -71,7 +78,7 @@
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="Article.EditorsChoice" /> @Html.DisplayNameFor(model => model.Article.EditorsChoice)
                     </label>
-                </div>
+                </div> *@
 
 
                 <div class="form-group my-4">
@@ -82,6 +89,8 @@
     </div>
 </div>
 
+
+
 <div class="my-3">
     <a asp-action="Index">Back to List</a>
 </div>
@@ -91,3 +100,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+
+
