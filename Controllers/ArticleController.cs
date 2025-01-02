@@ -36,7 +36,7 @@ namespace Fantastic4News.Controllers
 
         public IActionResult Index(int categoryId, string search)
         {
-            var articles = _articleService.GetArticles();
+            var articles = _articleService.GetArticles().OrderByDescending(a => a.DateStamp).AsEnumerable();
 
             if (categoryId != 0)
             {
@@ -48,7 +48,7 @@ namespace Fantastic4News.Controllers
             if (search != null)
             {
                 search = search.Trim();
-                articles = articles.Where(a => a.Content.ToUpper().Contains(search.ToUpper()));
+                articles = articles.Where(a => a.Content.ToUpper().Contains(search.ToUpper()) || a.HeadLine.ToUpper().Contains(search.ToUpper()) || a.LinkText.ToUpper().Contains(search.ToUpper()));
             }
 
             var articlesVM = new ArticleIndexVM()
