@@ -26,6 +26,17 @@ else
 </p>
 }
 
+<div class="m-4 p-3" style="border:1px dotted grey; border-radius:10px">
+<div class="mb-2">Search article</div>
+
+    <form asp-action="Index" asp-controller="Article">
+        <input type="text" name="search" />
+
+        <button type="submit">Search</button>
+        <button type="reset">Clear</button>
+    </form>
+</div>
+
 <table class="table">
     <thead>
         <tr>
