@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Fantastic4News.Models.ViewModels;
 
 
 namespace Fantastic4News.Controllers
@@ -20,15 +21,18 @@ namespace Fantastic4News.Controllers
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
         private readonly UserManager<User> _userManager;
+        private readonly IFileService _fileService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager)
-        {
-            _articleService = articleService;
-            _categoryService = categoryService;
-            _userManager = userManager;
-        }
+		public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService)
+		{
+			_articleService = articleService;
+			_categoryService = categoryService;
+			_userManager = userManager;
+			_fileService = fileService;
+		}
 
-        // Actions
+		// Actions
+
 
         public IActionResult Index(int categoryId, string search)
         {
@@ -80,8 +84,28 @@ namespace Fantastic4News.Controllers
 
             return View(obj);
         }
+        //this is for upload images
+		[HttpPost]
 
-        [Authorize(Roles = "Journalist,Admin")]
+		public IActionResult UploadImage(IFormFile imageFile)
+
+		{
+
+			if (imageFile == null || imageFile.Length == 0)
+
+			{
+
+				return Content("File not selected");
+
+			}
+
+			_fileService.UploadFileToContainer(imageFile);
+            string imgurl = "https://fantasticfourstorage.blob.core.windows.net/articleimages/" + imageFile.FileName;
+			return Json(imgurl);
+
+		}
+
+		[Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
         {
             Article obj = new Article();
@@ -106,26 +130,26 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public IActionResult Create(ArticleIndexVM vmObj)
         {
-            string uniqueFileName = null;
-            string imagePath = null;
-            string pathAndFile = null;
+            //string uniqueFileName = null;
+            //string imagePath = null;
+            //string pathAndFile = null;
 
-            if (!string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
-            {
+            //if (!string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
+            //{
 
-                uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
-            }
+            //    uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
+            //}
 
-            // Logic for finding path on disc and save to variable imagePath
+            //// Logic for finding path on disc and save to variable imagePath
 
-            if (uniqueFileName != null && imagePath != null)
-            {
-                pathAndFile = imagePath + "." + uniqueFileName;
-            }
+            //if (uniqueFileName != null && imagePath != null)
+            //{
+            //    pathAndFile = imagePath + "." + uniqueFileName;
+            //}
 
-            // Logic for sending image to Azure blob storage
+            //// Logic for sending image to Azure blob storage
 
-            // Adding address to blob storage into vmObj.article.ImageLink
+            //// Adding address to blob storage into vmObj.article.ImageLink
 
             _articleService.CreateArticle(vmObj.Article);
 

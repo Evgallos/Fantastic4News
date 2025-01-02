@@ -48,6 +48,7 @@ namespace Fantastic4News
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IFileService, FileService>();
 
 			builder.Services.AddTransient<IEmailSender, EmailSender>();
 
