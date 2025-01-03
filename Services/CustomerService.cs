@@ -16,13 +16,22 @@ namespace Fantastic4News.Services
             _db = db;
         }
 
-        // Methods
+		public bool CustomerExist(string email)
+		{
+            return _db.Users.Any(u => u.Email == email);
+		}
 
-        public User GetCustmerbyId(string id)
+		public bool CustomerUsrNameExist(string usrName)
+		{
+			return _db.Users.Any(u=>u.UserName==usrName);
+		}
+
+		public User GetCustmerbyId(string id)
         {
             var user = _db.Users.FirstOrDefault(u => u.Id == id);
             return user;
         }
+
         public void updateCustomer(EditUserVM user)
         {
             var user2 = _db.Users.FirstOrDefault(u => u.Email==user.Email);
