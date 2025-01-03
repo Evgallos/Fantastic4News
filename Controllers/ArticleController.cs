@@ -84,11 +84,10 @@ namespace Fantastic4News.Controllers
 
             return View(obj);
         }
+
         //this is for upload images
 		[HttpPost]
-
-		public IActionResult UploadImage(IFormFile imageFile)
-
+        public IActionResult UploadImage(IFormFile imageFile)
 		{
 
 			if (imageFile == null || imageFile.Length == 0)
@@ -110,7 +109,6 @@ namespace Fantastic4News.Controllers
         {
             Article obj = new Article();
             obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";
-            // obj.UserId = HttpContext.User.Identity.
 
             SelectList categoriesSl = new SelectList(
                 _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
