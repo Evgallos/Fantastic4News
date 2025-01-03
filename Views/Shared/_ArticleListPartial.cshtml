@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Fantastic4News.Models.Db.Article>
+
+@using Microsoft.AspNetCore.Identity
+@using Fantastic4News.Models.Db
+
+@inject UserManager<User> _userManager
+@inject SignInManager<User> _signinManager
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #dddddd;
+    }
+</style>
+
+<table class="">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HeadLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentSummary)
+            </th>
+            @*   <th>
+                @Html.DisplayNameFor(model => model.ImageLink)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+
+            @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin")){
+                <th>
+                    @Html.DisplayNameFor(model => model.IsArhived)
+                </th>
+            }
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        if (item.DateStamp != null)
+                        {
+                            DateTime stringDate = (DateTime)item.DateStamp;
+                            string? outputDate = stringDate.ToString("yyyy-MM-dd HH:mm");
+
+                            <span>@outputDate</span>
+                        }
+
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LinkText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HeadLine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentSummary)
+                </td>
+
+                @*  <td>
+                    @Html.DisplayFor(modelItem => item.ImageLink)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin")){
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsArhived)
+                    </td>
+                }
+               
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"> Details </a>
+
+                    @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+                    {
+                        <span>
+                            | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                        </span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
