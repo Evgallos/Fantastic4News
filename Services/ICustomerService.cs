@@ -12,5 +12,7 @@ namespace Fantastic4News.Services
         public void updateCustomer(EditUserVM user);
 
         public User GetCustmerbyId(string id);
+		bool CustomerExist(string email);
+		bool CustomerUsrNameExist(string userName);
 	}
 }

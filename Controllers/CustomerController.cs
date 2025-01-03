@@ -230,5 +230,32 @@ namespace Fantastic4News.Controllers
         }
 
 
-    }
+		[HttpPost]
+		public JsonResult ValidateRegisterEmail(string email)
+		{
+			//if (!ModelState.IsValid) { return Json(new { success = false, message = "Invalid email format." }); }
+
+
+			bool emailExists = _customerService.CustomerExist(email);
+			if (emailExists)
+				return Json(new { success = false, message = "User with This email address is already registerd." });
+
+			return Json(new { success = true });
+		}
+
+		[HttpPost]
+		public JsonResult ValidateRegisterUsername(string userName)
+		{
+			//if (!ModelState.IsValid) { return Json(new { success = false, message = "Invalid email format." }); }
+
+
+			bool usrNameExists = _customerService.CustomerUsrNameExist(userName);
+			if (usrNameExists)
+				return Json(new { success = false, message = "User Name already taken. Please choose another one." });
+
+			return Json(new { success = true });
+		}
+
+
+	}
 }

@@ -16,6 +16,7 @@ body {
 }
 
 /* Evangelos - Glass effect for cards */
+
 .card {
     background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white - Evangelos */
     backdrop-filter: blur(10px); /* Glass effect - Evangelos */
@@ -145,6 +146,12 @@ body {
 
 }
 
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; 
+    object-fit: cover; /* To ensure that the image fits within the bounds */
+}
 .d-flex.align-items-stretch {
     border-top: none !important;
     margin-top: 0 !important;
@@ -286,5 +293,17 @@ footer {
     text-decoration: none;     
 }
 
+ /*change tooltip style    */
 
+.tooltip-inner {
+    background-color: rgba(211, 211, 211, 0.6); 
+    color: #ea2929; 
+    font-size: 14px; 
+    padding: 10px; 
+    border-radius: 4px; /* Round the corners*/
+}
 
+.tooltip-arrow {
+    border-top-color: #0056b3; /* Change the arrow color */
+        }
+/*-------*/
