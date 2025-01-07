@@ -53,9 +53,11 @@
                     // Replace the <textarea> with CKEditor
                     CKEDITOR.replace('Article_Content');
                 </script>
-                <div> 
-                    <label>Select a file to upload:</label>
-                    <input type="file" id="imageFile" name="imageFile" onchange="uploadImg()" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Article.ImageFile" class="control-label"></label>
+                    <input asp-for="Article.ImageFile" type="file" class="form-control" />
+                    <span asp-validation-for="Article.ImageFile" class="text-danger"></span>
                 </div>
                 <br />
 @*                 <div id="uploadedImg">here: <br /></div>
