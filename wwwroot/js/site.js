@@ -1,4 +1,31 @@
-﻿// Function to show create form when selected category
+﻿//to fetch Edit employee view component 
+
+function displayEditVC(empId) {
+    console.log("id " + empId);
+    fetch(`/Admin/LoadEditComponent?empId=${empId}`)
+        .then(response => response.text())
+        .then(html => {
+            const res = document.getElementById("resultdiv");
+            res.style.display = 'block';
+            res.innerHTML = html;
+        });
+}
+
+//to fetch Register view component 
+
+function displayRegisterVC() {
+    console.log("test ");
+    fetch(`/Admin/LoadRegisterComponent`)
+        .then(response => response.text())
+        .then(html => {
+            const res = document.getElementById("resultdiv");
+            res.style.display = 'block';
+            res.innerHTML = html;
+        });
+}
+
+
+// Function to show create form when selected category
 
 //document.getElementById('drpCategory').addEventListener('change', function () {
 //    document.getElementById('createArticleForm').style.display = 'block';

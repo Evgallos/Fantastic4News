@@ -1,4 +1,5 @@
 ﻿using Fantastic4News.Models.Db;
+using Fantastic4News.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace Fantastic4News.Services
@@ -10,5 +11,9 @@ namespace Fantastic4News.Services
 		Task CreateRole(string role);
 		Task<string> FindRole(User user);
         Task AssigneRoleToUsers(User user,string role);
+
+		public User GetUserById(string id);
+		public void updateUser(EmployeeRegisterViewModel user);
+		Task updateUserRole(EmployeeRegisterViewModel emp);
 	}
 }
