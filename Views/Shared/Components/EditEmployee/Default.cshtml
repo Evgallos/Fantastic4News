@@ -1,19 +1,18 @@
 ﻿@model Fantastic4News.Models.ViewModels.EmployeeRegisterViewModel
 
-<form asp-action="EmployeeRegister" asp-controller="Admin" method="post">
+<form asp-action="EditEmployee" asp-controller="Admin" method="post">
+	<div class="form-group">
+		<input asp-for="Id" class="form-control" hidden/>
+	</div>
 	<div class="form-group">
 		<label asp-for="Email"></label>
-		<input asp-for="Email" class="form-control" />
+		<input asp-for="Email" class="form-control"/>
 		<span asp-validation-for="Email" class="text-danger"></span>
 	</div>
-	<div class="form-group">
-		<label asp-for="Password"></label>
-		<input asp-for="Password" class="form-control" />
-		<span asp-validation-for="Password" class="text-danger"></span>
-	</div>
+	
 	<div class="form-group">
 		<label asp-for="FirstName"></label>
-		<input asp-for="FirstName" class="form-control" />
+		<input asp-for="FirstName" class="form-control"/>
 		<span asp-validation-for="FirstName" class="text-danger"></span>
 	</div>
 	<div class="form-group">
@@ -24,18 +23,18 @@
 
 	<div class="form-group">
 		<label asp-for="Dob"></label>
-		<input asp-for="Dob" class="form-control" type="date"/>
+		<input asp-for="Dob" class="form-control" type="date" />
 		<span asp-validation-for="Dob" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="RoleName">Role</label>
-		<select asp-for="RoleName" class="form-control" asp-items="Model.Roles"></select>
+		<select asp-for="RoleName" class="form-control" asp-items="Model.Roles" ></select>
 		<span asp-validation-for="RoleName" class="text-danger"></span>
 	</div>
 	<div class=" row contentcenter">
 		<div class="w-75 row  ">
 
-			<button type="submit" class="btn btn-primary mt-2 ">Register</button>
+			<button type="submit" class="btn btn-primary mt-2 ">Update</button>
 		</div>
 
 	</div>
