@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Fantastic4News.Models.ViewModels;
 
 
+
 namespace Fantastic4News.Controllers
 {
     public class ArticleController : Controller
@@ -23,15 +24,15 @@ namespace Fantastic4News.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IFileService _fileService;
 
-		public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService)
-		{
-			_articleService = articleService;
-			_categoryService = categoryService;
-			_userManager = userManager;
-			_fileService = fileService;
-		}
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService)
+        {
+            _articleService = articleService;
+            _categoryService = categoryService;
+            _userManager = userManager;
+            _fileService = fileService;
+        }
 
-		// Actions
+        // Actions
 
 
         public IActionResult Index(int categoryId, string search)
@@ -86,25 +87,25 @@ namespace Fantastic4News.Controllers
         }
 
         //this is for upload images
-		[HttpPost]
+        [HttpPost]
         public IActionResult UploadImage(IFormFile imageFile)
-		{
+        {
 
-			if (imageFile == null || imageFile.Length == 0)
+            if (imageFile == null || imageFile.Length == 0)
 
-			{
+            {
 
-				return Content("File not selected");
+                return Content("File not selected");
 
-			}
+            }
 
-			_fileService.UploadFileToContainer(imageFile);
+            _fileService.UploadFileToContainer(imageFile);
             string imgurl = "https://fantasticfourstorage.blob.core.windows.net/articleimages/" + imageFile.FileName;
-			return Json(imgurl);
+            return Json(imgurl);
 
-		}
+        }
 
-		[Authorize(Roles = "Journalist,Admin")]
+        [Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
         {
             Article obj = new Article();
@@ -119,7 +120,7 @@ namespace Fantastic4News.Controllers
             ArticleIndexVM vmObj = new ArticleIndexVM()
             {
                 Article = obj,
-                CategoriesSelectList = categoriesSl
+                CategoriesSelectList = categoriesSl,
             };
 
             return View(vmObj);
@@ -128,9 +129,9 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public IActionResult Create(ArticleIndexVM vmObj)
         {
-            //string uniqueFileName = null;
-            //string imagePath = null;
-            //string pathAndFile = null;
+            string uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
+            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
 
             //if (!string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
             //{
@@ -138,16 +139,18 @@ namespace Fantastic4News.Controllers
             //    uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
             //}
 
-            //// Logic for finding path on disc and save to variable imagePath
+            using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
+            {
+                vmObj.Article.ImageFile.CopyTo(fileStream);
+            }
 
-            //if (uniqueFileName != null && imagePath != null)
-            //{
-            //    pathAndFile = imagePath + "." + uniqueFileName;
-            //}
+            // Logic for sending image to Azure blob storage
 
-            //// Logic for sending image to Azure blob storage
+            _fileService.UploadFileToContainer(vmObj.Article.ImageFile);
 
-            //// Adding address to blob storage into vmObj.article.ImageLink
+            vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
+
+            // Adding address to blob storage into vmObj.article.ImageLink
 
             _articleService.CreateArticle(vmObj.Article);
 
