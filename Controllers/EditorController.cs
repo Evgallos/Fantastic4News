@@ -14,7 +14,7 @@ namespace Fantastic4News.Controllers
 
 		public IActionResult Index()
 		{
-			var articles = _articleService.GetAllArticles().ToList();
+			var articles = _articleService.GetArticlesWithJournalist().ToList();
 			return View(articles);
 		}
 
