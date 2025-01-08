@@ -3,6 +3,9 @@
 	ViewData["Title"] = "Index";
 }
 
+<a class="btn btn-outline-primary disabled-link" onclick="displayRegisterVC()">Register New Employee </a> |
+
+
 <table class="table">
 	<thead>
 		<tr>
@@ -36,7 +39,7 @@
 				</td>
 
 				<td>
-					<a class="btn btn-outline-primary disabled-link" asp-action="edit" asp-controller="admin" asp-route-itemid="@item.empId">Edit </a> |
+					<a class="btn btn-outline-primary disabled-link" onclick="displayEditVC('@item.empId')" >Edit </a> |
 					<a class="btn btn-outline-info disabled-link" asp-action="Detail" asp-controller="admin" asp-route-itemid="@item.empId">Detail </a> |
 					<a class="btn btn-outline-danger disabled-link" asp-action="Delete" asp-controller="admin" asp-route-itemid="@item.empId">Delete </a> 
 				</td>
@@ -47,11 +50,7 @@
 </table>
 
 <div class="row contentcenter">
-	<div class="col-md-8 glass2 ">
+	<div class="col-md-8 glass2 " id="resultdiv" style="display:none">
 
-		@await Component.InvokeAsync("RegisterEmployee")
-		
-@* 		 todo: regisconfirmation
- *@
 	</div>
 </div>

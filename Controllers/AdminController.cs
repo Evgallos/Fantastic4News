@@ -40,19 +40,22 @@ namespace Fantastic4News.Controllers
             return View(employeeswithrole.OrderByDescending(e=>e.EmployeeName));
 
         }
+        	
 
-        
-        [HttpPost]
+	    public IActionResult LoadRegisterComponent()
+		{
+			return ViewComponent("RegisterEmployee");
+		}
+
+		[HttpPost]
         public async Task<IActionResult> EmployeeRegister(EmployeeRegisterViewModel model)
         {
-
-
             var user = new User
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                DOB = DateTime.Now,
+                DOB = model.Dob,
                 UserName = model.Email,
                 EmailConfirmed=true,
                 CreatedAt= DateTime.Now,
@@ -68,11 +71,26 @@ namespace Fantastic4News.Controllers
 
                 return RedirectToAction("Index", "Admin");
             }
-
-
-
             return RedirectToAction("Index", "Admin");
 
         }
-    }
+		public IActionResult LoadEditComponent(string empId)
+		{
+			return ViewComponent("EditEmployee", new { empId = empId });
+		}
+	
+
+        [HttpPost]
+        public IActionResult EditEmployee(EmployeeRegisterViewModel emp)
+        {
+			_ius.updateUser(emp);
+			return Redirect("index");
+		}
+
+
+
+
+
+
+	}
 }

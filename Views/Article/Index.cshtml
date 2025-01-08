@@ -26,61 +26,11 @@ else
 </p>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().DateStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().LinkText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().HeadLine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ContentSummary)
-            </th>
-          @*   <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().ImageLink)
-            </th> *@
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles.FirstOrDefault().IsArhived)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Articles)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateStamp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LinkText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HeadLine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContentSummary)
-                </td>
+<div class="m-4 p-3" style="border:1px dotted grey; border-radius:10px">
+<div class="mb-2">Search article</div>
 
-               @*  <td>
-                    @Html.DisplayFor(modelItem => item.ImageLink)
-                </td> *@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsArhived)
-                </td>
-                <td>
-                    <a asp-action = "Details" asp-route-id = "@item.Id" > Details </a>
+    <form asp-action="Index" asp-controller="Article">
+        <input type="text" name="search" />
 
                     @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
                     {
@@ -90,8 +40,12 @@ else
                         </span>
                     }
 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <button type="submit">Search</button>
+        <button type="reset">Clear</button>
+    </form>
+</div>
+
+
+<div>
+    <partial name="_ArticleListPartial" model="@Model.Articles"/>
+</div>

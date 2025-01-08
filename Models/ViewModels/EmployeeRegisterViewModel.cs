@@ -5,6 +5,7 @@ namespace Fantastic4News.Models.ViewModels
 {
 	public class EmployeeRegisterViewModel
 	{
+		public string Id { get; set; }
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
@@ -12,6 +13,7 @@ namespace Fantastic4News.Models.ViewModels
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; } = "S3cr3t!";
+
 
 		
 		[Display(Name = "First Name")]
@@ -21,6 +23,8 @@ namespace Fantastic4News.Models.ViewModels
 		[Display(Name = "Last Name")]
 		public string LastName { get; set; }=string.Empty;
 
+		[Display (Name="Date of Birth")]
+		public DateTime Dob { get; set; }
 		
 		[Display(Name = "Role")]
 		public string RoleName { get; set; }=string.Empty;

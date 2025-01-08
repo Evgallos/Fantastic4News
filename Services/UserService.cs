@@ -4,6 +4,7 @@ using Fantastic4News.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 
 namespace Fantastic4News.Services
 {
@@ -31,28 +32,82 @@ namespace Fantastic4News.Services
 		public IEnumerable<User> ListEmployees()
 		{
 			var res = _db.Users.ToList();
-			
+
 			return res;
 		}
 
 		public async Task CreateRole(string role)
-		{			
+		{
 			if (!role.IsNullOrEmpty()) { var newRole = await _roleManager.CreateAsync(new IdentityRole() { Name = role }); }
 		}
 
 		public async Task<string> FindRole(User user)
 		{
-            //GetRolesAsync(user)gives list of roles for user but
+			//GetRolesAsync(user)gives list of roles for user but
 			//we have just one role for one user sor using FirstOrDefault()
-            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+			var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 			return role;
 
-        }
+		}
 
-        public async Task AssigneRoleToUsers(User user,string role)
+		public async Task AssigneRoleToUsers(User user, string role)
 		{
 			await _userManager.AddToRoleAsync(user, role);
 		}
 
+		public void updateUser(EmployeeRegisterViewModel user)
+		{
+			var user2 = _db.Users.FirstOrDefault(u => u.Id == user.Id);
+			user2.FirstName = user.FirstName;
+			user2.LastName = user.LastName;
+			user2.Email = user.Email;
+			user2.DOB=user.Dob;
+
+			_db.Update(user2);
+			_db.SaveChanges();
+			bool check = _userManager.IsInRoleAsync(user2, user.RoleName).Result;
+
+			var role = _userManager.GetRolesAsync(user2).Result.FirstOrDefault();
+			//var role = roles.FirstOrDefault();
+			if (role != null)
+			{
+				var res = _userManager.RemoveFromRoleAsync(user2, role);
+				if (res.Result.Succeeded)
+				{
+					Console.WriteLine("removed successfully");
+				}
+			}
+			var res1=_userManager.AddToRoleAsync(user2, user.RoleName);
+			if (res1.Result.Succeeded) {
+				Console.WriteLine("added roles to user"); 
+			}
+			
+		}
+
+		public User GetUserById(string id)
+		{
+			var usr = _db.Users.FirstOrDefault(u => u.Id == id);
+			return usr;
+		}
+
+		
+
+		public async Task updateUserRole(EmployeeRegisterViewModel emp)
+		{
+			var user = _db.Users.FirstOrDefault(usr => usr.Id == emp.Id);
+			bool check = await _userManager.IsInRoleAsync(user, emp.RoleName);
+
+			var roles = await _userManager.GetRolesAsync(user);
+			var role = roles.FirstOrDefault();
+			
+					await _userManager.RemoveFromRoleAsync(user, role);
+				
+
+				 await _userManager.AddToRoleAsync(user, emp.RoleName);
+			
+			
+			
+
+		}
 	}
 }
