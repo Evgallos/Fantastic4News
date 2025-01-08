@@ -31,6 +31,7 @@ namespace Fantastic4News.Models.Db
 
         public bool IsArhived { get; set; } = false;
 
+        [Display(Name ="Editors Choice")]
         public bool EditorsChoice { get; set; } = false;
 
         public bool IsPublished { get; set; } = false;

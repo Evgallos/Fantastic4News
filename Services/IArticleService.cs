@@ -13,6 +13,8 @@ namespace Fantastic4News.Services
 
         void UpdateArticle(Article obj);
 
+        List<Article> GetAllArticles();
+
         void DeleteArticle(int id);
     }
 }

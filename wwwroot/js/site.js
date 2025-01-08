@@ -1,8 +1,8 @@
 ﻿// Function to show create form when selected category
 
-document.getElementById('drpCategory').addEventListener('change', function () {
-    document.getElementById('createArticleForm').style.display = 'block';
-});
+//document.getElementById('drpCategory').addEventListener('change', function () {
+//    document.getElementById('createArticleForm').style.display = 'block';
+//});
 
 
 function ChooseSubs(MonthNum) {

@@ -18,9 +18,15 @@
         <div class="col-4">
             <span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
         </div>
-        <div class="col-4 text-center">
+        @if (User.IsInRole("Customer"))
+        {
+            <span>
+            <a asp-action="Like" asp-route-id="@Model.Like">Like</a>
+            </span>
+        }
+       @*  <div class="col-4 text-center">
             Views: @Model.Views, Likes: <span id="likes">@Model.Like</span>
-        </div>
+        </div> *@
 
         <div class="col-4 text-end">
             @if ((User.IsInRole("Journalist") && (@Model.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))

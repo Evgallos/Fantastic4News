@@ -50,5 +50,11 @@ namespace Fantastic4News.Services
             _db.Articles.Remove(obj);
             _db.SaveChanges();
         }
-    }
+
+		public List<Article> GetAllArticles()
+		{
+			var articleList = _db.Articles.OrderByDescending(a => a.DateStamp).ToList();
+            return articleList;
+		}
+	}
 }
