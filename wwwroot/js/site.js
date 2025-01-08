@@ -25,6 +25,7 @@ function displayRegisterVC() {
 }
 
 
+
 // Function to show create form when selected category
 
 //document.getElementById('drpCategory').addEventListener('change', function () {

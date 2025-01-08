@@ -32,10 +32,19 @@ else
     <form asp-action="Index" asp-controller="Article">
         <input type="text" name="search" />
 
+                    @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+                    {
+                        <span>
+                            | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action = "Delete" asp-route-id = "@item.Id" > Delete </a >
+                        </span>
+                    }
+
         <button type="submit">Search</button>
         <button type="reset">Clear</button>
     </form>
 </div>
+
 
 <div>
     <partial name="_ArticleListPartial" model="@Model.Articles"/>

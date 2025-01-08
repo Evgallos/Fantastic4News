@@ -30,7 +30,12 @@ namespace Fantastic4News.Models.Db
         public IFormFile? ImageFile { get; set; }
 
         public bool IsArhived { get; set; } = false;
+
+
      //   public bool IsComplete { get; set; } = false;//complete button and to send the article to editor for approving
+      
+
+        [Display(Name ="Editors Choice")]
         public bool EditorsChoice { get; set; } = false;
         public bool IsPublished { get; set; } = false;//when article is approved this is set as true 
 
