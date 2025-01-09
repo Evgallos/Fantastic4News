@@ -53,21 +53,21 @@
                     // Replace the <textarea> with CKEditor
                     CKEDITOR.replace('Article_Content');
                 </script>
-                <div> 
-                    <label>Select a file to upload:</label>
-                    <input type="file" id="imageFile" name="imageFile" onchange="uploadImg()" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Article.ImageFile" class="control-label"></label>
+                    <input asp-for="Article.ImageFile" type="file" class="form-control" />
+                    <span asp-validation-for="Article.ImageFile" class="text-danger"></span>
                 </div>
                 <br />
 @*                 <div id="uploadedImg">here: <br /></div>
  *@
 
-                <div class="form-group mb-3">
+@*                 <div class="form-group mb-3">
                     <input asp-for="Article.ImageLink" class="form-control" id="uploadedImg" value=""  />
                     <span asp-validation-for="Article.ImageLink" class="text-danger"></span>
-                </div>
-
-             
-
+                </div> *@
+          
                @*  <div class="form-group form-check mb-3">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="Article.IsArhived" /> @Html.DisplayNameFor(model => model.Article.IsArhived)

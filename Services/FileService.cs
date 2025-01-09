@@ -13,7 +13,7 @@ namespace Fantastic4News.Services
             _configuration = configuration;
         }
 
-		public void UploadFileToContainer(IFormFile model)
+		public void UploadFileToContainer(string filePath, string fileName)
 
 		{
 
@@ -29,11 +29,10 @@ namespace Fantastic4News.Services
 
 			containerClient.CreateIfNotExistsAsync();
 
-			BlobClient blobClient = containerClient.GetBlobClient(model.FileName);
+			BlobClient blobClient = containerClient.GetBlobClient(fileName);
 
-			using (var stream = model.OpenReadStream())
-
-			{
+            using (var stream = File.OpenRead(filePath))
+            {
 
 				blobClient.Upload(stream, true);
 
