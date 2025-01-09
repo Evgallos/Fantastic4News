@@ -1,6 +1,7 @@
 ﻿using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Controllers
 {
-    public class AdminController : Controller
+	[Authorize(Roles = "Admin")]
+
+	public class AdminController : Controller
     {
         private readonly IUserService _ius;
         private readonly RoleManager<IdentityRole> _roleManager;

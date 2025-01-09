@@ -65,6 +65,7 @@ namespace Fantastic4News.Helper
             art.CategoryId = _db.Categories.Where(c => c.Name == "International").Select(c=> c.Id).FirstOrDefault();
             art.UserId = _db.Users.Where(u => u.FirstName == "Fantastic").Select(u => u.Id).FirstOrDefault();
             art.IsComplete = true;
+            art.IsPublished=true;
             articles.Add(art);
 
             Article art1 = new();
@@ -79,6 +80,7 @@ namespace Fantastic4News.Helper
             art1.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art1.EditorsChoice = true;
             art1.IsComplete = true;
+            art1.IsPublished=true;
 
             articles.Add(art1);
 
@@ -93,6 +95,7 @@ namespace Fantastic4News.Helper
             art2.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art2.EditorsChoice = true;
             art2.IsComplete = true;
+            art2.IsPublished = true;
             articles.Add(art2);
 
             Article art3 = new();
@@ -105,7 +108,7 @@ namespace Fantastic4News.Helper
             art3.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
             art3.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art3.IsComplete = true;
-
+            art3.IsPublished = true;
             articles.Add(art3);
 
             Article art4 = new();
@@ -119,8 +122,7 @@ namespace Fantastic4News.Helper
             art4.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art4.EditorsChoice = true;
             art4.IsComplete = true;
-
-
+            art4.IsPublished=true;
             articles.Add(art4);
 
             Article art5 = new();
@@ -133,7 +135,7 @@ namespace Fantastic4News.Helper
             art5.CategoryId = _db.Categories.Where(c => c.Name == "Politics").Select(c => c.Id).FirstOrDefault();
             art5.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art5.IsComplete = true;
-
+            art5.IsPublished = true;
             articles.Add(art5);
 
 
@@ -144,15 +146,39 @@ namespace Fantastic4News.Helper
             art6.ImageLink = "https://8sidor.se/wp-content/uploads/2024/12/busch-.jpg";
             art6.ContentSummary = art6.Content.Substring(0, art6.Content.IndexOf("."));
             art6.DateStamp = DateTime.Now;
-            art6.CategoryId = _db.Categories.Where(c => c.Name == "Politics").Select(c => c.Id).FirstOrDefault();
+            art6.CategoryId = _db.Categories.Where(c => c.Name == "Local").Select(c => c.Id).FirstOrDefault();
             art6.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art6.EditorsChoice = true;
             art6.IsComplete = true;
-
+            art6.IsPublished = true;
             articles.Add(art6);
 
+			Article art7 = new();
+			art7.HeadLine = "Lorem Ipsum";
+            art7.Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+			art7.LinkText = art7.HeadLine;
+			art7.ImageLink = "https://8sidor.se/wp-content/uploads/2025/01/feldt3.jpg";
+			art7.ContentSummary = art7.Content.Substring(0, art7.Content.IndexOf("."));
+			art7.CategoryId = _db.Categories.Where(c => c.Name == "Local").Select(c => c.Id).FirstOrDefault();
+			art7.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
+			art7.EditorsChoice = true;
+			art7.IsComplete = true;
+			articles.Add(art7);
 
-            await _db.AddRangeAsync(articles);
+			Article art8 = new();
+			art8.HeadLine = "Lorem Ipsum Heading 2";
+            art8.Content = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.  \n The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+			art8.LinkText = art8.HeadLine;
+			art8.ImageLink = "https://8sidor.se/wp-content/uploads/2025/01/feldt3.jpg";
+			art8.ContentSummary = art8.Content.Substring(0, art8.Content.IndexOf("."));
+			art8.CategoryId = _db.Categories.Where(c => c.Name == "Local").Select(c => c.Id).FirstOrDefault();
+			art8.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
+			art8.EditorsChoice = true;
+			art8.IsComplete = true;
+			articles.Add(art8);
+
+
+			await _db.AddRangeAsync(articles);
             await _db.SaveChangesAsync();
         }
 
