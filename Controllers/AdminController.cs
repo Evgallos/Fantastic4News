@@ -88,9 +88,28 @@ namespace Fantastic4News.Controllers
 		}
 
 
+        [HttpGet]
+        public IActionResult DeleteUser(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var user = _ius.GetUserById(id);
+            if (user == null)
+                return NotFound();
+
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult DeleteUserConfirmed(string id)
+        {
+            _ius.DeleteUser(id);
+            TempData["Message"] = $"User_{id} is Removed succesfully";
+
+            return RedirectToAction("Index");
+        }
 
 
 
-
-	}
+    }
 }

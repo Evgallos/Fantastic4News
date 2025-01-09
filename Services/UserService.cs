@@ -31,7 +31,7 @@ namespace Fantastic4News.Services
 
 		public IEnumerable<User> ListEmployees()
 		{
-			var res = _db.Users.ToList();
+			var res = _db.Users.Where(u=>u.status==true).ToList();
 
 			return res;
 		}
@@ -105,9 +105,19 @@ namespace Fantastic4News.Services
 
 				 await _userManager.AddToRoleAsync(user, emp.RoleName);
 			
-			
+		}
+
+        public void DeleteUser(string id)
+        {
+            var user = _db.Users.Find(id);
 			
 
-		}
-	}
+            if (user != null)
+            {
+                user.status = false;
+				_db.Users.Update(user);
+                _db.SaveChanges();
+            }
+        }
+    }
 }

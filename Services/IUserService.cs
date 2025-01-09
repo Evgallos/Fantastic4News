@@ -15,5 +15,8 @@ namespace Fantastic4News.Services
 		public User GetUserById(string id);
 		public void updateUser(EmployeeRegisterViewModel user);
 		Task updateUserRole(EmployeeRegisterViewModel emp);
-	}
+		void DeleteUser(string id);
+
+
+    }
 }
