@@ -64,7 +64,7 @@ namespace Fantastic4News.Helper
             art.ContentSummary = art.Content.Substring(0, art.Content.IndexOf("."));
             art.CategoryId = _db.Categories.Where(c => c.Name == "International").Select(c=> c.Id).FirstOrDefault();
             art.UserId = _db.Users.Where(u => u.FirstName == "Fantastic").Select(u => u.Id).FirstOrDefault();
-            
+            art.IsComplete = true;
             articles.Add(art);
 
             Article art1 = new();
@@ -78,7 +78,7 @@ namespace Fantastic4News.Helper
             art1.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
             art1.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art1.EditorsChoice = true;
-
+            art1.IsComplete = true;
 
             articles.Add(art1);
 
@@ -92,7 +92,7 @@ namespace Fantastic4News.Helper
             art2.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
             art2.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art2.EditorsChoice = true;
-
+            art2.IsComplete = true;
             articles.Add(art2);
 
             Article art3 = new();
@@ -104,6 +104,7 @@ namespace Fantastic4News.Helper
             art3.DateStamp = DateTime.Now.AddDays(-1);
             art3.CategoryId = _db.Categories.Where(c => c.Name == "National").Select(c => c.Id).FirstOrDefault();
             art3.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
+            art3.IsComplete = true;
 
             articles.Add(art3);
 
@@ -117,6 +118,8 @@ namespace Fantastic4News.Helper
             art4.CategoryId = _db.Categories.Where(c => c.Name == "Local").Select(c => c.Id).FirstOrDefault();
             art4.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art4.EditorsChoice = true;
+            art4.IsComplete = true;
+
 
             articles.Add(art4);
 
@@ -129,6 +132,7 @@ namespace Fantastic4News.Helper
             art5.DateStamp = DateTime.Now;
             art5.CategoryId = _db.Categories.Where(c => c.Name == "Politics").Select(c => c.Id).FirstOrDefault();
             art5.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
+            art5.IsComplete = true;
 
             articles.Add(art5);
 
@@ -143,6 +147,7 @@ namespace Fantastic4News.Helper
             art6.CategoryId = _db.Categories.Where(c => c.Name == "Politics").Select(c => c.Id).FirstOrDefault();
             art6.UserId = _db.Users.Where(u => u.FirstName == "John").Select(u => u.Id).FirstOrDefault();
             art6.EditorsChoice = true;
+            art6.IsComplete = true;
 
             articles.Add(art6);
 
