@@ -4,14 +4,14 @@
 @{
 
 
-	//	Layout = "_Layout";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 
-	if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Customer")
-	{
-		Layout = "_CustomerLayout";
-	}
-	else
-	{
-		Layout = "_EmployeeLayout";
-	}
+	// if (HttpContextAccessor.HttpContext.Session.GetString("UserRole") == "Customer")
+	// {
+	// 	Layout = "_CustomerLayout";
+	// }
+	// else
+	// {
+	// 	Layout = "_EmployeeLayout";
+	// }
 }

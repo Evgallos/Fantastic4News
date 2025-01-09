@@ -124,7 +124,14 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
                     lastUser.LastLogin = DateTime.Now;
                     await _userManager.UpdateAsync(lastUser);
 
-                    _logger.LogInformation("User logged in.");
+                    if (_userManager.IsInRoleAsync(lastUser, "Admin").Result)
+						returnUrl = Url.Content("~/Admin");
+
+					else if (_userManager.IsInRoleAsync(lastUser, "Editor").Result)
+                        returnUrl = Url.Content("~/Editor");
+
+
+					_logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

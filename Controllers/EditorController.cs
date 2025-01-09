@@ -1,9 +1,12 @@
 ﻿using Fantastic4News.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Controllers
 {
+	[Authorize(Roles = "Editor")]
+
 	public class EditorController : Controller
 	{
 		private readonly IArticleService _articleService;
