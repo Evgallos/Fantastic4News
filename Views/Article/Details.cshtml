@@ -7,49 +7,56 @@
 @inject UserManager<User> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 
 
 
 }
 
 <div class="m-4 p-4" style="border:1px solid gray;  border-radius: 15px">
-    <div class="row">
-        <div class="col-4">
-            <span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
-        </div>
-        @if (User.IsInRole("Customer"))
-        {
-            <span>
-            <a asp-action="Like" asp-route-id="@Model.Like">Like</a>
-            </span>
-        }
-       @*  <div class="col-4 text-center">
-            Views: @Model.Views, Likes: <span id="likes">@Model.Like</span>
-        </div> *@
+	<div class="row">
+		<div class="col-4">
+			<span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
+		</div>
 
-        <div class="col-4 text-end">
-            @if ((User.IsInRole("Journalist") && (@Model.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
-            {
-                <span>
-                     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@Model.Id"> Delete </a>
-                </span>
-            }
-        </div>
-    </div>
-    <h1>@Model.HeadLine</h1>
-    <h4>Category: @Model.Category.Name</h4>
-    <img src="@Model.ImageLink" class="mb-3" style="border:1px solid gray; border-radius:10px" alt="@Model.LinkText" />
+		@*   <span>
+		<a asp-action="Like" asp-route-id="@Model.Like">Like</a>
+		</span> *@
+		<div class="col-4 text-center">
+			Views: @Model.Views
+		</div>
 
-    <p><b>@Model.ContentSummary</b></p>
+		<div class="col-4 text-end">
+			@if ((User.IsInRole("Journalist") && (@Model.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+			{
+				<span>
+					<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+					<a asp-action="Delete" asp-route-id="@Model.Id"> Delete </a>
+				</span>
+			}
+		</div>
+	</div>
+	<h1>@Model.HeadLine</h1>
+	<h4>Category: @Model.Category.Name</h4>
+	<img src="@Model.ImageLink" class="mb-3" style="border:1px solid gray; border-radius:10px" alt="@Model.LinkText" />
 
-    <p>@Model.Content</p>
+	<p><b>@Model.ContentSummary</b></p>
 
-    <button onclick="likeArticle(@Model.Id)">Like</button>
+	<p>@Model.Content</p>
+	<br />
+	@if (User.IsInRole("Customer"))
+	{
+		<div class="glass2 col-md-1">
+			<button type="button" class=" btn btn-pirmary" onclick="likeArticle(@Model.Id)"><i class="bi bi-hand-thumbs-up" style="font-size: 2rem;"></i></button>
+			<span id="likes">@Model.Like</span>
+		</div>
+		
 
-    <br /><br />
-    <a class="mt-5" asp-action="Index">Back to List</a>
+
+	}
+
+	<br /><br />
+	<a class="mt-5" asp-action="Index">Back to List</a>
 
 </div>
 

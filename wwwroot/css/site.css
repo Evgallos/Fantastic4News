@@ -307,3 +307,11 @@ footer {
     border-top-color: #0056b3; /* Change the arrow color */
         }
 /*-------*/
+
+/*custom modal*/
+.modal-custom {
+    position: absolute;
+    top: calc(100% + 10px); /* Adjust distance below the dropdown button */
+    left: 0;
+    right: 0;
+}
