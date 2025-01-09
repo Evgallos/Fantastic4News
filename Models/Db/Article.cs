@@ -32,14 +32,14 @@ namespace Fantastic4News.Models.Db
         public bool IsArhived { get; set; } = false;
 
 
-     //   public bool IsComplete { get; set; } = false;//complete button and to send the article to editor for approving
+       public bool IsComplete { get; set; } = false;//complete button and to send the article to editor for approving
       
 
         [Display(Name ="Editors Choice")]
         public bool EditorsChoice { get; set; } = false;
         public bool IsPublished { get; set; } = false;//when article is approved this is set as true 
 
-    //    public string? editorsComment { get; set; }// when its not approved ispublished remain false and adds editorscomment why its not approved
+        public string? editorsComment { get; set; }// when its not approved ispublished remain false and adds editorscomment why its not approved
         public ArticlePriority Priority { get; set; } = ArticlePriority.Low;
 
 		//Nav
