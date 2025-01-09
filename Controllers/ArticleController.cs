@@ -87,23 +87,23 @@ namespace Fantastic4News.Controllers
         }
 
         //this is for upload images
-        [HttpPost]
-        public IActionResult UploadImage(IFormFile imageFile)
-        {
+        //[HttpPost]
+        //public IActionResult UploadImage(IFormFile imageFile)
+        //{
 
-            if (imageFile == null || imageFile.Length == 0)
+        //    if (imageFile == null || imageFile.Length == 0)
 
-            {
+        //    {
 
-                return Content("File not selected");
+        //        return Content("File not selected");
 
-            }
+        //    }
 
-            _fileService.UploadFileToContainer(imageFile);
-            string imgurl = "https://fantasticfourstorage.blob.core.windows.net/articleimages/" + imageFile.FileName;
-            return Json(imgurl);
+        //    _fileService.UploadFileToContainer(imageFile);
+        //    string imgurl = "https://fantasticfourstorage.blob.core.windows.net/articleimages/" + imageFile.FileName;
+        //    return Json(imgurl);
 
-        }
+        //}
 
         [Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
@@ -129,32 +129,51 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public IActionResult Create(ArticleIndexVM vmObj)
         {
+            if (vmObj.Article.ImageFile == null || string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
+            {
+                ModelState.AddModelError("", "Please upload a valid image file.");
+                return View(vmObj);
+            }
+
             string uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
             string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
 
-            //if (!string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
-            //{
-
-            //    uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
-            //}
-
-            using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
+            try
             {
-                vmObj.Article.ImageFile.CopyTo(fileStream);
+                if (!Directory.Exists(uploadFolder))
+                {
+                    Directory.CreateDirectory(uploadFolder);
+                }
+
+                using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
+                {
+                    vmObj.Article.ImageFile.CopyTo(fileStream);
+                }
+
+                // Logic for sending image to Azure blob storage
+
+                _fileService.UploadFileToContainer(uniqueFilePath, uniqueFileName);
+
+                if (System.IO.File.Exists(uniqueFilePath))
+                {
+                    System.IO.File.Delete(uniqueFilePath);
+                    }
+
+                    vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
+
+                    // Create article
+
+                    _articleService.CreateArticle(vmObj.Article);
+
+                    return RedirectToAction(nameof(Index));
+                }
+
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error uploading the file: {ex.Message}");
+                return View(vmObj);
             }
-
-            // Logic for sending image to Azure blob storage
-
-            _fileService.UploadFileToContainer(vmObj.Article.ImageFile);
-
-            vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
-
-            // Adding address to blob storage into vmObj.article.ImageLink
-
-            _articleService.CreateArticle(vmObj.Article);
-
-            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int id)

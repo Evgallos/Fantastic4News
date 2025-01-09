@@ -31,7 +31,6 @@ namespace Fantastic4News.Services
 
 			BlobClient blobClient = containerClient.GetBlobClient(fileName);
 
-            // using (var stream = model.OpenReadStream())
             using (var stream = File.OpenRead(filePath))
             {
 

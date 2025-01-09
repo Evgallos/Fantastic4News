@@ -4,7 +4,8 @@ namespace Fantastic4News.Services
 {
 	public interface IFileService
 	{
-		void UploadFileToContainer(IFormFile file);
+        void UploadFileToContainer(string filePath, string fileName);
 
-	}
+
+    }
 }
