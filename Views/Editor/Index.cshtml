@@ -4,15 +4,16 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1></h1>
 
-<p>
-	<a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
 	<thead>
 		<tr>
 
+			<th>
+
+			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.HeadLine)
 			</th>
@@ -24,88 +25,106 @@
 			</th>
 
 			<th></th>
+			<th></th>
 		</tr>
 	</thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            var name = item.User.FirstName + " " + item.User.LastName;
-            <tr>
-                <td>
-                    @item.HeadLine
-                </td>
-                <td>
-                    @item.ContentSummary
-                </td>
-                <td>
-                    @name
-                </td>
-                <td>
-                    <a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id">Details</a> |
-                    <div>
-                        <br />
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Action
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#approveModal-@item.Id">Approve</a></li>
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#rejectModal-@item.Id">Reject</a></li>
-                            </ul>
-                        </div>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			var name = item.User.FirstName + " " + item.User.LastName;
+			<tr>
+				<td>
+					Article-@item.Id
+				</td>
+				<td>
+					@item.HeadLine
+				</td>
+				<td>
+					@item.ContentSummary
+				</td>
+				<td>
+					@name
+				</td>
+				<td>
+					<a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id">Details</a>
+				</td>
+				<td>
+					<div>
+						<br />
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Action
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#approveModal-@item.Id">Approve</a></li>
+								<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#rejectModal-@item.Id">Reject</a></li>
+							</ul>
 
-                        <!-- Approve Modal -->
-                        <div class="modal fade" id="approveModal-@item.Id" tabindex="-1" aria-labelledby="approveModalLabel-@item.Id" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="approveModalLabel-@item.Id">Set Publish Date</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form asp-action="ApproveArticle" method="post">
-                                            <div class="mb-3">
-                                                <input type="hidden" name="Id" value="@item.Id" />
-                                                <label for="publishDate-@item.Id" class="form-label">Publish Date</label>
-                                                <input type="date" class="form-control" id="publishDate-@item.Id" name="publishDate">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						</div>
 
-                        <!-- Reject Modal -->
-                        <div class="modal fade" id="rejectModal-@item.Id" tabindex="-1" aria-labelledby="rejectModalLabel-@item.Id" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="rejectModalLabel-@item.Id">Reason for Rejection</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form asp-action="RejectArticle" method="post">
-                                            
-                                            <div class="mb-3">
-                                                <input type="hidden" name="Id" value="@item.Id" />
-                                                <label for="rejectReason-@item.Id" class="form-label">Reason</label>
-                                                <textarea class="form-control" id="rejectReason-@item.Id" name="rejectReason" rows="3"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a asp-action="" asp-route-id="@item.Id">Action</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-   
-   
+						<!-- Approve Modal -->
+						<div class="modal fade" id="approveModal-@item.Id" tabindex="-1" aria-labelledby="approveModalLabel-@item.Id" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="approveModalLabel-@item.Id">Set Publish Date</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form asp-action="ApproveArticle" method="post">
+											<div>
+												<h4>Article-@item.Id</h4>
+											</div>
+											<div class="mb-3">
+
+												<input type="hidden" name="Id" value="@item.Id" />
+												<label for="publishDate-@item.Id" class="form-label">Publish Date</label>
+												<input type="date" class="form-control" id="publishDate-@item.Id" name="publishDate">
+											</div>
+											<div class="mb-3">
+												<label class="form-check-label" for="editorsChoice">
+														Editor's Choice
+												</label> &emsp;
+												<input type="checkbox" class="form-check-input" value=true name="editorsChoice"> 
+											</div>
+
+
+											<button type="submit" class="btn btn-primary">Submit</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Reject Modal -->
+						<div class="modal fade" id="rejectModal-@item.Id" tabindex="-1" aria-labelledby="rejectModalLabel-@item.Id" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="rejectModalLabel-@item.Id">Reason for Rejection</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form asp-action="RejectArticle" method="post">
+
+											<div class="mb-3">
+												<input type="hidden" name="Id" value="@item.Id" />
+												<label for="rejectReason-@item.Id" class="form-label">Reason</label>
+												<textarea class="form-control" id="rejectReason-@item.Id" name="rejectReason" rows="3"></textarea>
+											</div>
+											<button type="submit" class="btn btn-primary">Submit</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+
+
 
 </table>
 

@@ -21,14 +21,14 @@ namespace Fantastic4News.Controllers
 		}
 
         [HttpPost]
-        public IActionResult ApproveArticle(int id, DateTime publishDate)
+        public IActionResult ApproveArticle(int id, DateTime publishDate,bool editorsChoice)
         {
             var article = _articleService.GetArticleById(id);
             if (article != null)
             {
                 article.DateStamp = publishDate;
                 article.IsPublished = true;
-                
+                article.EditorsChoice = editorsChoice;                
                 _articleService.UpdateArticle(article);
             }
 
