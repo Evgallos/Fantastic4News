@@ -17,6 +17,8 @@ namespace Fantastic4News.Services
 		Task updateUserRole(EmployeeRegisterViewModel emp);
 		void DeleteUser(string id);
 
+		
+
 
     }
 }

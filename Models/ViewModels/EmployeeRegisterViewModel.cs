@@ -24,7 +24,8 @@ namespace Fantastic4News.Models.ViewModels
 		public string LastName { get; set; }=string.Empty;
 
 		[Display (Name="Date of Birth")]
-		public DateTime Dob { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime Dob { get; set; }
 		
 		[Display(Name = "Role")]
 		public string RoleName { get; set; }=string.Empty;
