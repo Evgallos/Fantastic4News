@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Fantastic4News.Models.Db.Article>
+
+    @using Microsoft.AspNetCore.Identity
+@using Fantastic4News.Models.Db
+
+@inject UserManager<User> _userManager
+@inject SignInManager<User> _signinManager
+
+<div class="container-fluid mb-3 text-center">
+
+	<div class="row">
+
+		@foreach (var item in Model)
+		{
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 me-4 mb-4">
+
+				<div class="card-container">
+					<!-- Evangelos - Card Front -->
+					<a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id">
+						<div class="card shadow-sm" data-id="@item.Id" style="border: 2px solid #ddd;">
+							<div class="card-face front">
+								<img src="@item.ImageLink" class="card-img-top img-fluid" alt="@item.HeadLine" style=" height:250px" />
+								<div class="card-body">
+									<!-- Evangelos - Card Title -->
+									<h4 class="card-title m-1">
+										@item.HeadLine
+									</h4>
+									<!-- Evangelos - Card Text -->
+									<p class="card-text ms-2">
+										- @item.User.FirstName @item.User.LastName;
+									</p>
+									<button type="button" class="speaker-icon" aria-label="Read this article aloud">
+										<i class="fa fa-volume-up"></i>
+									</button>
+								</div>
+
+						@* 		@if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+								{
+									<div class="card-footer">
+										<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+										<a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+									</div>
+								} *@
+
+
+
+							</div>
+
+
+
+						</div>
+
+					</a>
+
+				</div>
+
+			</div>
+
+
+		}
+
+	</div>
+
+</div>

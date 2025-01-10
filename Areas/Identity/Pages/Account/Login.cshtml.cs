@@ -129,6 +129,8 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
 
 					else if (_userManager.IsInRoleAsync(lastUser, "Editor").Result)
                         returnUrl = Url.Content("~/Editor");
+					else if (_userManager.IsInRoleAsync(lastUser, "Journalist").Result)
+						returnUrl = Url.Content("~/Journalist");
 
 
 					_logger.LogInformation("User logged in.");
