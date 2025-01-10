@@ -42,7 +42,7 @@ namespace Fantastic4News.Controllers
 
         public IActionResult Index()
         {
-            var articles = _articleService.GetArticlesWithJournalist().Where(a=>a.IsPublished==true).ToList();
+            var articles = _articleService.GetArticlesWithJournalist().Where(a=>a.IsPublished==true && a.DateStamp<=DateTime.Now).ToList();
 
             var cusIndexVm = new CustomerIndexViewModel()
             {

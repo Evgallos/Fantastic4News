@@ -29,7 +29,18 @@
                     </tr>
                     <tr>
                         <td>DOB:</td>
-                        <td>@Model.Dob</td>
+                        @{
+                            if (Model.Dob != null)
+                            {
+                                DateTime stringDate = (DateTime)@Model.Dob;
+                                string? outputDate = stringDate.ToString("yyyy-MM-dd");
+
+                                <td>@outputDate</td>
+                            }
+
+                        }
+
+                        
                     </tr>
                     <tr>
                         <td>Role:</td>
