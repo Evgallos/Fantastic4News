@@ -31,8 +31,10 @@ namespace Fantastic4News.Controllers
             {
                 article.DateStamp = publishDate;
                 article.IsPublished = true;
-                article.EditorsChoice = editorsChoice;                
+                article.EditorsChoice = editorsChoice;
+                article.editorsComment = "";
                 _articleService.UpdateArticle(article);
+
             }
 
             return RedirectToAction("Index");

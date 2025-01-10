@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Fantastic4News.Models.Db.Article>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>My List of New Articles</h1>
+
+
+<table class="table">
+	<thead>
+		<tr>
+
+			<th>
+
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.HeadLine)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ContentSummary)
+			</th>
+
+			<th>
+				@Html.DisplayNameFor(model => model.DateStamp)
+			</th>
+
+			<th>
+				Status
+			</th>
+			<th>
+				Editor's Comment
+			</th>
+			<th></th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			var name = item.User.FirstName + " " + item.User.LastName;
+			<tr>
+				<td>
+					Article-@item.Id
+				</td>
+				<td>
+					@item.HeadLine
+				</td>
+				<td>
+					@item.ContentSummary
+				</td>
+
+
+				@{
+					if (item.IsPublished == false)
+					{
+						<td>-</td>
+					}
+					else
+					{
+						<td>@item.DateStamp</td>
+					}
+
+				}
+
+				@{
+					if (item.IsPublished == false && item.IsComplete == true)
+					{
+						<td>Pending</td>
+					}
+					
+					else if(item.IsPublished==false && item.IsComplete==false && item.editorsComment!=null)
+					{
+						<td>Rejected</td>
+
+					}
+					else if(item.IsComplete==false && item.editorsComment==null)
+					{
+						<td>-</td>
+					}
+					else if (item.IsPublished ==true)
+					{
+						<td>Approved</td>
+					}
+				}
+
+				<td>@item.editorsComment</td>
+				<td>
+					<a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id">Details</a> &ensp;
+					
+						@if(item.IsComplete == false)
+						{						
+							<a asp-action = "Edit" asp-controller = "Article" asp-route-id = "@item.Id" > Edit </a >
+						}
+
+					
+				</td>
+				<td>
+					<div>
+						@if (item.IsComplete == false)
+						{
+							<a class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#approveModal-@item.Id">Editors Approval</a>
+
+						}
+
+						<!-- Approve Modal -->
+						<div class="modal fade" id="approveModal-@item.Id" tabindex="-1" aria-labelledby="approveModalLabel-@item.Id" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="approveModalLabel-@item.Id">Ask for Editors Permission</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form asp-action="ForApproveArticle" method="post">
+											<div>
+												<h4>Article-@item.Id</h4>
+											</div>
+
+											<input type="hidden" name="Id" value="@item.Id" />
+
+											<div class="mb-3">
+												<p>Article is Complete?</p>
+
+												<label class="form-check-label" for="isComplete">
+													Yes
+												</label> &emsp;
+												<input type="checkbox" class="form-check-input" value=true name="isComplete">
+											</div>
+
+
+											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="button" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+
+
+
+</table>
+

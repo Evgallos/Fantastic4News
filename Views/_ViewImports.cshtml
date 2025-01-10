@@ -1,4 +1,11 @@
 ﻿@using Fantastic4News
 @using Fantastic4News.Models
+
+@using Microsoft.AspNetCore.Identity
+@using Fantastic4News.Models.Db
+
+@inject UserManager<User> _userManager
+@inject SignInManager<User> _signinManager
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *,  Fantastic4News
