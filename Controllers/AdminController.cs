@@ -109,7 +109,23 @@ namespace Fantastic4News.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
 
+        public IActionResult DetailUser(string id)
+        {
+            var user = _ius.GetUserById(id);
+            var employee = new EmployeeRegisterViewModel
+            {
+                FirstName = user.FirstName,
+                LastName= user.LastName,
+                Email = user.Email,
+                RoleName = _ius.FindRole(user).Result,
+                Id = user.Id
+
+            };
+
+            return View(employee);
+        }
 
     }
 }
