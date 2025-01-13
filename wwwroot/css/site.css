@@ -11,7 +11,8 @@ body {
 
 /* Background Gradient (No stripes, smooth transition from cyan to white on hover) - Evangelos */
 body {
-    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));
+    /*background: */ /*linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));*/
+    background: linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(250, 120, 171, 0.5));
     background-size: cover;
 }
 
@@ -20,13 +21,13 @@ body {
 .card {
     background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white - Evangelos */
     backdrop-filter: blur(10px); /* Glass effect - Evangelos */
-    border-radius: 8px;
+    border-radius: 10px;
     transition: background-color 0.8s ease, transform 0.3s ease; /* Slower color transformation - Evangelos */
-    border: 2px solid #ddd;
     margin-bottom: 20px;
     height: 100%;
-    width:98%;
+    width:95%;
     margin: auto;
+    
 }
 
     /* Evangelos - Hover effect for cards (Color transition from white to grey, then to orange) */
@@ -39,6 +40,7 @@ body {
 .card {
     background-color: rgba(255, 255, 255, 1); /* Starts as white - Evangelos */
     transition: background-color 0.8s ease;
+
 }
 
     .card:hover {
@@ -113,7 +115,7 @@ body {
     }
 
     .logo-title {
-        font-size: 2rem;           
+        font-size: 2rem;
     }
 }
 
@@ -131,12 +133,12 @@ body {
 /* Article Layout Adjustments - Evangelos */
 .container {
     border: none !important;
-    padding: 0 !important;
+    padding: 20px !important;
 }
 
 .row {
     margin: 0 !important;
-    padding: 0 !important;
+    padding: 10px !important;
 }
 
 .card, .card-body, .col-lg-3, .col-md-4, .col-sm-6 {
@@ -203,9 +205,9 @@ footer {
 /* -Evangelos - Style for the category container with borders and shadows */
 .category-container {
     border: 2px solid #ddd; 
-    border-radius: 8px; 
+    border-radius: 10px; 
     padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
     transition: box-shadow 0.3s ease; 
 }
 
@@ -243,7 +245,7 @@ footer {
 /* - Evangelos- Modal body styling */
 .modal-body {
     padding: 10px;
-    background-color: /*#F8D7B9;*/ /*#D8BFD8;*/ rgba(173, 216, 230, 0.4);
+    background-color: /*#F8D7B9;*/ /*#D8BFD8;*/ /*rgba(173, 216, 230, 0.4);*/ whitesmoke;
 }
 
 /* -Evangelos - Modal footer styling */
@@ -315,3 +317,4 @@ footer {
     left: 0;
     right: 0;
 }
+

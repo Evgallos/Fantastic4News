@@ -49,9 +49,9 @@
                 <p class="card-text ms-2">
                     - @Model.User.FirstName @Model.User.LastName;
                 </p>
-                <button  type="button" class="speaker-icon" aria-label="Read this article aloud">
+                @* <button  type="button" class="speaker-icon" aria-label="Read this article aloud">
                     <i class="fa fa-volume-up"></i>
-                </button>
+                </button> *@
             </div>
                 @{
                     @if (User.IsInRole("Journalist") && (_userManager.GetUserId(User) == Model.UserId) || (User.IsInRole("Admin")))
