@@ -38,12 +38,21 @@ namespace Fantastic4News
 
 
             builder.Services.AddControllersWithViews();
+
 			builder.Services.AddSession();
+
             builder.Services.AddHttpContextAccessor(); // Register IHttpContextAccessor
+
 			builder.Services.AddDistributedMemoryCache(); // Required for session state
 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookieValue = "true";
+            });
 
-			builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
@@ -67,13 +76,17 @@ namespace Fantastic4News
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseCookiePolicy();
+
             app.UseSession(); // Add this line to enable session middleware
 
             app.UseRouting();
 
             app.UseAuthorization();
-            //app.UseAuthentication();
+
 
             app.MapControllerRoute(
                 name: "default",
