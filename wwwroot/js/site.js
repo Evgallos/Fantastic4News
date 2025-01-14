@@ -2,10 +2,6 @@
 // Coockie consent at _Layout.cshtml
 
 var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-//button.addEventListener("click", function () {
-//    document.cookie = button.dataset.cookieString;
-//    document.getElementById("cookieConsent").remove("show");
-//}, false);
 
 function SaveConsentCoockie() {
     document.cookie = button.dataset.cookieString;
