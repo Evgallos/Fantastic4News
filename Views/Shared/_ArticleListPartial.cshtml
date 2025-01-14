@@ -1,117 +1,4 @@
-﻿@* @* @* @* @model IEnumerable<Fantastic4News.Models.Db.Article>
-
-@using Microsoft.AspNetCore.Identity
-@using Fantastic4News.Models.Db
-
-@inject UserManager<User> _userManager
-@inject SignInManager<User> _signinManager
-
-<style>
-    table {
-        font-family: 'Times New Roman', Times, serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 1px solid #000000;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #dddddd;
-    }
-</style>
-
-<table class="">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LinkText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HeadLine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContentSummary)
-            </th>
-            @*   <th>
-                @Html.DisplayNameFor(model => model.ImageLink)
-            </th> *@
-@* <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-
-            @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin")){
-                <th>
-                    @Html.DisplayNameFor(model => model.IsArhived)
-                </th>
-            }
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @{
-                        if (item.DateStamp != null)
-                        {
-                            DateTime stringDate = (DateTime)item.DateStamp;
-                            string? outputDate = stringDate.ToString("yyyy-MM-dd HH:mm");
-
-                            <span>@outputDate</span>
-                        }
-
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LinkText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HeadLine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContentSummary)
-                </td>
-
-                @*  <td>
-                    @Html.DisplayFor(modelItem => item.ImageLink)
-                </td> *@
-@* <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin")){
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsArhived)
-                    </td>
-                }
-
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id"> Details </a>
-
-                    @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
-                    {
-                        <span>
-                            | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
-                        </span>
-                    }
-
-                </td>
-            </tr> *@
-@*     }
-    </tbody>
-</table>
- *@
-
+﻿
 @model IEnumerable<Fantastic4News.Models.Db.Article>
 
 @using Microsoft.AspNetCore.Identity
@@ -122,9 +9,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 <style>
-    /*I used here so will be more easy to make changes instead looking all the CSS code, we can change the like as we want i use one simple Unicode hand
-        -Evangelos
-    */
+    /*List Article View CSS Bellow Keep this CSS code in here, if transfer it to CSS file then the home Page
+    will effect also because i use the same names (card, container and etc i will update the names but for now keep it here.*/
     body {
         font-family: 'Times New Roman', Times, serif;
         background-color: #f4f4f9;
@@ -135,8 +21,9 @@
     }
 
     .article-image {
-        width: 90%;
+        width: 100%;
         height: auto;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .card-container {
@@ -147,14 +34,11 @@
 
     .card {
         width: 100%;
-        width: 900px; /* Larger width for cards - Evangelos */
-        margin: 15px;
-    }
-
-    .second-image {
-        width: 60%; /* Make second image smaller -Evangelos */
-        margin: 0 auto; /* Center align the second image -Evangelos */
-        padding-inline-end: 5px;
+        max-width: 900px; /* Card width - Larger than default -Evangelos*/
+        margin: 15px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 2px white;
+        border-radius: 10px;
     }
 
     .card-body {
@@ -163,8 +47,65 @@
 
     .card-footer {
         padding: 10px;
+        text-align: right;
     }
 
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .small-text {
+        font-size: 0.85rem;
+        color: #777;
+    }
+
+    .date-journalist {
+        font-size: 0.85rem;
+        color: #aaa;
+    }
+
+    .article-card {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+        .article-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+    .article-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .like-button {
+        margin-top: 10px;
+    }
+
+    /* Responsive Design */
+
+    .article-card {
+        flex-direction: column;
+        max-width: 767px;
+    }
+
+    .article-content {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 767px;
+    }
 </style>
 
 <div class="container content-wrapper">
@@ -173,55 +114,41 @@
         {
             <div class="card article-card">
                 <div class="row no-gutters">
-                    <div class="col-md-6">
-                        <img src="@item.ImageLink" alt="Article Image" class="article-image card-img">
+                    <div class="col-md-4">
+                        <img src="@item.ImageLink" alt="Article Image" class="article-image">
                     </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="article-content">
                             <h5 class="card-title">@item.HeadLine</h5>
-                            <p class="card-text"><strong>Category:</strong> @item.Category.Name</p>
+                            <p class="card-text"><strong>Category:</strong><i>@item.Category.Name</i></p>
                             <p class="card-text">@item.ContentSummary</p>
-                            <p class="card-text">@Html.Raw(item.Content.Substring(0, item.Content.IndexOf("</p>", 0) + 4))</p>
+                            <p class="card-text">@Html.Raw(item.Content.Substring(0, item.Content.IndexOf("</p>", 0) + 4)) </p>
+                            <div>
+                                <button class="btn btn-primary like-button" alt="Button Like Article">👍</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Second Image and Additional Content -Evangelos -->
-                <div class="row no-gutters">
-                    <div class="col-md-6 order-md-2">
-                        <img src="@item.ImageLink" alt="Second Article Image" class="second-image card-img">
+            <!-- Actions (Details, Edit, Delete) -Evangelos -->
+            <div class="card-footer text-center">
+                @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin"))
+                {
+                    <div>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary effect-border">Details</a>
+                        @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+                        {
+                            <span>
+                                | <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning effect-border">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger effect-border">Delete</a>
+                            </span>
+                        }
                     </div>
-                    <div class="col-md-6 order-md-1">
-                        <div class="card-body">
-                            <p>@Html.Raw(item.Content.Substring(item.Content.IndexOf("</p>", 0) + 4))</p>
-                            <p>@Html.Raw(item.Content.Substring(item.Content.IndexOf("</p>", 0) + 4))</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer mt-3 mb-0 align-content-md-center" style="box-shadow:10px;">
-                    <button class="btn article-button btn-primary rounded align-content-center" style="box-shadow:5px;"alt="Button Like Article">👍</button>
-                </div>
-
-                <!-- Actions (Details, Edit, Delete) -Evangelos -->
-                <div class="card-footer text-center">
-                    @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin"))
-                    {
-                        <div>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary effect-border">Details</a>
-                            @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
-                            {
-                                <span>
-                                    | <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning effect-border">Edit</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger effect-border">Delete</a>
-                                </span>
-                            }
-                        </div>
-                    }
-                </div>
+                }
             </div>
         }
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
