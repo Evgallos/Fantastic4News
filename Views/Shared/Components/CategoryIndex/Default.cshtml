@@ -3,5 +3,5 @@
 
 @foreach (Category category in Model)
 {
-    <a class="btn btn-sm btn-dark mb-2 mx-1" asp-controller="Article" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a>
+    <a class="btn btn-md btn-light mb-2 mx-1 shadow-btn" asp-controller="Article" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a>
 }
