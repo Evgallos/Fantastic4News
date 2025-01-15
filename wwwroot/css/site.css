@@ -12,7 +12,7 @@ body {
 /* Background Gradient (No stripes, smooth transition from cyan to white on hover) - Evangelos */
 body {
     /*background: */ /*linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));*/
-    background: linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(250, 120, 171, 0.5));
+    background: repeating-linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(77, 39, 35, 0,60)); /*linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(250, 120, 171, 0.5))*/
     background-size: cover;
 }
 
@@ -370,7 +370,7 @@ footer {
 }
 
 /* Base styles for the box - Evangelos */
-.animated-box {
+/*.animated-box {
     transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
@@ -378,10 +378,10 @@ footer {
         box-shadow: 0px 0px 20px rgba(245, 250, 255, 0.6);
         transform: translateX(5px);
         animation: shake 0.3s ease; 
-    }
+    }*/
 
 /* Keyframes for shake effect -Evangelos*/
-@keyframes shake {
+/*@keyframes shake {
     0% {
         transform: translateX(5px);
     }
@@ -401,4 +401,4 @@ footer {
     100% {
         transform: translateX(0);
     }
-}
+}*/
