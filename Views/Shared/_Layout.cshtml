@@ -40,9 +40,15 @@
                     </h1>
                 </a>
 
+
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					
+					<ul class="navbar-nav flex-grow-1">
+
                 <div class="border-white animated-box" style="height:100px; position:absolute; top:5px; left:65%; border-radius:8px; border:solid 1px white; box-shadow:5px 5px 10px rgba(254,254,255,0.1);">
-                    <img class="img-fluid h-100 w-100 rounded-3" style="image-resolution:from-image;" src="/css/Images/weather.JPG" alt="Weather Informations Picture weather sun & clouds" />
+					@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
                 </div>
+
 
                 @* <div class="border-white" style=" height:100px; position:absolute; top:5px; left:65%; border-radius:8px; border:solid 1px white; box-shadow:5px 5px 10px rgba(254,254,255,0.1);">
                     <img class="img-fluid h-100 w-100 rounded-3" style="image-resolution:from-image;" src="/css/Images/weather.JPG" alt="Weather Informations Picture weather sun & clouds" />
@@ -92,10 +98,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Home</a>
                                 </li>
                             }
+					
 
                         }
 
                     </ul>
+
 
                     <partial name="_LoginPartial" />
                 </div>

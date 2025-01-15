@@ -91,7 +91,16 @@
 
 
 <div class="my-3">
-    <a asp-action="Index">Back to List</a>
+    @{
+        if (User.IsInRole("Journalist"))
+        {
+            <a class="mt-5" asp-controller="Journalist" asp-action="Index">Back to List</a>
+        }     
+        else
+        {
+            <a class="mt-5" asp-action="Index">Back to List</a>
+        }
+    }
 </div>
 
 @section Scripts {
