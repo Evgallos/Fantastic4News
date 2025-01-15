@@ -48,13 +48,28 @@
 			<button type="button" class=" btn btn-pirmary" onclick="likeArticle(@Model.Id)"><i class="bi bi-hand-thumbs-up" style="font-size: 2rem;"></i></button>
 			<span id="likes">@Model.Like</span>
 		</div>
-		
+
 
 
 	}
 
 	<br /><br />
-	<a class="mt-5" asp-action="Index">Back to List</a>
+	@{
+		if (User.IsInRole("Journalist"))
+		{
+			<a class="mt-5" asp-controller="Journalist" asp-action="Index">Back to List</a>
+
+		}
+		else if (User.IsInRole("Editor"))
+		{
+			<a class="mt-5" asp-controller="Editor" asp-action="Index">Back to List</a>
+		}
+		else
+		{
+			<a class="mt-5" asp-action="Index">Back to List</a>
+
+		}
+	}
 
 </div>
 

@@ -49,8 +49,14 @@ namespace Fantastic4News
             builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IFileService, FileService>();
+            builder.Services.AddScoped<IApiService, ApiService>();
 
 			builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+            builder.Services.AddHttpClient("forecast", config =>
+            {
+                config.BaseAddress = new(builder.Configuration["WeatherAPIAddressLex"]);
+            });
 
 			var app = builder.Build();
 
