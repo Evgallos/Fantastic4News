@@ -10,5 +10,8 @@ namespace Fantastic4News.Services
 
 
 		Category GetCategoryById(int id);
+
+        public void CreateCategories(Category cate);
+
     }
 }
