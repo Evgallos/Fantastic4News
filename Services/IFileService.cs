@@ -6,6 +6,6 @@ namespace Fantastic4News.Services
 	{
         void UploadFileToContainer(string filePath, string fileName);
 
-
+        void UploadFileToContainer2(string fileName, FileStream stream);
     }
 }

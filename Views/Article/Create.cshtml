@@ -55,7 +55,7 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="Article.ImageFile" class="control-label"></label>
-                    <input asp-for="Article.ImageFile" type="file" class="form-control" />
+                    <input asp-for="Article.ImageFile" type="file" class="form-control" accept=".png, .jpg, .jpeg, .gif" />
                     <span asp-validation-for="Article.ImageFile" class="text-danger"></span>
                 </div>
                 <br />

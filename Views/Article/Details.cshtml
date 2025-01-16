@@ -40,7 +40,7 @@
 
 	<p><b>@Model.ContentSummary</b></p>
 
-	<p>@Model.Content</p>
+	<p>@Html.Raw(Model.Content)</p>
 	<br />
 	@if (User.IsInRole("Customer"))
 	{
