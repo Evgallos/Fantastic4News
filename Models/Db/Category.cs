@@ -10,6 +10,6 @@ namespace Fantastic4News.Models.Db
         public string Name { get; set; }=string.Empty;
 
         //Nav
-        public IEnumerable<Article> Articles { get; set; }
+        public IEnumerable<Article>? Articles { get; set; }
     }
 }
