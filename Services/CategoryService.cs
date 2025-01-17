@@ -11,6 +11,7 @@ namespace Fantastic4News.Services
 
         private readonly ApplicationDbContext _db;
 
+
         public CategoryService(ApplicationDbContext db)
         {
             _db = db;
@@ -40,7 +41,16 @@ namespace Fantastic4News.Services
             _db.Categories.Add(cate);
             _db.SaveChangesAsync();
         }
-
+        public void  UpdateCategories(Category category)
+        {
+            _db.Categories.Update(category);
+            _db.SaveChanges();
+        }
+        public void RemoveCategories(Category category)
+        {
+            _db.Remove(category);
+            _db.SaveChanges();
+        }
 
     }
 }

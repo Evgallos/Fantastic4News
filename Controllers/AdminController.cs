@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Fantastic4News.Controllers
 {
@@ -158,18 +160,61 @@ namespace Fantastic4News.Controllers
                     ModelState.AddModelError("Name", "Category already exists.");
                     return View(category);
                 }
-               
-                _ics.CreateCategories(category);
+
+                _ics.CreateCategories(category);//
+
+            }
+            return RedirectToAction("Index");//
+
+        }
+
+        public IActionResult ViewCategories()
+        {
+            var category = _ics.GetCategories();
+            return View(category);
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            var cate = _ics.GetCategoryById(id);
+            return View(cate);
+        }
+        [HttpPost]
+        public IActionResult EditCategory(Category category)
+        {
+            _ics.UpdateCategories(category);
+            return RedirectToAction("ViewCategories");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = _ics.GetCategoryById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+        [HttpPost]
+        public IActionResult DeleteCategoryConfirmed(int id)
+        {
+            var category =  _ics.GetCategoryById(id);
+           
+            if (category != null)
+            {
+                if (!category.Articles.IsNullOrEmpty() && category.Articles.Any(a => a.CategoryId == id)) 
+                {
+                    ModelState.AddModelError("Name", "You can not delete that.");
+
+                    return RedirectToAction("DeleteCategory",id);
+                }
+
+                _ics.RemoveCategories(category);
                
             }
             return RedirectToAction("Index");
-                
-        }
-
-        public async Task<IActionResult> ViewCategories(string Id)
-        {
-            var category = await _context.Categories.ToListAsync();
-            return View(category);
-        }
+        } 
     }
 }
