@@ -143,7 +143,7 @@ namespace Fantastic4News.Controllers
                 /// Read from file
                 using var image = new MagickImage(uniqueFilePath);
 
-                var size = new MagickGeometry(600, 400);
+                var size = new MagickGeometry(900, 500);
                 size.IgnoreAspectRatio = true;
 
                 image.Resize(size);
