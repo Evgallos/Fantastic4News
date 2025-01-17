@@ -3,14 +3,17 @@ using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Fantastic4News.Models.Db;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using ImageResizer;
 using Microsoft.AspNetCore.Authorization;
-
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Fantastic4News.Models.ViewModels;
-
+using System.Drawing.Imaging;
+using System.Drawing;
+using System;
+using System.IO;
+using ImageMagick;
 
 
 namespace Fantastic4News.Controllers
@@ -86,25 +89,6 @@ namespace Fantastic4News.Controllers
             return View(obj);
         }
 
-        //this is for upload images
-        //[HttpPost]
-        //public IActionResult UploadImage(IFormFile imageFile)
-        //{
-
-        //    if (imageFile == null || imageFile.Length == 0)
-
-        //    {
-
-        //        return Content("File not selected");
-
-        //    }
-
-        //    _fileService.UploadFileToContainer(imageFile);
-        //    string imgurl = "https://fantasticfourstorage.blob.core.windows.net/articleimages/" + imageFile.FileName;
-        //    return Json(imgurl);
-
-        //}
-
         [Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
         {
@@ -146,28 +130,44 @@ namespace Fantastic4News.Controllers
                     Directory.CreateDirectory(uploadFolder);
                 }
 
+                // Save image to folder
+
                 using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
                 {
                     vmObj.Article.ImageFile.CopyTo(fileStream);
+
                 }
+
+                // ImageMagick 
+
+                /// Read from file
+                using var image = new MagickImage(uniqueFilePath);
+
+                var size = new MagickGeometry(900, 500);
+                size.IgnoreAspectRatio = true;
+
+                image.Resize(size);
+                image.Write("tempImage.JPG");
+
+                FileStream newStream = new FileStream("tempImage.JPG", FileMode.Open);
 
                 // Logic for sending image to Azure blob storage
 
-                _fileService.UploadFileToContainer(uniqueFilePath, uniqueFileName);
+                _fileService.UploadFileToContainer2(uniqueFileName, newStream);
 
                 if (System.IO.File.Exists(uniqueFilePath))
                 {
                     System.IO.File.Delete(uniqueFilePath);
-                    }
-
-                    vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
-
-                    // Create article
-
-                    _articleService.CreateArticle(vmObj.Article);
-
-                    return RedirectToAction(nameof(Index));
                 }
+
+                vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
+
+                // Create article
+
+                _articleService.CreateArticle(vmObj.Article);
+
+                return RedirectToAction(nameof(Index));
+            }
 
             catch (Exception ex)
             {
@@ -239,6 +239,6 @@ namespace Fantastic4News.Controllers
         }
 
 
-      
+
     }
 }
