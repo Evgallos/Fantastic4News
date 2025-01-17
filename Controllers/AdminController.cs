@@ -1,23 +1,30 @@
-﻿using Fantastic4News.Models.Db;
+﻿using Fantastic4News.Data;
+using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fantastic4News.Controllers
 {
-	[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 
-	public class AdminController : Controller
+    public class AdminController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly IUserService _ius;
+        private readonly ICategoryService _ics;
+
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager)
+        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ICategoryService ics)
         {
+            _context = context;
             _ius = ius;
+            _ics = ics;
             _roleManager = roleManager;
         }
         public IActionResult Index()
@@ -28,29 +35,29 @@ namespace Fantastic4News.Controllers
             {
                 var employee = new EmployeesWithRoleViewModel
                 {
-                    EmployeeName=user.FirstName+" "+user.LastName,
-                    Email=user.Email,
-                    Role=_ius.FindRole(user).Result,
-                    empId=user.Id
-                   
+                    EmployeeName = user.FirstName + " " + user.LastName,
+                    Email = user.Email,
+                    Role = _ius.FindRole(user).Result,
+                    empId = user.Id
+
                 };
-                if(employee.Role!="Customer")
+                if (employee.Role != "Customer")
                 {
-                employeeswithrole.Add(employee);
+                    employeeswithrole.Add(employee);
 
                 }
             }
-            return View(employeeswithrole.OrderByDescending(e=>e.EmployeeName));
+            return View(employeeswithrole.OrderByDescending(e => e.EmployeeName));
 
         }
-        	
 
-	    public IActionResult LoadRegisterComponent()
-		{
-			return ViewComponent("RegisterEmployee");
-		}
 
-		[HttpPost]
+        public IActionResult LoadRegisterComponent()
+        {
+            return ViewComponent("RegisterEmployee");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> EmployeeRegister(EmployeeRegisterViewModel model)
         {
             var user = new User
@@ -60,16 +67,16 @@ namespace Fantastic4News.Controllers
                 Email = model.Email,
                 DOB = model.Dob,
                 UserName = model.Email,
-                EmailConfirmed=true,
-                CreatedAt= DateTime.Now,
+                EmailConfirmed = true,
+                CreatedAt = DateTime.Now,
             };
-            var res=await _ius.CreateEmployee(user,model.Password);
+            var res = await _ius.CreateEmployee(user, model.Password);
             if (res.Succeeded)
             {
                 var role = model.RoleName;
                 if (model.RoleName != null)
                 {
-                   await _ius.AssigneRoleToUsers(user, role);
+                    await _ius.AssigneRoleToUsers(user, role);
                 }
 
                 return RedirectToAction("Index", "Admin");
@@ -77,18 +84,18 @@ namespace Fantastic4News.Controllers
             return RedirectToAction("Index", "Admin");
 
         }
-		public IActionResult LoadEditComponent(string empId)
-		{
-			return ViewComponent("EditEmployee", new { empId = empId });
-		}
-	
+        public IActionResult LoadEditComponent(string empId)
+        {
+            return ViewComponent("EditEmployee", new { empId = empId });
+        }
+
 
         [HttpPost]
         public IActionResult EditEmployee(EmployeeRegisterViewModel emp)
         {
-			_ius.updateUser(emp);
-			return Redirect("index");
-		}
+            _ius.updateUser(emp);
+            return Redirect("index");
+        }
 
 
         [HttpGet]
@@ -120,7 +127,7 @@ namespace Fantastic4News.Controllers
             var employee = new EmployeeRegisterViewModel
             {
                 FirstName = user.FirstName,
-                LastName= user.LastName,
+                LastName = user.LastName,
                 Email = user.Email,
                 RoleName = _ius.FindRole(user).Result,
                 Id = user.Id
@@ -130,5 +137,39 @@ namespace Fantastic4News.Controllers
             return View(employee);
         }
 
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Create(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+
+                bool exists = _context.Categories.Any(c => c.Name.ToLower() == category.Name.ToLower());
+                if (exists)
+                {
+                    ModelState.AddModelError("Name", "Category already exists.");
+                    return View(category);
+                }
+               
+                _ics.CreateCategories(category);
+               
+            }
+            return RedirectToAction("Index");
+                
+        }
+
+        public async Task<IActionResult> ViewCategories(string Id)
+        {
+            var category = await _context.Categories.ToListAsync();
+            return View(category);
+        }
     }
 }
