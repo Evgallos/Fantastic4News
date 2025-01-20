@@ -14,32 +14,7 @@ namespace Fantastic4News.Services
         }
 
 
-
-		public void UploadFileToContainer(string filePath, string fileName)
-		{
-
-			string connectionString = _configuration["AzureBlobConnectionString"];
-
-			string containerName = _configuration["AzureBlobContainerName"];
-
-			BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-
-			BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-
-			// Create the container if it does not exist
-
-			containerClient.CreateIfNotExistsAsync();
-
-			BlobClient blobClient = containerClient.GetBlobClient(fileName);
-
-            using (var stream = File.OpenRead(filePath))
-            {
-				blobClient.Upload(stream, true);
-			}
-		}
-
-
-        public void UploadFileToContainer2(string fileName, FileStream stream)
+        public void UploadFileToContainer(string fileName, FileStream stream)
         {
 
             string connectionString = _configuration["AzureBlobConnectionString"];

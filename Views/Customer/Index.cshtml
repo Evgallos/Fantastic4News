@@ -1,5 +1,6 @@
 ﻿@model Fantastic4News.Models.ViewModels.CustomerIndexViewModel
 
+@using Fantastic4News.Models.Api
 @using Fantastic4News.Models.Db
 
 
@@ -14,8 +15,6 @@
         articles.Add(item);
     }
 }
-
-
 
 <!-- Button to Show Articles placed on the right side with shadow effect - Evangelos -->
 <div class="row mb-4 justify-content-end">
@@ -51,8 +50,8 @@
             </div>
 
             <!-- Evangelos - Center Article (Middle) -->
-            <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex flex-column h-100" style="border: none;">                
-                    <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />               
+            <div class="col-lg-6 col-md-4 col-sm-12 mb-3 d-flex flex-column h-100" style="border: none;">
+                <partial name="_ArticlePartialDetailMiddlePartial" model="@articles[2]" />
             </div>
 
             <!-- Evangelos - Right Side Articles -->
@@ -94,20 +93,22 @@
         </div>
 
         <div class="row mb-2">
-            @{int i =0;
+            @{
+                int i = 0;
                 @foreach (var item in Model.EditorsChoice)
                 {
                     i++;
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      
-                        <div class="row">                        
+
+                        <div class="row">
                             <partial name="_ArticlePartialDetailPartial" model="item" />
                         </div>
                         <h2 class="text-info-emphasis number-circle">@i</h2>
                     </div>
-                }}
-            </div>
+                }
+            }
         </div>
+    </div>
 </body>
 
 <!-- Evangelos - Footer placed outside the article sections -->
