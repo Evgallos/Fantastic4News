@@ -6,5 +6,6 @@ namespace Fantastic4News.Services
     {
         Task<WeatherForecast> GetForecast(string chosencity);
 
+        Task<Namnsdagar> GetTodaysInfo();
     }
 }
