@@ -12,72 +12,79 @@
 }
 
 <div class="container align-content-lg-center p-4 shadow-lg rounded" style="border:1px solid #ddd;">
-    <h1 style="text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1); text-align:center;">@Model.HeadLine</h1>
-    <h4>Category: @Model.Category.Name</h4>
-    <div class="row mb-4">
-        <!-- Left Column: Large Image -Evangelos-->
-        <div class="col-md-4">
-            <img src="@Model.ImageLink" class="img-fluid shadow-sm rounded" alt="@Model.LinkText" />
-        </div>
-
-        <!-- Right Column: First Paragraph - Evangelos -->
-        <div class="col-md-8">
-            <p><b>@Model.ContentSummary</b></p>
-            <p>@Model.Content</p>
-        </div>
-    </div>
-
-    <div class="row mb-6">
-        <!-- Left Column: Two Paragraphs -Evangelos-->
-        <div class="col-md-9">
-            <p>@Model.Content</p>
-            <p>@Model.Content</p>
-        </div>
-
-        <!-- Right Column: Smaller Image - Evangelos-->
-        <div class="col-md-3" style="text-transform:capitalize; text-align:center;">
-            <h4>Official Sponsors</h4>
-            <p><i>Online Game RPG Texter Commercial</i></p>
-            <img src="~/css/images/81dh9heqnjl.png" class="img-fluid shadow-sm rounded shadow-btn" style="max-width: 80%;" alt="Official Sponsor Torn-City" />
-            <p><strong><i>Create your character</i></strong></p>
-
-            <!-- Button Linking to Torn City Comercial -Evangelos-->
-            <div class="mt-0 text-center">
-                <a href="https://www.torn.com/" target="_blank" class="btn btn-primary btn-sm shadow-sm">Visit Torn City</a>
-            </div>
-        </div>
-
-    </div>
-    <div class="row mb-6">
-
-        <!-- Left Column: Two Paragraphs -Evangelos-->
-        <div class="col-md-9">
-            <p>@Model.Content</p>
-            <p>@Model.Content</p>
-        </div>
-        <!-- Right Column: Smaller Image - Evangelos-->
-        <div class="col-md-3" style="text-transform:capitalize; text-align:center;">
-            <p><i>Online Game MMORPG Commercial</i></p>
-            <img src="~/css/images/oip (2).jpg" class="img-fluid shadow-sm rounded shadow-btn" style="max-width: 80%;" alt="Official Sponsor Blizzard" />
-            <p><strong><i>Register & Subscribe in Game</i></strong></p>
-
-            <!-- Button Linking to Blizzard Comercial -Evangelos-->
-            <div class="mt-0 text-center">
-                <a href="https://www.blizzard.com/en-us/" target="_blank" class="btn btn-primary btn-sm shadow-sm" alt="Blizzard Entertainment Website Comercial">Visit Blizzard</a>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-9">
+
+            @*  HEADLINE  *@
+            <h1 style="text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);">@Model.HeadLine</h1>
+
+            @*  CATEGORY  *@
+            <h4>Category: @Model.Category.Name</h4>
+
+
+            @*  BILD  *@
+            <div class="p-3">
+                <img src="@Model.ImageLink" class="img-fluid shadow-sm rounded" alt="@Model.LinkText" />
+            </div>
+
+
+            <div>
+                <p><b>@Model.ContentSummary</b></p>
+
+                <p>@Html.Raw(Model.Content)</p>
+            </div>
+
+
+        </div>
+
+        <div class="col-3" style="border-left: 1px solid grey">
+
+            <!-- Right Column: Smaller Image - Evangelos-->
+            <div style="text-transform:capitalize; text-align:center;">
+                <h4>Official Sponsors</h4>
+                <p><i>Online Game RPG Texter Commercial</i></p>
+                <img src="~/css/images/81dh9heqnjl.png" class="img-fluid shadow-sm rounded shadow-btn" style="max-width: 80%;" alt="Official Sponsor Torn-City" />
+                <p><strong><i>Create your character</i></strong></p>
+
+                <!-- Button Linking to Torn City Comercial -Evangelos-->
+                <div class="mt-0 text-center">
+                    <a href="https://www.torn.com/" target="_blank" class="btn btn-primary btn-sm shadow-sm">Visit Torn City</a>
+                </div>
+            </div>
+
+            <hr class="my-5" />
+
+            <!-- Right Column: Smaller Image - Evangelos-->
+            <div style="text-transform:capitalize; text-align:center;">
+                <p><i>Online Game MMORPG Commercial</i></p>
+                <img src="~/css/images/oip (2).jpg" class="img-fluid shadow-sm rounded shadow-btn" style="max-width: 80%;" alt="Official Sponsor Blizzard" />
+                <p><strong><i>Register & Subscribe in Game</i></strong></p>
+
+                <!-- Button Linking to Blizzard Comercial -Evangelos-->
+                <div class="mt-0 text-center">
+                    <a href="https://www.blizzard.com/en-us/" target="_blank" class="btn btn-primary btn-sm shadow-sm" alt="Blizzard Entertainment Website Comercial">Visit Blizzard</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row mt-5">
+        <hr />
+        <div class="col-5">
             <span><i>Article created at @Model.DateStamp by @Model.User.FirstName @Model.User.LastName</i></span>
         </div>
 
-        <div class="col-4 text-center">
+        <div class="col-2 text-center">
             Views: @Model.Views
         </div>
 
-        <div class="col-4 text-end">
+        <div class="col-5 text-end">
             @if ((User.IsInRole("Journalist") && (@Model.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
             {
                 <span>
