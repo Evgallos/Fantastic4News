@@ -51,6 +51,16 @@
                             @await Component.InvokeAsync("Weather", new { city = "Linkoping" })
                         </div>
 
+
+                        <div>
+                            @await Component.InvokeAsync("TodayBox")
+                        </div>
+
+
+                        @* <div class="border-white" style=" height:100px; position:absolute; top:5px; left:65%; border-radius:8px; border:solid 1px white; box-shadow:5px 5px 10px rgba(254,254,255,0.1);">
+                    <img class="img-fluid h-100 w-100 rounded-3" style="image-resolution:from-image;" src="/css/Images/weather.JPG" alt="Weather Informations Picture weather sun & clouds" />
+                </div> *@
+
                         <div style="text-shadow: 20px; position:absolute; top:30%; left:45%; align-content:center;">
                             <form asp-action="Index" asp-controller="Article">
                                 <div class="input-group shadow-btn align-content-center align-self-md-auto">

@@ -153,7 +153,7 @@ namespace Fantastic4News.Controllers
 
                 // Logic for sending image to Azure blob storage
 
-                _fileService.UploadFileToContainer2(uniqueFileName, newStream);
+                _fileService.UploadFileToContainer(uniqueFileName, newStream);
 
                 if (System.IO.File.Exists(uniqueFilePath))
                 {
