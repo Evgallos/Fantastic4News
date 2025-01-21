@@ -3,16 +3,19 @@ body {
     font-family: 'Times New Roman', serif;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: #f0f8ff;
-    width:100%
+    background-color: /*#ffb338;*/ #f0f8ff;
+    width: 100%
     /*background-image: url('images/gid confetti.gif') */
     /*background-image: image-rendering:pixelated;*/
+    
 }
 
 /* Background Gradient (No stripes, smooth transition from cyan to white on hover) - Evangelos */
 body {
-    /*background: */ /*linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));*/
-    background: repeating-linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(77, 39, 35, 0,60)); /*linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(250, 120, 171, 0.5))*/
+    /*background-image: repeating-linear-gradient(5deg, var(--gold) 0%, var(--light-shadow) 3%, var(--gold) 31%);*/
+    color: #1e2127;
+    background:  linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));
+    /* background:  */ /*repeating-linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(77, 39, 35, 0,60));*/ /*linear-gradient(65deg, rgba(255, 255, 255, 0.3), rgb(250, 120, 171, 0.5))*/
     background-size: cover;
 }
 
@@ -25,9 +28,8 @@ body {
     transition: background-color 0.8s ease, transform 0.3s ease; /* Slower color transformation - Evangelos */
     margin-bottom: 20px;
     height: 100%;
-    width:95%;
+    width: 95%;
     margin: auto;
-    
 }
 
     /* Evangelos - Hover effect for cards (Color transition from white to grey, then to orange) */
@@ -40,7 +42,6 @@ body {
 .card {
     background-color: rgba(255, 255, 255, 1); /* Starts as white - Evangelos */
     transition: background-color 0.8s ease;
-
 }
 
     .card:hover {
@@ -55,7 +56,8 @@ body {
 
 
     .card:hover {
-        background-color: rgba(173, 216, 230, 0.6); /*rgba(248, 215, 185, 0.8)*/ /*rgba(255, 140, 0, 0.8);*/ /*  - Evangelos */
+        background-color: rgba(173, 216, 230, 0.6)
+        ; /*rgba(248, 215, 185, 0.8)*/ /*rgba(255, 140, 0, 0.8);*/ /*  - Evangelos */
     }
 
 /* Evangelos - Card shadow effect */
@@ -89,8 +91,8 @@ body {
     }
 
     .card {
-    /*    margin-bottom: 20px;*/
-        margin:0 10px 0 0;
+        /*    margin-bottom: 20px;*/
+        margin: 0 10px 0 0;
     }
 
     .row.mb-2 {
@@ -110,31 +112,32 @@ body {
 
 /* Large screen (Desktop) Styling - Evangelos */
 @media (min-width: 768px) {
-    #weather-api{
-        position:relative;
-        padding:12px 35px;
-        background-attachment:fixed;
-        font-size:15px;
-        font-weight:300;
-        border:3px solid white;
-        border-radius:10px;
-        box-shadow:0 0 0 #feC1958c;
-        cursor:pointer;
+    #weather-api {
+        position: relative;
+        padding: 12px 35px;
+        background-attachment: fixed;
+        font-size: 15px;
+        font-weight: 300;
+        border: 3px solid white;
+        border-radius: 10px;
+        box-shadow: 0 0 0 #feC1958c;
+        cursor: pointer;
     }
-    .logo-container {
+
+  /*  .logo-container {
         text-align: center;
-        position:relative;
-        padding:12px 35px;
-        background:var(--color);
-        font-size:17px;
-        font-weight:500;
-        color:#181818;
-        border:3px solid var(--color);
-        border-radius:8px;
-        box-shadow:0 0 0 #feC1958c;
+        position: relative;
+        padding: 12px 35px;
+        background: var(--color);
+        font-size: 17px;
+        font-weight: 500;
+        color: #181818;
+        border: 3px solid var(--color);
+        border-radius: 8px;
+        box-shadow: 0 0 0 #feC1958c;
         transition: all .3s ease-in-out;
-        cursor:pointer;
-    }
+        cursor: pointer;
+    }*/
     /*.star-1{
         position:absolute; Doesn't work is better for use it on buttons. A star sparkles -Evangelos
         top:20%; left:20%;
@@ -154,7 +157,7 @@ body {
         z-index: -5;
         transition:all .8s ease;
     }*/
-   /* .button:hover .star-1{ Doesn't work is better for use it on buttons. A star sparkles with hover - Evangelos
+    /* .button:hover .star-1{ Doesn't work is better for use it on buttons. A star sparkles with hover - Evangelos
         position:absolute;
         top:-80%;
         left:-30%;
@@ -165,8 +168,7 @@ body {
     }*/
     .logo-title {
         font-size: 2rem;
-        text-shadow:10px;
-
+        text-shadow: 10px;
     }
 }
 
@@ -195,16 +197,15 @@ body {
 .card, .card-body, .col-lg-3, .col-md-4, .col-sm-6 {
     border: none !important;
     padding: 0 !important;
-    
-
 }
 
-.card img {
-    width: 100%;
-    height: auto;
-    max-height: 500px; 
-    object-fit: cover; /* To ensure that the image fits within the bounds */
-}
+    .card img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: cover; /* To ensure that the image fits within the bounds */
+    }
+
 .d-flex.align-items-stretch {
     border-top: none !important;
     margin-top: 0 !important;
@@ -241,50 +242,50 @@ footer {
 .modal-right {
     position: fixed;
     top: 0;
-    right: -100%; 
-    width: 350px; 
+    right: -100%;
+    width: 350px;
     height: 100%;
-    overflow-y: auto; 
+    overflow-y: auto;
     transition: right 0.5s ease-in-out;
 }
 
 
 .sidebar-modal.show .modal-dialog.modal-right {
-    right: 15px; 
+    right: 15px;
 }
 
 /* -Evangelos - Style for the category container with borders and shadows */
 .category-container {
-    border: 2px solid #ddd; 
-    border-radius: 10px; 
+    border: 2px solid #ddd;
+    border-radius: 10px;
     padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
-    transition: box-shadow 0.3s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    transition: box-shadow 0.3s ease;
 }
 
     /* - Evangelos - Hover effect for categories */
     .category-container:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
 /* Evangelos-  Style for category title */
 .category-title {
     font-weight: bold;
-    color: #333; 
-    border-bottom: 2px solid #ccc; 
+    color: #333;
+    border-bottom: 2px solid #ccc;
     padding-bottom: 5px;
 }
 
 /* - Evangelos - Style for category links */
 .category-links a {
-    color: #007bff; 
-    text-decoration: none; 
+    color: #007bff;
+    text-decoration: none;
     transition: color 0.2s ease;
 }
 
     /* - Evangelos - Hover effect for links */
     .category-links a:hover {
-        color: #0056b3; 
+        color: #0056b3;
     }
 
 
@@ -335,30 +336,30 @@ footer {
     margin: 6px 0;
 }
 
-.contentcenter{
-    align-content:center;
-    justify-content:center;
+.contentcenter {
+    align-content: center;
+    justify-content: center;
 }
 
 /*-------*/
 
- a {
-    text-decoration: none;     
+a {
+    text-decoration: none;
 }
 
- /*change tooltip style    */
+/*change tooltip style    */
 
 .tooltip-inner {
-    background-color: rgba(211, 211, 211, 0.6); 
-    color: #ea2929; 
-    font-size: 14px; 
-    padding: 10px; 
+    background-color: rgba(211, 211, 211, 0.6);
+    color: #ea2929;
+    font-size: 14px;
+    padding: 10px;
     border-radius: 4px; /* Round the corners*/
 }
 
 .tooltip-arrow {
     border-top-color: #0056b3; /* Change the arrow color */
-        }
+}
 /*-------*/
 
 /*custom modal*/
@@ -402,3 +403,58 @@ footer {
         transform: translateX(0);
     }
 }*/
+
+
+/*Title Color Black - Gold -Evangelos */
+
+:root {
+    --gold: #ffb338;
+    --light-shadow: #77571d;
+    --dark-shadow: #3e2904;
+}
+
+body {
+    margin: 0;
+    font-family: 'Times New Roman', serif;
+}
+
+
+.wrapper {
+    background: radial-gradient(#272727, #1b1b1b);
+    display: grid;
+    grid-template-areas: 'overlap';
+    place-content: center;
+    text-transform: uppercase;
+    height: 6vh;
+    text-align: center;
+}
+
+    .wrapper > div {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: 75;
+        font-size: clamp(2em, 2vw, 6rem);
+        grid-area: overlap;
+        letter-spacing: 4px;
+        -webkit-text-stroke: 4px transparent;
+    }
+
+div.bg {
+    background-image: repeating-linear-gradient(105deg, var(--gold) 0%, var(--dark-shadow) 2%, var(--gold) 32%);
+    color: transparent;
+    filter: drop-shadow(2px 2px 2px black);
+    transform: scaleY(1.05);
+    transform:scaleX(1.05);
+    transform-origin: top;
+}
+
+div.fg {
+    background-image: repeating-linear-gradient(5deg, var(--red) 0%, var(--light-shadow) 4%, var(--gold) 30%);
+    color: #1e2127; 
+    transform: scale(1);
+}
+
+#navid{
+    color:cyan !important;
+}
