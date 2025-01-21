@@ -41,7 +41,7 @@
 
             <div class="form-group">
                 <label asp-for="Article.Content" class="control-label"></label>
-                <input asp-for="Article.Content" class="form-control" />
+                <textarea asp-for="Article.Content" class="form-control"></textarea>
                 <span asp-validation-for="Article.Content" class="text-danger"></span>
             </div>
 
@@ -50,6 +50,11 @@
                 <input asp-for="Article.ImageLink" class="form-control" />
                 <span asp-validation-for="Article.ImageLink" class="text-danger"></span>
             </div>
+
+            <script>
+                // Replace the <textarea> with CKEditor
+                CKEDITOR.replace('Article_Content');
+            </script>
 
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -62,7 +67,7 @@
                     <input class="form-check-input" asp-for="Article.EditorsChoice" /> @Html.DisplayNameFor(model => model.Article.EditorsChoice)
                 </label>
             </div>
-                        
+
             <div class="form-group">
                 <label asp-for="Article.CategoryId" class="control-label">Category</label>
                 <select id="drpCategory" asp-for="Article.CategoryId" asp-items="@Model.CategoriesSelectList">
@@ -83,7 +88,7 @@
         {
             <a class="mt-5" asp-controller="Journalist" asp-action="Index">Back to List</a>
         }
-      
+
         else
         {
             <a class="mt-5" asp-action="Index">Back to List</a>
@@ -92,5 +97,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
