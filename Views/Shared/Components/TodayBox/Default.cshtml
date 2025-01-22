@@ -1,0 +1,44 @@
+﻿@using Fantastic4News.Models.Api
+
+@{
+    var today = (Namnsdagar)ViewBag.Today;
+    var namnsdagsArray = today.dagar;
+    string namnsdagString = string.Empty;
+    int namnsdagsArrayLenght = namnsdagsArray.Length;
+    foreach (var item in namnsdagsArray[0].namnsdag)
+    {
+        namnsdagString = namnsdagString + item + ", ";
+    }
+    namnsdagString = namnsdagString.Trim().Remove(namnsdagString.Length - 2);
+
+    // Veckodag på engelska
+
+    string weekDay = string.Empty;
+    if (@today.dagar[0].veckodag == "Måndag")
+        weekDay = "Monday";
+    else if (@today.dagar[0].veckodag == "Tisdag")
+        weekDay = "Tuesday";
+    else if (@today.dagar[0].veckodag == "Onsdag")
+        weekDay = "Wednesday";
+    else if (@today.dagar[0].veckodag == "Torsdag")
+        weekDay = "Thursday";
+    else if (@today.dagar[0].veckodag == "Fredag")
+        weekDay = "Friday";
+    else if (@today.dagar[0].veckodag == "Lördag")
+        weekDay = "Saturday";
+    else if (@today.dagar[0].veckodag == "Söndag")
+        weekDay = "Sunday";
+
+    // Datum
+
+    var year = DateTime.Now.Year;
+    var month = DateTime.Now.Month;
+    var date = DateTime.Now.Day;
+}
+<div style="display:flex">
+    <div style="border: 1px solid grey; border-radius:5px; padding:5px; margin:3px">
+        <b>@weekDay @date/@month @year</b>
+        <br />
+        Todays name: @namnsdagString
+    </div>
+</div>

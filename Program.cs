@@ -67,7 +67,12 @@ namespace Fantastic4News
                 config.BaseAddress = new(builder.Configuration["WeatherAPIAddressLex"]);
             });
 
-			var app = builder.Build();
+            builder.Services.AddHttpClient("today", config =>
+            {
+                config.BaseAddress = new(builder.Configuration["NamesDayAPIAddress"]);
+            });
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
