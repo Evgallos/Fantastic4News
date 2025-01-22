@@ -17,6 +17,7 @@ namespace Fantastic4News.Services
 
 
         IEnumerable<Subscription> GetSubscriptionById(string id);
+        Subscription GetSubscription(string id);
 
     }
 }

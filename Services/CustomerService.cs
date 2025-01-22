@@ -1,6 +1,7 @@
 ﻿using Fantastic4News.Data;
 using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using SQLitePCL;
 
 namespace Fantastic4News.Services
@@ -10,6 +11,7 @@ namespace Fantastic4News.Services
         // Injections
 
         private readonly ApplicationDbContext _db;
+       
 
         public CustomerService(ApplicationDbContext db)
         {
@@ -40,10 +42,9 @@ namespace Fantastic4News.Services
             user2.Email = user.Email;
 			_db.Update(user2);
 			_db.SaveChanges();
-			
-			
 		}
 
+    
 
     }
 }

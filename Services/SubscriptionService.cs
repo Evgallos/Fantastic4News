@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using SQLitePCL;
 using Fantastic4News.Models.Db  ;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 //todo : generativeAI models for rendering speech
 
@@ -27,7 +28,7 @@ namespace Fantastic4News.Services
 
         public IEnumerable<Subscription> GetSubscriptions()
         {
-            return _db.Subscriptions;
+            return _db.Subscriptions.Include(u => u.User).ToList();
         }
 
         public Subscription GetSubscriptionById(int id)
@@ -37,10 +38,12 @@ namespace Fantastic4News.Services
 
         public IEnumerable<Subscription> GetSubscriptionById(string id)
         {
+            // ToDo: Always returns a list of only one subscription! Rewrite so that it only returns one sub.
             //multipleactiveresulsset to true 
-            var Subscription =_db.Subscriptions                            
+            var Subscription = _db.Subscriptions
                             .Include(s => s.SubscriptionType)
-                            .Where(s=>s.UserId==id).ToList();
+                            .Where(s => s.UserId == id).ToList();
+
 
             return Subscription;
         }
@@ -66,10 +69,6 @@ namespace Fantastic4News.Services
 			
 		}
 
-
-
-       
-
       
         public void AddSubscription(Subscription subscription)
         {
@@ -78,13 +77,17 @@ namespace Fantastic4News.Services
 
                 var res = _db.Subscriptions.Add(subscription);
                 _db.SaveChanges();
-                    }
-
-            
-
+            }
         }
 
-		
-	}
+        public Subscription GetSubscription(string id)
+        {
+            // Might need to check if subscription is active or not
+            var customer = _db.Subscriptions.Include(u => u.User).FirstOrDefault(u => u.UserId == id);
+            return (customer);
+
+        }
+         
+    }
 }
 

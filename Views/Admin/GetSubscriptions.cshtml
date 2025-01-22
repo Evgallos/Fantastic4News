@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Fantastic4News.ViewModels.CustomerDetailVM>
+
+@{
+    ViewData["Title"] = "GetSubscriptions";
+}
+
+<h1>Subscriptions</h1>
+@* 
+<div>
+    <div class="row">
+        <div class="col-4">
+
+            Name
+        </div>
+        <div class="col-8">@Model.</div>
+
+"
+    </div>
+    <div></div>
+</div> *@
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expired)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var subscription in Model) 
+{ *@
+      @*       var name = subscription.User.FirstName + " " + subscription.User.LastName;
+        <tr>
+            <td>
+                   
+                </td>
+        <tbody>
+           
+
+                    @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Expired)
+            </td>
+            <td>
+                 @Html.DisplayFor(modelItem =>item.SubscriptionType.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                    <a asp-action="GetSubscriptions" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="GetSubscriptions" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="GetSubscriptions" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
