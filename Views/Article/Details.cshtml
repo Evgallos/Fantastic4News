@@ -1,5 +1,4 @@
-﻿
- @model Fantastic4News.Models.Db.Article
+﻿ @model Fantastic4News.Models.Db.Article
 
 @using Fantastic4News.Models.Db
 @using Microsoft.AspNetCore.Identity
@@ -97,8 +96,8 @@
 
     @if (User.IsInRole("Customer"))
     {
-        <div style="padding-left:20px;" >
-            <button type="button" class="shadow-btn btn btn-sm btn btn-primary rounded btn" onclick="likeArticle(@Model.Id)">
+        <div style="padding-left:20px;">
+            <button type="button" class="shadow-btn btn btn-sm btn btn-primary rounded btn" onclick="likeArticle(@Model.Id)" aria-label="Like">
                 <i class="bi bi-hand-thumbs-up" style="font-size: 1rem;"></i>
             </button>
             <span id="likes">@Model.Like</span>
