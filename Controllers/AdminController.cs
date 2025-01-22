@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Fantastic4News.Controllers
@@ -20,14 +21,19 @@ namespace Fantastic4News.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IUserService _ius;
         private readonly ICategoryService _ics;
+        private readonly ICustomerService _icu;
+        private readonly ApplicationDbContext _db;
+        private readonly ISubscriptionService _isub;
 
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ICategoryService ics)
+        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ICategoryService ics , ICustomerService icu , ISubscriptionService isub)
         {
             _context = context;
             _ius = ius;
             _ics = ics;
             _roleManager = roleManager;
+            _icu = icu;
+            _isub = isub;
         }
         public IActionResult Index()
         {
@@ -144,7 +150,9 @@ namespace Fantastic4News.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            Category category = new Category();
+
+            return View(category);
         }
 
 
@@ -164,7 +172,7 @@ namespace Fantastic4News.Controllers
                 _ics.CreateCategories(category);//
 
             }
-            return RedirectToAction("Index");//
+            return RedirectToAction("ViewCategories");//
 
         }
 
@@ -205,16 +213,59 @@ namespace Fantastic4News.Controllers
             if (category != null)
             {
                 if (!category.Articles.IsNullOrEmpty() && category.Articles.Any(a => a.CategoryId == id)) 
+                
                 {
-                    ModelState.AddModelError("Name", "You can not delete that.");
+                    //    ModelState.AddModelError("Id", "You can not delete this category .");
 
-                    return RedirectToAction("DeleteCategory",id);
-                }
+                    //    return View("DeleteCategory",id);
+
+                    string msg = "You can not delete this category .";
+                    return RedirectToAction("ViewMsg","Admin", msg);
+
+				        }
 
                 _ics.RemoveCategories(category);
                
             }
-            return RedirectToAction("Index");
-        } 
-    }
+            return RedirectToAction("ViewCategories");
+        }
+
+        public IActionResult ListCustomers()
+        {
+            var customers = _ius.ListCustomers();
+            return View(customers);
+        }
+
+        [HttpGet] 
+        public IActionResult GetSubscriptions(string id)
+        {
+
+            var customers = _isub.GetSubscriptionById(id);
+            return View(customers);
+
+        }
+         
+        [HttpPost]
+
+        public async Task<IActionResult> GetSubscriptions()
+        {
+            // Might need to check if subscription is active or not
+            var customers = _isub.GetSubscriptions();
+            //var customers = await _db.Users.Include(c => c.Subscriptions).ToListAsync();
+            return View(customers); 
+        }
+    
+
+     
+
+  
+		public IActionResult ViewMsg(string msg)
+        {
+            TempData["msg"] = msg;
+            return View();
+        }
+
+
+	}
 }
+
