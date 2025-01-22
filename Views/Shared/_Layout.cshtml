@@ -113,12 +113,12 @@
                         @await Component.InvokeAsync("CategoryIndex")
                     </div>
 
-                    <div class="col-md-4 m-auto pe-3" style="text-shadow: 20px; ">
+                    <div class="col-md-4 m-auto pe-3 p-auto" style="text-shadow: 20px; ">
                         <form asp-action="Index" asp-controller="Article">
-                            <div class="input-group shadow-btn align-content-center align-self-md-auto">
+                            <div class="input-group shadow-btn align-content-center align-self-lg-auto" style="width:450px">
 
                                 <input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search Article</button>
+                                <button type="submit" class="btn btn-outline-primary ms-2" data-mdb-ripple-init>Search Article</button>
 
                             </div>
                         </form>
