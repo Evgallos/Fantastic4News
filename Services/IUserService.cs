@@ -8,6 +8,7 @@ namespace Fantastic4News.Services
 	{
 		Task<IdentityResult> CreateEmployee(User newEmp, string pwd);
 		IEnumerable<User> ListEmployees();
+		IEnumerable<User> ListCustomers();
 		Task CreateRole(string role);
 		Task<string> FindRole(User user);
         Task AssigneRoleToUsers(User user,string role);

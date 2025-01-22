@@ -7,8 +7,8 @@ namespace Fantastic4News.Services
     public interface ICustomerService
     {
         //object GetType(string id);
-         
 
+        
         public void updateCustomer(EditUserVM user);
 
         public User GetCustmerbyId(string id);
