@@ -39,7 +39,7 @@ namespace Fantastic4News.Services
         public void CreateCategories(Category cate)
         {
             _db.Categories.Add(cate);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
         public void  UpdateCategories(Category category)
         {
