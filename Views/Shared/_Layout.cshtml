@@ -42,7 +42,13 @@
                     </div>
                 </a>
 
-                <div class="collapse navbar-collapse text-ligt" id="navbarNav">
+                <!-- Hamburger button for mobile screens -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar content -->
+                <div class="collapse navbar-collapse text-light" id="navbarNav">
                     <ul class="navbar-nav me-auto text-white">
                         @{
                             if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
@@ -138,135 +144,6 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-=======
-	<partial name="_CookieConsentSimplyVersionPartial" />
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark text-light mb-0">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#" style="text-align:center; padding: 10px; box-shadow: 10px 10px 10px rgba(0,0,0,0.2);">
-					<div class="wrapper bg-dark-subtle">
-						<div class="bg">
-							Fantastic 4 <i>News</i>
-						</div>
-						<div class="bg">
-							Fantastic 4 <i>News</i>
-						</div>
-					</div>
-				</a>
-
-
-				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
-					<div class="navbar-nav flex-grow-1 shadow">
-
-						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-								aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-
-						<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-							<ul class="navbar-nav flex-grow-1">
-
-								@{
-									if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
-									{
-										<partial name="_CustomerLayoutPartial" />
-									}
-									else if (SignInManager.IsSignedIn(User) && User.IsInRole("Journalist"))
-									{
-										<partial name="_JournalistLayoutPartial" />
-									}
-
-									else if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-									{
-										<partial name="_AdminLayoutPartial" />
-
-									}
-									else if (SignInManager.IsSignedIn(User) && User.IsInRole("Editor"))
-									{
-										<partial name="_EditorLayoutPartial" />
-									}
-									else
-									{
-										<li class="nav-item ">
-											<a class="nav-link text-light" asp-area="" asp-controller="Customer" asp-action="Index">Home</a>
-										</li>
-									}
-
-
-								}
-
-							</ul>
-							
-
-							
-						
-							<div id="weatherInfo">
-								@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
-							</div>
-							<div>
-								@await Component.InvokeAsync("TodayBox")
-							</div>
-							<div class="ms-3">
-							<partial name="_LoginPartial" />
-
-							</div>
-						</div>
-
-
-
-
-					</div>
-
-				</div>
-			</div>
-
-
-		</nav>
-
-
-		<div class="row w-100  bg-dark text-white">
-			<div class="w-100">
-				<nav class="row border-bottom box-shadow mb-3 text-center align-content-center m-auto ">
-					<div class="col-md-8">
-
-					@await Component.InvokeAsync("CategoryIndex")
-					</div>
-
-					<div class="col-md-4 m-auto pe-3" style="text-shadow: 20px; ">
-						<form asp-action="Index" asp-controller="Article">
-							<div class="input-group shadow-btn align-content-center align-self-md-auto">
-
-								<input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-								<button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search Article</button>
-
-							</div>
-						</form>
-					</div>
-
-				</nav>
-
-
-			</div>
-		</div>
-
-	</header>
-	<div class="container-fluid">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
-
-	<footer class="border-top footer text-muted">
-		<div class="container-fluid">
-			&copy; 2024 - Fantastic4News - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
-
 
 </body>
 </html>
