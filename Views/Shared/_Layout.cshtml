@@ -96,22 +96,10 @@
 								}
 
 							</ul>
-							@* <div >
-								@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
-							</div> *@
+							
 
-							<div class="container mt-5">
-								<!-- Clickable Div to Open Modal -->
-								<div class="align-content-end" style="width:200px; cursor:pointer;" onclick="openModal()">
-									
-								</div>
-							</div>
-							<div>
-
-@* 								@await Html.PartialAsync("_ChangeCityModal")
- *@								
-
-							</div>
+							
+						
 							<div id="weatherInfo">
 								@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
 							</div>
@@ -122,17 +110,6 @@
 							<partial name="_LoginPartial" />
 
 							</div>
-						</div>
-
-						<div style="text-shadow: 20px; position:absolute; top:30%; left:50%; align-content:center;">
-							<form asp-action="Index" asp-controller="Article">
-								<div class="input-group shadow-btn align-content-center align-self-md-auto">
-
-									<input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-									<button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search Article</button>
-
-								</div>
-							</form>
 						</div>
 
 
@@ -149,9 +126,26 @@
 
 		<div class="row w-100  bg-dark text-white">
 			<div class="w-100">
-				<nav class="border-bottom box-shadow mb-3 text-center align-content-center m-auto ">
+				<nav class="row border-bottom box-shadow mb-3 text-center align-content-center m-auto ">
+					<div class="col-md-8">
+
 					@await Component.InvokeAsync("CategoryIndex")
+					</div>
+
+					<div class="col-md-4 m-auto pe-3" style="text-shadow: 20px; ">
+						<form asp-action="Index" asp-controller="Article">
+							<div class="input-group shadow-btn align-content-center align-self-md-auto">
+
+								<input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+								<button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search Article</button>
+
+							</div>
+						</form>
+					</div>
+
 				</nav>
+
+
 			</div>
 		</div>
 

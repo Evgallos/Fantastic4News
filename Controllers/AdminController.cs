@@ -150,7 +150,9 @@ namespace Fantastic4News.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            Category category = new Category();
+
+            return View(category);
         }
 
 
@@ -170,7 +172,7 @@ namespace Fantastic4News.Controllers
                 _ics.CreateCategories(category);//
 
             }
-            return RedirectToAction("Index");//
+            return RedirectToAction("ViewCategories");//
 
         }
 
@@ -225,7 +227,7 @@ namespace Fantastic4News.Controllers
                 _ics.RemoveCategories(category);
                
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewCategories");
         }
 
         public IActionResult ListCustomers()
