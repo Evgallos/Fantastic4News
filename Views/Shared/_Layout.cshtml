@@ -96,11 +96,25 @@
 								}
 
 							</ul>
-							<div >
+							@* <div >
+								@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
+							</div> *@
+
+							<div class="container mt-5">
+								<!-- Clickable Div to Open Modal -->
+								<div class="align-content-end" style="width:200px; cursor:pointer;" onclick="openModal()">
+									
+								</div>
+							</div>
+							<div>
+
+@* 								@await Html.PartialAsync("_ChangeCityModal")
+ *@								
+
+							</div>
+							<div id="weatherInfo">
 								@await Component.InvokeAsync("Weather", new { city = "Linkoping" })
 							</div>
-
-
 							<div>
 								@await Component.InvokeAsync("TodayBox")
 							</div>
@@ -110,7 +124,7 @@
 							</div>
 						</div>
 
-						<div style="text-shadow: 20px; position:absolute; top:30%; left:40%; align-content:center;">
+						<div style="text-shadow: 20px; position:absolute; top:30%; left:50%; align-content:center;">
 							<form asp-action="Index" asp-controller="Article">
 								<div class="input-group shadow-btn align-content-center align-self-md-auto">
 

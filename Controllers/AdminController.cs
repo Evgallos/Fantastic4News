@@ -205,16 +205,29 @@ namespace Fantastic4News.Controllers
             if (category != null)
             {
                 if (!category.Articles.IsNullOrEmpty() && category.Articles.Any(a => a.CategoryId == id)) 
+                
                 {
-                    ModelState.AddModelError("Name", "You can not delete that.");
+                    //    ModelState.AddModelError("Id", "You can not delete this category .");
 
-                    return RedirectToAction("DeleteCategory",id);
-                }
+                    //    return View("DeleteCategory",id);
+
+                    string msg = "You can not delete this category .";
+                    return RedirectToAction("ViewMsg","Admin", msg);
+
+				}
 
                 _ics.RemoveCategories(category);
                
             }
             return RedirectToAction("Index");
-        } 
-    }
+        }
+
+		public IActionResult ViewMsg(string msg)
+        {
+            TempData["msg"] = msg;
+            return View();
+        }
+
+
+	}
 }

@@ -33,7 +33,7 @@ namespace Fantastic4News.Services
 
         public Category GetCategoryById(int id)
         {
-            return _db.Categories.Find(id);
+            return _db.Categories.Include(c=>c.Articles).FirstOrDefault(c=>c.Id==id);
         }
 
         public void CreateCategories(Category cate)

@@ -1,4 +1,13 @@
-﻿
+﻿//open weather modal
+function openModal() {
+    $('#cityModal').modal('show');
+}
+
+//sumbit modal
+
+
+
+
 // Coockie consent at _Layout.cshtml
 
 var button = document.querySelector("#cookieConsent button[data-cookie-string]");
