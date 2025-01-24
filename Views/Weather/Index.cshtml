@@ -1,0 +1,65 @@
+﻿@model Fantastic4News.Models.ViewModels.WeatherIndexModel
+<div class="my-3 pt-3">
+
+<a class="btn btn-primary" asp-action="SaveWeather" asp-controller="Weather">PRESS TO SAVE TODAYS TEMP IN AZURE TABLE</a>
+</div>
+
+<h1>Weather -  Azure Table</h1>
+<div>
+    <form method="post" asp-controller="Weather" asp-action="SearchWeather">
+        <div class="form-group">
+            <label for="timestamp">Timestamp:</label>
+            <input type="date" class="form-control" id="timestamp" name="Timestamp" style="width:400px " required />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Weather Description
+            </th>
+            <th>
+                Temperature At
+            </th>
+            <th>
+              Temperature C
+            </th>
+            <th>
+                Temperature F
+            </th>
+            <th>
+                Image
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WeatherHistories)
+        {
+            <tr>
+                <td>
+                    @item.Summary
+                </td>
+                <td>
+                    @item.Timestamp
+                </td>
+                <td>
+                    @item.TemperatureC
+                </td>
+                <td>
+                    @item.TemperatureF
+                </td>
+                <td>
+                    <img src="@item.Url" style="height:30px; width:30px;" alt="image showing @item.Summary" />
+                </td>
+
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+
