@@ -17,7 +17,10 @@ namespace Fantastic4News.Data
 		public DbSet<Category> Categories { get; set; }
 
 		public DbSet<Subscription> Subscriptions { get; set; }
+
 		public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
-		//public DbSet<User> Users { get; set; }
+
+        public DbSet<NewsLetter> Newsletters { get; set; }
+        //public DbSet<User> Users { get; set; }
     }
 }

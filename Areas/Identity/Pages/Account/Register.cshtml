@@ -56,7 +56,12 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+			<div class="form-group form-check form-switch mb-3 mt-4">
+				<input type="checkbox" asp-for="Input.WantNewsLetter" class="form-check-input" role="switch" checked/>
+				<label asp-for="Input.WantNewsLetter" class="form-check-label"></label>
+			</div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Register</button>
         </form>
 	</div>
 	<div class="row">
