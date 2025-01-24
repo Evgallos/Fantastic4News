@@ -1,0 +1,28 @@
+﻿@model bool
+
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<h1 class="mt-3">Newsletter</h1>
+
+
+@if (Model)
+{
+    <p>You are registered for the weekly newsletter right now!</p>
+
+    <a asp-controller="NewsLetter" asp-action="UnsubscribeNewsletter">
+        Unsubscribe
+    </a>
+}
+else
+{
+    <p>You are not registered for the weekly newsletter right now!</p>
+
+    <a asp-controller="NewsLetter" asp-action="SubscribeNewsletter">
+        Subscribe
+    </a>
+}
+
+<br /><br /><br />
