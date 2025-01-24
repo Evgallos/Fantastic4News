@@ -2,6 +2,7 @@
 using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
+using Fantastic4News.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -254,18 +255,29 @@ namespace Fantastic4News.Controllers
             //var customers = await _db.Users.Include(c => c.Subscriptions).ToListAsync();
             return View(customers); 
         }
-    
 
-     
 
-  
-		public IActionResult ViewMsg(string msg)
+
+
+
+        public IActionResult DetailsCustomer(string id)
         {
-            TempData["msg"] = msg;
-            return View();
+            var user = _ius.GetUserById(id);
+            var subscriptions = _isub.GetSubscriptionsForUser(id);
+
+            var obj = new CustomerDetailVM
+            {
+                CustomerUserName = user.UserName,
+                CustomerFullName = $"{user.FirstName} {user.LastName}",
+                CustomerEmail = user.Email,
+                Subscriptions = subscriptions
+            };
+            return View(obj);
         }
 
 
-	}
+      
+    }
 }
+
 
