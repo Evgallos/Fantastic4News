@@ -31,6 +31,8 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
+			item.DateStamp = DateTime.Now;
+
 			var name = item.User.FirstName + " " + item.User.LastName;
 			<tr>
 				<td>
@@ -78,7 +80,7 @@
 
 												<input type="hidden" name="Id" value="@item.Id" />
 												<label for="publishDate-@item.Id" class="form-label">Publish Date</label>
-												<input type="date" class="form-control" id="publishDate-@item.Id" name="publishDate">
+												<input type="datetime" class="form-control" id="publishDate-@item.Id" name="publishDate" value="@item.DateStamp">
 											</div>
 											<div class="mb-3">
 												<label class="form-check-label" for="editorsChoice">

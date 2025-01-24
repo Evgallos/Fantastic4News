@@ -31,6 +31,7 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+
 		public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
@@ -44,9 +45,6 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-
-
-
 		}
 
         /// <summary>
@@ -115,6 +113,8 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
             [Display(Name = "Username")]
             public string UserName { get; set; }
 
+            [Display(Name ="Weekly newsletter")]
+            public bool WantNewsLetter { get; set; }
         }
 
 
@@ -135,6 +135,7 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
                 user.LastName=Input.LastName;
                 user.DOB=Input.DOB;
                 user.UserName = Input.UserName;
+                user.WantNewsLetter = Input.WantNewsLetter;
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
