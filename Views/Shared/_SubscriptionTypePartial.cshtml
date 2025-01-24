@@ -5,8 +5,6 @@
 <div class="row mt-5">
     @foreach (var item in Model)
     {
-
-
         <div class="col-md-4">
             <div class="card py-2 mb-4" style="width: 18rem;">
                 <div class="card-body">
@@ -20,6 +18,28 @@
             </div>
         </div>
 
-
+        @* <div class="cold-md-4">
+            <div class="flip-card py-2 mb-4">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h1 class="card-title">@item.TypeName</h1>
+                    </div>
+                    <div class="flip-card-back py-2 mb-4">
+                        <h1>Package Including:</h1>
+                        <ul>
+                            <li>@item.Desciption</li>
+                            <li>Daily Access to Articles and Sponsors</li>
+                        </ul>
+                        <h2>Price kr/month:</h2>
+                        <ul>
+                            <li>@item.Price kr/month</li>
+                        </ul>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-primary">Choose</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> *@
     }
 </div>
