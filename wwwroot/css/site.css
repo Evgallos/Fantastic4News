@@ -11,7 +11,7 @@ body {
 }
 
 /* Background Gradient (No stripes, smooth transition from cyan to white on hover) - Evangelos */
-body {
+.body {
     /*background-image: repeating-linear-gradient(5deg, var(--gold) 0%, var(--light-shadow) 3%, var(--gold) 31%);*/
     color: #1e2127;
     background:  linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.3));
@@ -434,7 +434,7 @@ body {
 
     .wrapper > div {
         background-clip: text;
-        -webkit-background-clip: text;
+        /*-webkit-background-clip: text;*/
         color: transparent;
         font-weight: 75;
         font-size: clamp(2em, 2vw, 6rem);
@@ -506,4 +506,54 @@ div.fg {
   background-color: dodgerblue;
   color: white;
   transform: rotateY(180deg);
+}
+
+/*Button to the TOP -Evangelos*/
+/*--Evangelos I added that to hover some changes to our striped-background to hover dark pink shadow applied to DetailView page movie when hover the moust
+    on top.
+*/
+.Striped-button:hover {
+    box-shadow: 0 4px 12px cyan;
+}
+/*--Evangelos some scroll to top button possition fixed and margin padding and others still needs improvments dont like the size to narrow*/
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ffb338;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+    /*-Evvangelos color and transform timer for the change color On hover (click) */
+    #scrollToTopBtn:hover {
+        background-color: /*#ff69b4*/ #3e2904;
+        transform: scale(1.1);
+    }
+/*--Evangelos this CSS code nested is about Navbar hover effect  see bellow i used Figma tools for better understanding the design*/
+.navbar-nav .nav-link {
+    transition: color 0.3s ease;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: rgb(0,255,255);
+    }
+
+    /*--Evangelos some Optional: Style for the navbar link when the mouse touches see bellow: */
+    .navbar-nav .nav-link:focus {
+        color: rgb(0,255,255);
+        text-decoration: none;
+    }
+
+.nav-link:hover {
+    color: #ff69b4 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /*-- Evangelos or any other shade of pink we like to do for Nav bar a small change*/
+    /*The !important is a special annotation that can override all the CSS rules and can make some changes without effects others codes*/
 }

@@ -173,3 +173,15 @@ function likeArticle(id) {
     });
 }
 
+
+//Buton to the Top
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
+        $('#scrollToTopBtn').fadeIn();
+    } else {
+        $('#scrollToTopBtn').fadeOut();
+    }
+});
+function scrollToTop() {
+    $('html, body').animate({ scrollTop: 0 }, 500);
+}
