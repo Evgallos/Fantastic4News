@@ -7,13 +7,11 @@ namespace Fantastic4News.ViewModels
     {
         public IEnumerable<Subscription> Subscriptions { get; set; }
 
-        public string CustomerName { get; set; }
-        
+        public string CustomerUserName { get; set; }
+
+        public string CustomerFullName { get; set; }
+
         public string CustomerEmail { get; set; } = string.Empty;
-
-
-
-
 
 
 

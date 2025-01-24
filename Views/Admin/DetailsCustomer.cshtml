@@ -1,0 +1,75 @@
+﻿@model Fantastic4News.ViewModels.CustomerDetailVM
+
+@{
+    ViewData["Title"] = "DetailsCustomer";
+}
+
+<h1>DetailsCustomer</h1>
+
+<p>
+   
+</p
+<div>
+   <pre>
+
+   Customer Name:&emsp;@Model.CustomerFullName <br />
+   Cutomer Email:&emsp;@Model.CustomerEmail <br />
+
+
+   </pre>
+
+</div>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subscriptions.FirstOrDefault().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subscriptions.FirstOrDefault().Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subscriptions.FirstOrDefault().Expired)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subscriptions.FirstOrDefault().SubscriptionType.TypeName)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Subscriptions )
+        {
+        <tr>
+               
+                <td>
+                    @item.Price
+                </td>
+              
+            
+               
+                <td>
+                    @item.Created
+                </td>
+
+                
+                <td>
+                    @item.Expired
+                </td> 
+
+                
+                <td>
+                    @item.SubscriptionType.TypeName
+                </td> 
+          
+            <td>
+
+                   <a asp-action="DetailsCustomer" asp-route-id="@item.Id"></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
