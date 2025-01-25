@@ -25,9 +25,10 @@ namespace Fantastic4News.Controllers
         private readonly ICustomerService _icu;
         private readonly ApplicationDbContext _db;
         private readonly ISubscriptionService _isub;
+        private readonly IChartService _ichs;
 
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ICategoryService ics , ICustomerService icu , ISubscriptionService isub)
+        public AdminController(IUserService ius, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ICategoryService ics , ICustomerService icu , ISubscriptionService isub,IChartService ichs)
         {
             _context = context;
             _ius = ius;
@@ -35,6 +36,7 @@ namespace Fantastic4News.Controllers
             _roleManager = roleManager;
             _icu = icu;
             _isub = isub;
+            _ichs = ichs;
         }
         public IActionResult Index()
         {
@@ -206,6 +208,8 @@ namespace Fantastic4News.Controllers
             }
             return View(category);
         }
+        
+        
         [HttpPost]
         public IActionResult DeleteCategoryConfirmed(int id)
         {
@@ -257,9 +261,6 @@ namespace Fantastic4News.Controllers
         }
 
 
-
-
-
         public IActionResult DetailsCustomer(string id)
         {
             var user = _ius.GetUserById(id);
@@ -276,8 +277,18 @@ namespace Fantastic4News.Controllers
         }
 
 
-      
-    }
+		public IActionResult ShowChart()
+		{
+            //var chartData = 
+            var viewModel = _ichs.GetBarChartUserSubscription();
+
+
+			return View(viewModel);
+		}
+
+
+	}
+
 }
 
 

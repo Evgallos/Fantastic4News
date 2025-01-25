@@ -103,12 +103,15 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public IActionResult chooseOtherSubscription(Subscription subs)
         {
-            string userID = "", userId = "";
+            string userId = "";
             if (User.Identity != null && User.Identity.IsAuthenticated)
             { // Get the user by their ID
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
             }
+
+            
+            
 
             var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
 
