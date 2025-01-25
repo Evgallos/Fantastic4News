@@ -80,11 +80,13 @@ namespace Fantastic4News.Services
             }
         }
 
-        public Subscription GetSubscription(string id)
+        public List<Subscription> GetSubscriptionsForUser(string userId)
         {
             // Might need to check if subscription is active or not
-            var customer = _db.Subscriptions.Include(u => u.User).FirstOrDefault(u => u.UserId == id);
-            return (customer);
+            var subscriptionsByUser = _db.Subscriptions
+                .Include(u => u.User)
+                .Include(s=>s.SubscriptionType).Where(u => u.UserId == userId).ToList();
+            return (subscriptionsByUser);
 
         }
          

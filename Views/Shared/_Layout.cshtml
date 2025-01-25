@@ -71,7 +71,6 @@
                             }
                         }
                     </ul>
-
                     <!-- Right Navigation Items (Desktop Only) - Evangelos-->
                     <div class="d-none d-lg-flex align-items-center">
                         <div id="weatherInfo" class="me-3 m-auto">
@@ -89,16 +88,20 @@
         </nav>
 
         <!-- Mobile Content Inside Hamburger Menu - Evangelos-->
-        <div class="collapse navbar-collapse bg-dark text-light" id="navbarContent">
-            <div class="bg-dark text-light px-3 py-2 d-lg-none">
+        <div class="collapse navbar-collapse bg-dark text-light" id="navbarContent" role="navigation" aria-labelledby="navbar-header">
+            <h2 id="navbar-header" class="visually-hidden">Main Navigation Menu</h2>
+
+            <div class="bg-dark text-light px-3 py-2 d-lg-none" role="region" aria-labelledby="login-section">
+                <h3 id="login-section" class="visually-hidden">User Login Section</h3>
                 <partial name="_LoginPartial" />
             </div>
 
-            <div class="bg-dark text-light px-3 py-2 d-lg-none">
-                <div class="w-75">
+            <div class="bg-dark text-light px-3 py-2 d-lg-none" role="complementary" aria-labelledby="weather-section">
+                <div id="weather-section" class="w-75">
                     @await Component.InvokeAsync("Weather", new { city = "Linkoping" })
                 </div>
-                <div class="mt-2">
+                <div class="mt-2" aria-labelledby="today-box-section">
+                    <span id="today-box-section" class="visually-hidden">Today's Highlights</span>
                     @await Component.InvokeAsync("TodayBox")
                 </div>
             </div>
@@ -113,9 +116,9 @@
 
                     <div class="col-md-4 container" style="text-shadow: 20px;">
                         <form asp-action="Index" asp-controller="Article">
-                            <div class="input-group shadow-btn m-auto" style="width:350px;">
+                            <div class="input-group shadow-btn m-auto form-check-inline my-2 my-lg-0" style="width:350px;">
                                 <input type="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-outline-primary ms-1 d-flex">Search Article</button>
+                                <button type="submit" class="btn btn-outline-primary ms-1 m-auto">Search Article</button>
                             </div>
                         </form>
                     </div>
@@ -123,16 +126,20 @@
             </div>
         </div>
     </header>
-
     <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            &copy; 2024 - Fantastic4News - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Evangeloa, Scroll to Top Button -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()" class="button" aria-label="Scroll to Top">
+        &#11161; <!-- Unicode -Evangelos-->
+    </button>
+
+    <footer class="border-top footer text-muted mt-md-2 mb-md-2">
+        <div class="container-fluid text-center">
+            &copy; 2024 - <strong>Fantastic4</strong><i>News</i> - <a asp-area="" asp-controller="Home" asp-action="Privacy"><i>Privacy</i></a>
         </div>
     </footer>
 
