@@ -21,7 +21,7 @@
 				@Html.DisplayNameFor(model => model.Expired)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Price) / Month
+				@Html.DisplayNameFor(model => model.Price) 
 			</th>
 
 			<th></th>
@@ -37,29 +37,21 @@
 				<td>
 					@item.Created
 				</td>
-				@{
-					if (@item.SubscriptionType.TypeName.ToLower() == "free")
-					{
-						<td>
-						-
-						</td>
-					}
-					else
-					{
-						<td>
-							@item.Expired
-						</td>
-					}
-				}
-					
-					<td>
-						@item.Price
-					</td>
-					<td>
-						@item.User
-					</td>
 
-				</tr>
+
+				<td>
+					
+					@item.Expired 
+				</td>
+
+				<td>
+					@item.Price
+				</td>
+				<td>
+					@item.User
+				</td>
+
+			</tr>
 		}
 	</tbody>
 </table>

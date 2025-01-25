@@ -33,7 +33,7 @@
 							else
 							{
 								<div class="btn-group btn-group-sm">
-									<button type="button" onclick="chooseDateTimepartial(@item.Id ,'@item.TypeName')" class="btn btn-primary">Choose</button>
+									<button type="button" onclick="chooseDateTimepartial(@item.Id ,'@item.TypeName',@item.Price)" class="btn btn-primary">Choose</button>
 								</div>
 								subtpid = item.Id;
 							}
@@ -74,11 +74,19 @@
 						<div class="col-sm-8 pt-2">
 							<input asp-for="Subs.SubscriptionTypeId" id="forsubtyid" type="number" style="width:95%" value="" hidden />
 						</div>
+						<div class="col-sm-8 pt-2">
+							<input asp-for="Subs.Price" id="forsubprice" type="number" style="width:95%" value="" hidden />
+						</div>
+						<div id="total" style="height:100px">
+						
+						</div>
 
 						<div class="col-sm-4 mt-1">
 							<button type="submit" class="btn btn-primary btn-block " id="submitbtn" disabled> Choose </button>
 							<button type="button" class="btn btn-danger btn-block" onclick="cancelSubscription()"> Cancel </button>
 						</div>
+
+					
 
 					</div>
 			</form>

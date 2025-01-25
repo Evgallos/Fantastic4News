@@ -89,6 +89,21 @@ namespace Fantastic4News.Services
             return (subscriptionsByUser);
 
         }
+
+        public Subscription GetPreviousSubs(string userId)
+        {
+            var subs = _db.Subscriptions.OrderByDescending(s=>s.Created).FirstOrDefault(s => s.UserId == userId);
+            return subs;
+        }
+
+        public void UpdateSubs(Subscription subscription)
+        {
+            if (subscription != null)
+            {
+                _db.Subscriptions.Update(subscription);
+                _db.SaveChanges();
+            }
+        }
          
     }
 }

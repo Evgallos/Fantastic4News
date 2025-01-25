@@ -18,7 +18,12 @@ namespace Fantastic4News.Services
 
         IEnumerable<Subscription> GetSubscriptionById(string id);
         List<Subscription> GetSubscriptionsForUser(string userId);
+        public Subscription GetPreviousSubs(string userId);
+        public void UpdateSubs(Subscription subscription);
 
-    }
+
+
+
+	}
 }
  

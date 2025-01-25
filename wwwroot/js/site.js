@@ -60,7 +60,8 @@ function ChooseSubs(MonthNum) {
     var monthNum = MonthNum;
     var startDate = new Date($('#startDate').val());    // Parse the start date
     var expiresDate = new Date();
-
+    var price = $('#forsubprice').val();
+    var totprice = price * monthNum;
     console.log("monthnum " + monthNum);
     console.log("startdate " + startDate);
 
@@ -72,6 +73,10 @@ function ChooseSubs(MonthNum) {
     console.log("formattedExpiresDate: ", formattedExpiresDate);
     $('#ExpiresDate').val(formattedExpiresDate);
     $('#errmsg').text("");
+    $('#total').html('<strong>Total price: </strong> ' + price +' * '+monthNum + ' = '+totprice);
+    $('#forsubprice').val(totprice);
+
+
 
     console.log("this is exp date " + $('#ExpiresDate').val());
 
@@ -79,11 +84,13 @@ function ChooseSubs(MonthNum) {
 
 
 //show hide the choose subscription form
-function chooseDateTimepartial(subtpId, typName) {
+function chooseDateTimepartial(subtpId, typName, price) {
     console.log("its here" + subtpId);
     console.log("tyname" + typName);
     $('#subsTp').text(typName);
     $('#forsubtyid').val(subtpId);
+    $('#forsubprice').val(price);
+
 
     $('#chooseDate').show();
 }
