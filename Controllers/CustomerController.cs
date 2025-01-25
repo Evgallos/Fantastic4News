@@ -76,27 +76,43 @@ namespace Fantastic4News.Controllers
         public IActionResult ChooseFreeSubscription(int id)
         {
 
-            string userId = "";
+            string userId = ""; Subscription subs;
             var subsc = _subscriptionService.GetSubscriptionTypeById(id);
             if (User.Identity != null && User.Identity.IsAuthenticated)
             { // Get the user by their ID
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
             }
+            var previousSubs = _subscriptionService.GetPreviousSubs(userId);
 
-
-
-            var subs = new Subscription
+			if (previousSubs == null)
             {
-                SubscriptionTypeId = id,
-                Created = DateTime.Now,
-                Price = subsc.Price,
-                UserId = userId
+				subs = new Subscription
+				{
+					SubscriptionTypeId = id,
+					Created = DateTime.Now,
+					Price = subsc.Price,
+					UserId = userId
 
-            };
+				};
+
+			}
+            else
+            {
+                subs = new Subscription
+                {
+                    SubscriptionTypeId = id,
+                    Created = ((DateTime)previousSubs.Expired).AddDays(1),
+                    Price=subsc.Price,
+                    UserId = userId
+                };
+            }
+
+
+           
             _subscriptionService.AddSubscription(subs);
 
-            return Json(new { success = true, redirectToUrl = Url.Action("index") });
+            return Json(new { success = true, redirectToUrl = Url.Action("RegisterConfirmation") });
 
         }
 
@@ -110,20 +126,25 @@ namespace Fantastic4News.Controllers
 
             }
 
-            
-            
-
-            var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
+			var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
 
             if (subs == null) { return Content("subs is null"); }
             else
             {
-                var subscription = new Subscription
+				var previousSubs = _subscriptionService.GetPreviousSubs(userId);
+
+				if (previousSubs.SubscriptionTypeId == 1)
+				{
+					previousSubs.Expired = subs.Created.AddDays(-1);
+
+					_subscriptionService.UpdateSubs(previousSubs);
+				}
+				var subscription = new Subscription
                 {
                     SubscriptionTypeId = subs.SubscriptionTypeId,
                     Created = subs.Created,
                     Expired = subs.Expired,
-                    Price = subsTpc.Price,
+                    Price = subs.Price,
                     UserId = userId
 
                 };
