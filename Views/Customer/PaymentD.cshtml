@@ -1,0 +1,84 @@
+﻿@model Fantastic4News.Models.ViewModels.PaymentViewModel
+
+<div class="container">
+	<div class="text-center">
+		<h1>Payment Confirmation</h1>
+	</div>
+	<div class="container">
+		<div class="row m-auto">
+
+			<h3 class="text-center">Payment Details:</h3>
+
+			<div class="row m-auto justify-content-center">
+				<table class="table border-0 w-70 ">
+					<tr>
+						<td>Subscrption-type</td>
+						<td>@Model.SubsTypeName</td>
+					</tr>
+					<tr>
+						<td>Total price</td>
+						<td> @Model.Subs.Price</td>
+					</tr>
+				</table>
+								
+			</div>
+
+
+			<div class="inlineimage">
+				<img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Mastercard-Curved.png">
+				<img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Discover-Curved.png">
+				<img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/Paypal-Curved.png">
+				<img class="img-responsive images" src="https://cdn0.iconfinder.com/data/icons/credit-card-debit-card-payment-PNG/128/American-Express-Curved.png">
+			</div>
+
+		</div>
+		<div>
+			<form asp-action="PaymentD" asp-controller="Customer" method="post">
+
+				@Html.AntiForgeryToken()
+				<div class="row">
+					<div class="form-group">
+						<label>CARD NUMBER</label>
+						<input type="text" class="form-control" placeholder="Valid Card Number" value="4263982640269299" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-7">
+						<div class="form-group">
+							<label>DATE</label>
+							<input type="text" class="form-control" placeholder="MM / YY" value="02/2026">
+						</div>
+					</div>
+					<div class="col-xs-5 col-md-5 pull-right">
+						<div class="form-group">
+							<label>CV CODE</label>
+							<input type="text" class="form-control" placeholder="CVC" value="887" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label>CARD OWNER</label>
+						<input type="text" class="form-control" placeholder="Card Owner Name" value="Customer" />
+					</div>
+				</div>
+
+				<hr />
+
+				<input asp-for="Subs.Created" type="date" class="form-control" value="@Model.Subs.Created" hidden />
+				<input asp-for="Subs.Expired" type="date" class="form-control" value="@Model.Subs.Expired" hidden />
+				<input asp-for="Subs.SubscriptionTypeId" type="number" style="width:95%" value="@Model.Subs.SubscriptionTypeId" hidden />
+				<input asp-for="Subs.Price" type="number" style="width:95%" value="@Model.Subs.Price" hidden />
+
+
+				<div class="row">
+					<button class="btn btn-success btn-lg" type="submit">Confirm Payment</button>
+				</div>
+
+
+			</form>
+		</div>
+
+	</div>
+</div>
+

@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Linq.Expressions;
 using Org.BouncyCastle.Bcpg;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 
 namespace Fantastic4News.Controllers
@@ -20,7 +21,8 @@ namespace Fantastic4News.Controllers
         private readonly IApiService _apiService;
         private readonly UserManager<User> _userManager;
 
-        public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager, IApiService apiService)
+
+		public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager, IApiService apiService)
         {
             _customerService = customerService;
             _subscriptionService = subscriptionService;
@@ -125,21 +127,27 @@ namespace Fantastic4News.Controllers
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
 
             }
+            PaymentViewModel payobj = new PaymentViewModel
+            {
+                SubsTypeName = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId).TypeName,
+                Subs = subs,
+            };
 
-			var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
+
+            var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
 
             if (subs == null) { return Content("subs is null"); }
             else
             {
-				var previousSubs = _subscriptionService.GetPreviousSubs(userId);
+                var previousSubs = _subscriptionService.GetPreviousSubs(userId);
 
-				if (previousSubs.SubscriptionTypeId == 1)
-				{
-					previousSubs.Expired = subs.Created.AddDays(-1);
+                if (previousSubs.SubscriptionTypeId == 1)
+                {
+                    previousSubs.Expired = subs.Created.AddDays(-1);
 
-					_subscriptionService.UpdateSubs(previousSubs);
-				}
-				var subscription = new Subscription
+                    _subscriptionService.UpdateSubs(previousSubs);
+                }
+                var subscription = new Subscription
                 {
                     SubscriptionTypeId = subs.SubscriptionTypeId,
                     Created = subs.Created,
@@ -152,40 +160,55 @@ namespace Fantastic4News.Controllers
                 _subscriptionService.AddSubscription(subscription);
 
             }
+            TempData["payobj"] = JsonConvert.SerializeObject(payobj); 
 
-
-            return RedirectToAction("RegisterConfirmation");
+			return RedirectToAction("PaymentD");
         }
 
 
 
-        public IActionResult SubscriptionType()
+    
+
+        [HttpGet]
+        public IActionResult PaymentD()
         {
-            var subscription = _subscriptionService.GetSubscriptionTypes().ToList();
-            return View(subscription);
-
+			if (TempData["payobj"] != null)
+			{
+				var payobj = JsonConvert.DeserializeObject<PaymentViewModel>((string)TempData["payobj"]); // Deserialize back to object
+             
+				return View(payobj);
+			}
+			return RedirectToAction("RegisterConfirmation");
         }
 
 
+		[HttpPost]
+		public IActionResult PaymentD (PaymentViewModel subs)
+		{
+			string userId = "";
+			if (User.Identity != null && User.Identity.IsAuthenticated)
+			{ // Get the user by their ID
+				userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
+
+			}
+	
+
+              
+            return RedirectToAction("RegisterConfirmation"); // Redirects to the GET method
+		}
 
 
-        //public IActionResult UpdateSubsriptionType(string customerId, int SubscriptionTypeId)
-        //{
-        //    bool isUpdated = _subscriptionService.updateSubscription(SubscriptionTypeId);
+		public IActionResult SubscriptionType()
+		{
+			var subscription = _subscriptionService.GetSubscriptionTypes().ToList();
+			return View(subscription);
 
-        //    if (isUpdated)
-        //    {
-        //        return RedirectToAction("Subscription Updated", new { customerId });
-        //    }
-        //    else
-        //    {
-        //        TempData["ErrorMessage"] = "Failed to update subscription. Subscription may not exist.";
-        //        return View();
-        //    }
-        //}
+		}
+
+		
 
 
-        [Authorize]
+		[Authorize]
         public IActionResult SubscriptionDetailCustomer()
         {
             string userId = "";

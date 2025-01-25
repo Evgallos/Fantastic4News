@@ -52,33 +52,41 @@ function displayRegisterVC() {
 //});
 
 function showArticleForm() {
-      document.getElementById('createArticleForm').style.display = 'block';
+    document.getElementById('createArticleForm').style.display = 'block';
 }
 
 function ChooseSubs(MonthNum) {
     console.log(MonthNum);
+    console.log('start date : '+$('#startDate').val());
     var monthNum = MonthNum;
-    var startDate = new Date($('#startDate').val());    // Parse the start date
-    var expiresDate = new Date();
-    var price = $('#forsubprice').val();
-    var totprice = price * monthNum;
-    console.log("monthnum " + monthNum);
-    console.log("startdate " + startDate);
-
-    var expiresDate = new Date(startDate);
-    expiresDate.setMonth(startDate.getMonth() + monthNum);
-    console.log(expiresDate);
-
-    var formattedExpiresDate = expiresDate.toISOString().split('T')[0];
-    console.log("formattedExpiresDate: ", formattedExpiresDate);
-    $('#ExpiresDate').val(formattedExpiresDate);
-    $('#errmsg').text("");
-    $('#total').html('<strong>Total price: </strong> ' + price +' * '+monthNum + ' = '+totprice);
-    $('#forsubprice').val(totprice);
+    if ($('#startDate').val() == '') {
+        $('#errmsg').text("choose start date");
+ }
+    else {
 
 
+        var startDate = new Date($('#startDate').val());    // Parse the start date
+        var expiresDate = new Date();
+        var price = $('#forsubprice').val();
+        var totprice = price * monthNum;
+        console.log("monthnum " + monthNum);
+        console.log("startdate " + startDate);
 
-    console.log("this is exp date " + $('#ExpiresDate').val());
+        var expiresDate = new Date(startDate);
+        expiresDate.setMonth(startDate.getMonth() + monthNum);
+        console.log(expiresDate);
+
+        var formattedExpiresDate = expiresDate.toISOString().split('T')[0];
+        console.log("formattedExpiresDate: ", formattedExpiresDate);
+        $('#ExpiresDate').val(formattedExpiresDate);
+        $('#errmsg').text("");
+        $('#total').html('<strong>Total price: </strong> ' + price + ' * ' + monthNum + ' = ' + totprice);
+        $('#forsubprice').val(totprice);
+
+
+
+        console.log("this is exp date " + $('#ExpiresDate').val());
+    }
 
 }
 
@@ -134,25 +142,25 @@ function uploadImg() {
     formData.append("imageFile", file);
 
     $.ajax({
-            type: 'post',
-            url: '/Article/UploadImage',
-            data: formData,
-            processData: false, 
-            contentType: false,
+        type: 'post',
+        url: '/Article/UploadImage',
+        data: formData,
+        processData: false,
+        contentType: false,
         // By setting processData and contentType to false,ensures that the file upload is handled
         // correctly by the browser and sent to the server in the appropriate format.
         success: function (response) {
             console.log("url" + response);
             console.log("Upload successful for file: " + file.name);
-            uploadedurl = response; 
+            uploadedurl = response;
             document.getElementById("uploadedImg").value = uploadedurl;
-            },
+        },
         error: function (xhr) {
             console.log("error " + xhr.statusText());
-                console.log("Upload failed for file: " + file.name);
-            }
+            console.log("Upload failed for file: " + file.name);
+        }
     });
-   
+
 }
 
 
