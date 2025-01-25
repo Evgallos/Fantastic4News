@@ -20,7 +20,7 @@ namespace Fantastic4News
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             var connectionString1 = builder.Configuration.GetConnectionString("ServerConnection") ?? throw new InvalidOperationException("Connection string 'ServerConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString1));
+                options.UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -61,6 +61,7 @@ namespace Fantastic4News
             builder.Services.AddScoped<IApiService, ApiService>();
             builder.Services.AddScoped<IWeatherService, WeatherService>();
             builder.Services.AddScoped<INewsLetterService, NewsLetterService>();
+            builder.Services.AddScoped<IChartService, ChartService>();
 
 			builder.Services.AddTransient<IEmailSender, EmailSender>();
 

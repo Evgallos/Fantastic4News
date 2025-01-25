@@ -1,0 +1,108 @@
+﻿@model Fantastic4News.Models.ViewModels.ChartViewModel
+<style>
+	#subscriptionBarChart, #userPieChart {
+		max-width: 600px; /* Desired width */
+		max-height: 400px; /* Desired height */
+	}
+</style>
+@* <div class="row  ">
+
+	<div class=" col-md-7 container align-content-center">
+		<h5>Bar Chart showing different Subscription types used by customer</h5>
+
+		<canvas id="subscriptionBarChart"></canvas>
+	</div>
+	<div class="col-md-5 container text-center align-content-center border-start border-1">
+		<h5>Bar Chart showing Active and In-Active customer</h5>
+
+		<canvas id="userPieChart"></canvas>
+	</div>
+</div> *@
+
+<div class="row">
+	<div class="col-md-7 d-flex flex-column">
+		<h4 class="text-star ps-2 pb-5">Bar Chart showing different Subscription types used by customer</h4>
+
+		<div class="d-flex justify-content-center">
+			<canvas id="subscriptionBarChart"></canvas>
+		</div>
+	</div>
+	<div class="col-md-5 d-flex flex-column border-start border-1">
+		<h4 class="text-start ps-2 pb-5">Pie Chart showing Active and In-Active customer</h4>
+		<div class="d-flex justify-content-center">
+			<canvas id="userPieChart"></canvas>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+	 // Bar Chart
+	// var barCtx = document.getElementById('subscriptionBarChart').getContext('2d');
+		var barCanvas = document.getElementById('subscriptionBarChart');
+	 barCanvas.width = 200;
+	 barCanvas.height = 100;
+
+	 var barCtx = barCanvas.getContext('2d');
+
+	var subscriptionBarChart = new Chart(barCtx, {
+		 type: 'bar',
+		 data: {
+			 labels: ['Free', 'Standard', 'Premium'],
+			 datasets: [
+				 {
+					 label: 'Current subscription Usage',
+					 data: [@Model.CurrFree, @Model.CurrStandard, @Model.CurrPremium],
+					 backgroundColor: 'rgba(75, 192, 192, 0.5)',
+					 borderColor: 'rgba(75, 192, 192, 1)',
+					 borderWidth: 1
+				 },
+				 {
+					 label: 'Previous Subscription Usage',
+					 data: [@Model.OldFree, @Model.OldStandard, @Model.OldPremium],
+					 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+					 borderColor: 'rgba(255, 99, 132, 1)',
+					 borderWidth: 1
+				 }
+			 ]
+		 },
+		 options: {
+			 scales: {
+				 y: {
+					 beginAtZero: true
+				 }
+			 }
+		 }
+	 });
+
+	 // Pie Chart
+	   var pieCanvas = document.getElementById('userPieChart');
+	   pieCanvas.width = 200;
+	   pieCanvas.height = 100;
+	 var pieCtx = pieCanvas.getContext('2d');
+	 var subscriptionPieChart = new Chart(pieCtx, {
+		 type: 'pie',
+		 data: {
+			 labels: ['Active', 'Inactive'],
+			 datasets: [{
+				 label: 'Customer Status',
+				 data: [@Model.TotalActiveCustormers, @Model.TotalInActiveCustomers],
+				 backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+				 borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+				 borderWidth: 1
+			 }]
+		 }
+	 });
+</script>
+
+
