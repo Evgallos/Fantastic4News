@@ -5,6 +5,42 @@
         checkDateInDatabase(selectedDate);
     });
 
+    //validation fro login email or username
+
+    $('#emailOrUsrname').on('change', function () {
+        var emailOrusrname = $(this).val();
+        console.log(emailOrusrname);
+        $.ajax({
+            type: 'POST',
+            url: '/Customer/ValidateLoginEmailOrUsrName',
+            dataType: 'json',
+            data: { emailOrusrname: emailOrusrname },
+            success: function (response) {
+                if (!response.success) {                   
+
+                    $('#emailOrUsrname').tooltip('dispose')
+                        .attr('title', response.message.replace(/\n/g, ' <br /> '))
+                        .tooltip({
+                            html: true,
+                            content: function ()//The content option ensures the tooltip correctly interprets HTML.
+                            {
+                                return $(this).prop('title');
+                            }
+
+                        })
+                        .tooltip('show');
+                    $('#login-submit').prop('disabled', true);
+
+                } else {
+                    $('#emailOrUsrname').tooltip('dispose');
+                    $('#login-submit').prop('disabled', false);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('An error occurred: ' + error);
+            }
+        });
+    });
 
     //validation for register Email
     $('#regEmail').on('change', function () {
@@ -20,9 +56,11 @@
                     $('#regEmail').tooltip('dispose')
                         .attr('title', response.message)
                         .tooltip('show');
+                    $('#registerSubmit').prop('disabled',true)
 
                 } else {
-                    $('#regEmail').tooltip('dispose')
+                    $('#regEmail').tooltip('dispose');
+                    $('#registerSubmit').prop('disabled', false)
                 }
             },
             error: function (xhr, status, error) {
@@ -45,9 +83,11 @@
                     $('#usrName').tooltip('dispose')
                         .attr('title', response.message)
                         .tooltip('show');
+                    $('#registerSubmit').prop('disabled', true);
 
                 } else {
-                    $('#usrName').tooltip('dispose')
+                    $('#usrName').tooltip('dispose');
+                    $('#registerSubmit').prop('disabled', true);
                 }
             },
             error: function (xhr, status, error) {

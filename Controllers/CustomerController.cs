@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 
 namespace Fantastic4News.Controllers
@@ -261,13 +262,34 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public JsonResult ValidateRegisterUsername(string userName)
         {
-            bool usrNameExists = _customerService.CustomerUsrNameExist(userName);
+
+			bool usrNameExists = _customerService.CustomerUsrNameExist(userName);
             if (usrNameExists)
                 return Json(new { success = false, message = "User Name already taken. Please choose another one." });
 
             return Json(new { success = true });
         }
 
+        [HttpPost]
 
-    }
+		public JsonResult ValidateLoginEmailOrUsrName(string emailOrusrname)
+        {
+			bool emailExists = _customerService.CustomerExist(emailOrusrname);
+			bool usrNameExists = _customerService.CustomerUsrNameExist(emailOrusrname);
+            bool inactiveEmail = _customerService.CustomerInactiveExist(emailOrusrname);
+            bool inactiveusername = _customerService.CustomerInactiveUsrNameExist(emailOrusrname);
+			if (!emailExists && !usrNameExists)
+            {
+				return Json(new { success = false, message = "Email or user name is not recognised. Please enter correct one." });
+			}
+            if(inactiveEmail || inactiveusername)
+            {
+                return Json(new { sucuss = false, message = "Inactive Account. \n Your Account is not active.\n *** Please contact Customer service for activating it.***" });
+            }
+
+            return Json(new { success = true });
+		}
+
+
+	}
 }

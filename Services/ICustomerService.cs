@@ -14,5 +14,7 @@ namespace Fantastic4News.Services
         public User GetCustmerbyId(string id);
 		bool CustomerExist(string email);
 		bool CustomerUsrNameExist(string userName);
+		bool CustomerInactiveExist(string email);
+		bool CustomerInactiveUsrNameExist(string userName);
 	}
 }
