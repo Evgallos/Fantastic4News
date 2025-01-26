@@ -36,9 +36,9 @@ namespace Fantastic4News.Controllers
 
             var cusIndexVm = new CustomerIndexViewModel()
             {
-                DailyNews = articles.OrderByDescending(a => a.DateStamp).Take(5).ToList(),
-                PopularNews = articles.OrderByDescending(a => a.Views).Take(4).ToList(),
-                EditorsChoice = articles.Where(a => a.EditorsChoice == true).Take(3).ToList(),
+                DailyNews = articles.Where(a => a.EditorsChoice == false).OrderByDescending(a => a.DateStamp).Take(5).ToList(),
+                PopularNews = articles.OrderByDescending(a => a.Views).ThenByDescending(a=>a.Like).Take(4).ToList(),
+                EditorsChoice = articles.Where(a => a.EditorsChoice == true).OrderByDescending(a => a.DateStamp).Take(3).ToList(),
             };
 
             return View(cusIndexVm);
@@ -137,7 +137,12 @@ namespace Fantastic4News.Controllers
 
                 if (previousSubs.SubscriptionTypeId == 1)
                 {
+                    if(previousSubs.Created>=subs.Created)
+                    { previousSubs.Expired=subs.Created; }
+                    else
+                    {
                     previousSubs.Expired = subs.Created.AddDays(-1);
+                    }
 
                     _subscriptionService.UpdateSubs(previousSubs);
                 }

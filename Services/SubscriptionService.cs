@@ -35,8 +35,14 @@ namespace Fantastic4News.Services
         {
             return _db.Subscriptions.Find(id);
         }
+        public Subscription GetCurrentSubscriptionById(string id)
+        { 
+        var subscription = _db.Subscriptions.Where(s=>s.UserId == id && DateTime.Now>=s.Created &&(s.Expired==null || DateTime.Now<=s.Expired)).FirstOrDefault();
+            return subscription;
+        }
 
-        public IEnumerable<Subscription> GetSubscriptionById(string id)
+
+		public IEnumerable<Subscription> GetSubscriptionById(string id)
         {
             // ToDo: Always returns a list of only one subscription! Rewrite so that it only returns one sub.
             //multipleactiveresulsset to true 

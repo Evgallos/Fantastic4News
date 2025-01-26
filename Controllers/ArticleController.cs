@@ -24,15 +24,17 @@ namespace Fantastic4News.Controllers
 
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
+        private readonly ISubscriptionService _iss;
         private readonly UserManager<User> _userManager;
         private readonly IFileService _fileService;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService,ISubscriptionService iss)
         {
             _articleService = articleService;
             _categoryService = categoryService;
             _userManager = userManager;
             _fileService = fileService;
+            _iss = iss;
         }
 
         // Actions
@@ -73,13 +75,32 @@ namespace Fantastic4News.Controllers
         [Authorize]
         public IActionResult Details(int id)
         {
+            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var obj = _articleService.GetArticleById(id);
 
-            var obj = _articleService.GetArticleById(id);
+			//checking if customer can read article with thier current subscription plan
+			//if not redirecting to different page which says not allowed to read it
+            
+            var currSubscription=_iss.GetCurrentSubscriptionById(usrId);
 
-            obj.Views = obj.Views + 1;
+            if(obj.EditorsChoice==true&&currSubscription.SubscriptionTypeId!=3)
+            {
+                //redirect to other page
+                return RedirectToAction("SubscriptionMessage");
+            }
+            if(obj.DateStamp==DateTime.Now && currSubscription.SubscriptionTypeId ==1)
+            {
+				//redirect to other page
+				return RedirectToAction("SubscriptionMessage");
+
+
+			}
+  			//**********************
+
+
+			obj.Views = obj.Views + 1;
             _articleService.UpdateArticle(obj);
 
-            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (!string.IsNullOrEmpty(usrId))
             {
@@ -89,7 +110,13 @@ namespace Fantastic4News.Controllers
             return View(obj);
         }
 
-        [Authorize(Roles = "Journalist,Admin")]
+		public IActionResult SubscriptionMessage()
+		{
+
+			return View();
+		}
+
+		[Authorize(Roles = "Journalist,Admin")]
         public IActionResult Create()
         {
             Article obj = new Article();

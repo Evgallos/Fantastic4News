@@ -8,7 +8,10 @@ namespace Fantastic4News.Services
 
         Subscription GetSubscriptionById(int id);
 
-        IEnumerable<SubscriptionType> GetSubscriptionTypes();
+        public Subscription GetCurrentSubscriptionById(string id);
+
+
+		IEnumerable<SubscriptionType> GetSubscriptionTypes();
 
         SubscriptionType GetSubscriptionTypeById(int id);
         Subscription DateBeforeExpiresDate(DateTime givenDate, string usrId);
