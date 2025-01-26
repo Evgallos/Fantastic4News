@@ -1,12 +1,9 @@
 ﻿using Fantastic4News.Models.Db;
 using Fantastic4News.Models.ViewModels;
 using Fantastic4News.Services;
-using Fantastic4News.ViewComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Linq.Expressions;
-using Org.BouncyCastle.Bcpg;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 
@@ -32,7 +29,6 @@ namespace Fantastic4News.Controllers
         }
 
 
-
         public IActionResult Index()
         {
             var articles = _articleService.GetArticlesWithJournalist().Where(a => a.IsPublished == true && a.DateStamp <= DateTime.Now).ToList();
@@ -55,8 +51,8 @@ namespace Fantastic4News.Controllers
             if (User.Identity != null && User.Identity.IsAuthenticated)
             { // Get the user by their ID
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
-
             }
+
             if (DateTime.TryParse(date, out DateTime parsedDate))
             {
                 var availablesubs = _subscriptionService.DateBeforeExpiresDate(parsedDate, userId);
@@ -77,14 +73,13 @@ namespace Fantastic4News.Controllers
 
         public IActionResult ChooseFreeSubscription(int id)
         {
-
             string userId = ""; Subscription subs;
             var subsc = _subscriptionService.GetSubscriptionTypeById(id);
             if (User.Identity != null && User.Identity.IsAuthenticated)
             { // Get the user by their ID
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
-
             }
+
             var previousSubs = _subscriptionService.GetPreviousSubs(userId);
 
 			if (previousSubs == null)
@@ -109,14 +104,12 @@ namespace Fantastic4News.Controllers
                     UserId = userId
                 };
             }
-
-
            
             _subscriptionService.AddSubscription(subs);
-
-            return Json(new { success = true, redirectToUrl = Url.Action("RegisterConfirmation") });
+            return Json(new { success = true, redirectToUrl = Url.Action("ConfirmationMessage") });
 
         }
+
 
         [HttpPost]
         public IActionResult chooseOtherSubscription(Subscription subs)
@@ -125,8 +118,8 @@ namespace Fantastic4News.Controllers
             if (User.Identity != null && User.Identity.IsAuthenticated)
             { // Get the user by their ID
                 userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
-
             }
+
             PaymentViewModel payobj = new PaymentViewModel
             {
                 SubsTypeName = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId).TypeName,
@@ -178,23 +171,15 @@ namespace Fantastic4News.Controllers
              
 				return View(payobj);
 			}
-			return RedirectToAction("RegisterConfirmation");
+			return RedirectToAction("ConfirmationMessage");
         }
 
 
 		[HttpPost]
 		public IActionResult PaymentD (PaymentViewModel subs)
 		{
-			string userId = "";
-			if (User.Identity != null && User.Identity.IsAuthenticated)
-			{ // Get the user by their ID
-				userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//using default claims are set in register or login
-
-			}
-	
-
-              
-            return RedirectToAction("RegisterConfirmation"); // Redirects to the GET method
+			              
+            return RedirectToAction("ConfirmationMessage"); // Redirects to the GET method
 		}
 
 
@@ -256,7 +241,7 @@ namespace Fantastic4News.Controllers
             return Redirect("index");
         }
 
-        public IActionResult RegisterConfirmation()
+        public IActionResult ConfirmationMessage()
         {
 
             return View();
@@ -266,9 +251,6 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public JsonResult ValidateRegisterEmail(string email)
         {
-            //if (!ModelState.IsValid) { return Json(new { success = false, message = "Invalid email format." }); }
-
-
             bool emailExists = _customerService.CustomerExist(email);
             if (emailExists)
                 return Json(new { success = false, message = "User with This email address is already registerd." });
@@ -279,9 +261,6 @@ namespace Fantastic4News.Controllers
         [HttpPost]
         public JsonResult ValidateRegisterUsername(string userName)
         {
-            //if (!ModelState.IsValid) { return Json(new { success = false, message = "Invalid email format." }); }
-
-
             bool usrNameExists = _customerService.CustomerUsrNameExist(userName);
             if (usrNameExists)
                 return Json(new { success = false, message = "User Name already taken. Please choose another one." });

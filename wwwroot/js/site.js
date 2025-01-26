@@ -1,10 +1,7 @@
-﻿//open weather modal
-function openModal() {
-    $('#cityModal').modal('show');
-}
-
-//sumbit modal
-
+﻿////open weather modal
+//function openModal() {
+//    $('#cityModal').modal('show');
+//}
 
 
 
