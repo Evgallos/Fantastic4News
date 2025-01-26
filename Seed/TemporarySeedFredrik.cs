@@ -50,7 +50,7 @@ namespace Fantastic4News.Seed
                         Email = "fredrik_customer@new.se",
                         UserName = "Fredrik_Customer",
                         EmailConfirmed = true
-                    }
+                    },
                 };
 
                 var password = "*Qwerty123";

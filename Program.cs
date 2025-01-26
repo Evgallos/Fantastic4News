@@ -140,8 +140,9 @@ namespace Fantastic4News
             }
 
             await Seed.TemporarySeedFredrik.Seed(app);
+			await Seed.TemporaryMoreCustomersSeed.Seed(app);
 
-            app.Run();
+			app.Run();
 		}
 	}
 
