@@ -17,7 +17,7 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.EmailOrUserName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <input asp-for="Input.EmailOrUserName" id="emailOrUsrname" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                     <label asp-for="Input.EmailOrUserName" class="form-label"></label>
                     <span asp-validation-for="Input.EmailOrUserName" class="text-danger"></span>
                 </div>
@@ -77,6 +77,11 @@
         </section>
     </div>
 </div> 
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/validation.js"></script>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

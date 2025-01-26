@@ -28,6 +28,16 @@ namespace Fantastic4News.Services
 			return _db.Users.Any(u=>u.UserName==usrName);
 		}
 
+		public bool CustomerInactiveExist(string email)
+		{
+			return _db.Users.Any(u => u.Email == email && u.status==false);
+		}
+
+		public bool CustomerInactiveUsrNameExist(string usrName)
+		{
+			return _db.Users.Any(u => u.UserName == usrName && u.status==false);
+		}
+
 		public User GetCustmerbyId(string id)
         {
             var user = _db.Users.FirstOrDefault(u => u.Id == id);
