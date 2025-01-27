@@ -23,21 +23,45 @@ namespace Fantastic4News.Services
 		{
 			var customers = _db.Users.ToList().Where(u => (_userManager.IsInRoleAsync(u,"Customer")).Result).ToList();
 
+			var curryear = DateTime.Now.Year;
+			var currMon = DateTime.Now.Month;
+			int previousMon=0; int Yr = curryear;
+			if (currMon == 1)
+			{
+				previousMon = 12;
+				Yr = curryear - 1;
+			}
+
+			var subs = _db.Subscriptions;
+			var CurrFree1 = _db.Subscriptions
+							.Where(s => s.SubscriptionTypeId == 1);
+
+			foreach (var item in CurrFree1)
+			{
+				
+			}
+
+
+			var oldFree1 = _db.Subscriptions.Where(s => s.SubscriptionTypeId == 1
+							&& (Yr == s.Expired.Value.Year && previousMon == s.Expired.Value.Month)).Count();
 
 			var chart = new ChartViewModel
-			{
-				CurrFree = _db.Subscriptions.Include(s => s.User)
-							.Where(s => s.SubscriptionTypeId == 1 && DateTime.Now<=s.Expired).Count(),
-				OldFree = _db.Subscriptions.Include(s => s.User)
-							.Where(s => s.SubscriptionTypeId == 1 && DateTime.Now > s.Expired).Count(),
-				CurrStandard = _db.Subscriptions.Include(s => s.User)
-							.Where(s => s.SubscriptionTypeId == 2 && DateTime.Now <= s.Expired).Count(),
-				OldStandard = _db.Subscriptions.Include(s => s.User)
-							.Where(s => s.SubscriptionTypeId == 2 && DateTime.Now > s.Expired).Count(),
-				CurrPremium = _db.Subscriptions.Include(s => s.User)
-							.Where(s => s.SubscriptionTypeId == 3 && DateTime.Now <= s.Expired).Count(),
-				OldPremium= _db.Subscriptions.Include(s=>s.User)
-							.Where(s=>s.SubscriptionTypeId==3 && DateTime.Now > s.Expired).Count(),
+			{	
+
+				CurrFree = 1,
+				OldFree = oldFree1,
+				CurrStandard = _db.Subscriptions
+							.Where(s => s.SubscriptionTypeId == 2 &&
+							curryear == s.Expired.Value.Year && currMon == s.Expired.Value.Date.Month).Count(),
+				OldStandard = _db.Subscriptions
+							.Where(s => s.SubscriptionTypeId == 2 
+							&& Yr == s.Expired.Value.Year && previousMon == s.Expired.Value.Month).Count(),
+				CurrPremium = _db.Subscriptions
+							.Where(s => s.SubscriptionTypeId == 3
+							&& Yr == s.Expired.Value.Year && previousMon == s.Expired.Value.Month).Count(),
+				OldPremium= _db.Subscriptions
+							.Where(s=>s.SubscriptionTypeId == 3
+							&& Yr == s.Expired.Value.Year && previousMon == s.Expired.Value.Month).Count(),
 
 				TotalActiveCustormers = customers.Where(u => u.status == true ).Count(),
 				TotalInActiveCustomers = customers.Where(u => u.status == false ).Count()
