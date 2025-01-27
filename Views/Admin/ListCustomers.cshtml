@@ -6,6 +6,7 @@
 
 <h1>Customers</h1>
 
+
 <p>
     <a asp-action="ListCustomer"></a>
 </p>
@@ -19,12 +20,13 @@
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Email) 
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+       
         @foreach (var item in Model)
         {
             <tr>
@@ -35,12 +37,17 @@
                     @item.LastName
                 </td>
                 <td>
-                    @item.EmailConfirmed
+                    @item.Email
                 </td>   
                 
                 <td>
-                    <a asp-action="DetailsCustomer" asp-route-id="@item.Id">Details</a>
-
+                  
+                    <div>
+                     
+                        <a asp-action="DetailsCustomer" asp-route-id="@item.Id"> <button class=" btn btn-outline-info shadow-btn ">Details</button></a>
+                    </div>
+                   @*  <a asp-action="DetailsCustomer" asp-route-id="@item.Id"> <button type="submit">Details</button></a> *@
+               
                 </td>
             </tr>
         }
