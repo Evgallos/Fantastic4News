@@ -1,4 +1,5 @@
-﻿using Fantastic4News.Services;
+﻿using Fantastic4News.Models.Db;
+using Fantastic4News.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +25,16 @@ namespace Fantastic4News.Controllers
 		}
 
         [HttpPost]
-        public IActionResult ApproveArticle(int id, DateTime publishDate,bool editorsChoice)
+        public IActionResult ApproveArticle( Article ar)
         {
-            var article = _articleService.GetArticleById(id);
+            var article = _articleService.GetArticleById(ar.Id);
             if (article != null)
             {
-                article.DateStamp = publishDate;
+                article.DateStamp = ar.DateStamp;
                 article.IsPublished = true;
-                article.EditorsChoice = editorsChoice;
+                article.EditorsChoice = ar.EditorsChoice;
                 article.editorsComment = "";
+                article.Priority = ar.Priority;
                 _articleService.UpdateArticle(article);
 
             }

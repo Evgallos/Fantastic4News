@@ -34,6 +34,7 @@ namespace Fantastic4News.Controllers
 			if (article != null)
 			{
 				article.IsComplete = isComplete;
+				article.editorsComment = "";
 				_ias.UpdateArticle(article);
 
 			}
