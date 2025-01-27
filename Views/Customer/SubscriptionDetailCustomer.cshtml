@@ -1,12 +1,12 @@
-﻿@model IEnumerable<Fantastic4News.Models.Db.Subscription>
+﻿ @model IEnumerable<Fantastic4News.Models.Db.Subscription>
 
 @{
-	ViewData["Title"] = "GetSubscriptionFor";
+    ViewData["Title"] = "GetSubscriptionFor";
 }
 
 <h1>Subscription</h1>
 
-
+@*
 <table class="table">
 	<thead>
 		<tr>
@@ -55,3 +55,49 @@
 		}
 	</tbody>
 </table>
+ *@
+
+<div class="accordion" id="subscriptionAccordion">
+    @foreach (var item in Model)
+    {
+        <div class="accordion-item shadow-btn">
+            <h2 class="accordion-header" id="heading-@item.SubscriptionType.TypeName-@item.Id">
+                <button class="accordion-button collapsed btn-primary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapse-@item.SubscriptionType.TypeName-@item.Id"
+                        aria-expanded="false"
+                        aria-controls="collapse-@item.SubscriptionType.TypeName-@item.Id">
+                    @item.SubscriptionType.TypeName
+                </button>
+            </h2>
+            <div id="collapse-@item.SubscriptionType.TypeName-@item.Id"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="heading-@item.SubscriptionType.TypeName-@item.Id"
+                 data-bs-parent="#subscriptionAccordion">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.SubscriptionType)</th>
+                                <th>@Html.DisplayNameFor(model => model.Created)</th>
+                                <th>@Html.DisplayNameFor(model => model.Expired)</th>
+                                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@item.SubscriptionType.TypeName</td>
+                                <td>@item.Created</td>
+                                <td>@item.Expired</td>
+                                <td>@item.Price</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
