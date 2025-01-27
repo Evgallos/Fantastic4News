@@ -271,7 +271,7 @@ namespace Fantastic4News.Controllers
                 CustomerUserName = user.UserName,
                 CustomerFullName = $"{user.FirstName} {user.LastName}",
                 CustomerEmail = user.Email,
-                Subscriptions = subscriptions
+                Subscriptions = subscriptions.ToList().OrderByDescending(s=> s.Created),
             };
             return View(obj);
         }

@@ -20,7 +20,7 @@ namespace Fantastic4News.Services
 
 		public bool CustomerExist(string email)
 		{
-            return _db.Users.Any(u => u.Email == email);
+            return _db.Users.Any(u => u.Email == email == true);
 		}
 
 		public bool CustomerUsrNameExist(string usrName)
