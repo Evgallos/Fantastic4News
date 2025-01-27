@@ -25,9 +25,32 @@ namespace Fantastic4News.Services
         {
             var usr = _db.Users.Find(usrId);
             bool hasNewsletter = usr.WantNewsLetter;
+
             usr.WantNewsLetter = !hasNewsletter;
+
+            if (usr.WantNewsLetter)  // Subscribe
+            {
+                if (!CheckIfNewsletterExist(usr.Email))
+                {
+                    _db.Newsletters.Add(new NewsLetter() { Email = usr.Email });
+                }
+            }
+            else  // Unsubscribe
+            {
+                if (CheckIfNewsletterExist(usr.Email))
+                {
+                    var newsletter = _db.Newsletters.Where(e => e.Email == usr.Email).FirstOrDefault();
+                    _db.Newsletters.Remove(newsletter);
+                }
+            }
+
             _db.Users.Update(usr);
             _db.SaveChanges();
+        }
+
+        private bool CheckIfNewsletterExist(string email)
+        {
+            return _db.Newsletters.Any(e => e.Email == email);
         }
     }
 }
