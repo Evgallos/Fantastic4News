@@ -237,8 +237,13 @@ namespace Fantastic4News.Controllers
 
         public IActionResult ListCustomers()
         {
-            var customers = _ius.ListCustomers();
-            return View(customers);
+			var customers = _ius.ListCustomers();
+
+            CustomerInfoViewModel cvm = new CustomerInfoViewModel();
+            cvm.Customers = _ius.ListCustomers().ToList();
+            cvm.Chart = _ichs.GetBarChartUserSubscription();
+
+			return View(cvm);
         }
 
         [HttpGet] 
