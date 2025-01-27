@@ -7,15 +7,17 @@
 <h1>Customers</h1>
 
 
+
 <div>
     <partial name="_ShowCharPartial" model="Model.Chart" />
 </div>
 
 <hr />
 
-<p>
-    <a asp-action="ListCustomer"></a>
-</p>
+
+<h4>
+    Customers List
+</h4>
 <table class="table">
     <thead>
         <tr>
@@ -26,13 +28,17 @@
                 LastName
             </th>
              <th>
+
                 Email
+
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model.Customers)
+
         {
             <tr>
                 <td>
@@ -42,12 +48,17 @@
                     @item.LastName
                 </td>
                 <td>
-                    @item.EmailConfirmed
+                    @item.Email
                 </td>   
                 
                 <td>
-                    <a asp-action="DetailsCustomer" asp-route-id="@item.Id">Details</a>
-
+                  
+                    <div>
+                     
+                        <a asp-action="DetailsCustomer" asp-route-id="@item.Id"> <button class=" btn btn-outline-info shadow-btn ">Details</button></a>
+                    </div>
+                   @*  <a asp-action="DetailsCustomer" asp-route-id="@item.Id"> <button type="submit">Details</button></a> *@
+               
                 </td>
             </tr>
         }
