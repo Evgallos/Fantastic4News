@@ -44,7 +44,7 @@ namespace Fantastic4News.Controllers
 
 		public IActionResult Index(int categoryId, string search)
 		{
-			var articles = _articleService.GetArticles().OrderByDescending(a => a.DateStamp).AsEnumerable();
+			var articles = _articleService.GetArticles().Where(a=>a.IsPublished==true).OrderByDescending(a => a.DateStamp).AsEnumerable();
 
 			if (categoryId != 0)
 			{
