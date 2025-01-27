@@ -4,25 +4,28 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>My List of New Articles</h1>
+<div class="my-5">
+
+<h1>My Articles</h1>
+</div>
 
 
-<table class="table">
-	<thead>
+<table class="table table-hover">
+	<thead class="table-secondary py-2">
 		<tr>
 
 			<th>
+				#
+			</th>
+			<th>
+				HeadLine
+			</th>
+			<th>
+				ContentSummary
+			</th>
 
-			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.HeadLine)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ContentSummary)
-			</th>
-
-			<th>
-				@Html.DisplayNameFor(model => model.DateStamp)
+				DateStamp
 			</th>
 
 			<th>
@@ -35,11 +38,11 @@
 			<th>Action</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="table-group-divider" >
 		@foreach (var item in Model)
 		{
 			var name = item.User.FirstName + " " + item.User.LastName;
-			<tr>
+			<tr class="">
 				<td>
 					Article-@item.Id
 				</td>

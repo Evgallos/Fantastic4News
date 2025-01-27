@@ -3,11 +3,13 @@
 	ViewData["Title"] = "Index";
 }
 
-<a class="btn btn-outline-primary disabled-link" onclick="displayRegisterVC()">Register New Employee </a> |
+<div class="my-5">
 
+<a class="btn btn-outline-primary disabled-link" onclick="displayRegisterVC()">Register New Employee </a> 
+</div>
 
-<table class="table">
-	<thead>
+<table class="table table-hover">
+	<thead class="table-secondary py-2">
 		<tr>
 
 			<th>
@@ -24,7 +26,7 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="table-group-divider">
 		@foreach (var item in Model)
 		{
 			<tr>
@@ -39,9 +41,9 @@
 				</td>
 
 				<td>
-					<a class="btn btn-outline-primary disabled-link" onclick="displayEditVC('@item.empId')" >Edit </a> |
-					<a class="btn btn-outline-info disabled-link" asp-action="DetailUser" asp-controller="admin" asp-route-id="@item.empId">Detail </a> |
-					<a class="btn btn-outline-danger disabled-link" asp-action="DeleteUser" asp-controller="admin" asp-route-id="@item.empId">Delete </a> 
+					<a class="btn btn-outline-primary " onclick="displayEditVC('@item.empId')" >Edit </a> |
+					<a class="btn btn-outline-info " asp-action="DetailUser" asp-controller="admin" asp-route-id="@item.empId">Detail </a> |
+					<a class="btn btn-outline-danger " asp-action="DeleteUser" asp-controller="admin" asp-route-id="@item.empId">Delete </a> 
 				</td>
 
 			</tr>

@@ -125,7 +125,7 @@ namespace Fantastic4News.Controllers
         public IActionResult DeleteUserConfirmed(string id)
         {
             _ius.DeleteUser(id);
-            TempData["Message"] = $"User_{id} is Removed succesfully";
+            TempData["Message"] = $"User_{id} is Inactivated succesfully";
 
             return RedirectToAction("Index");
         }
