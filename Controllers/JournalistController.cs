@@ -24,7 +24,7 @@ namespace Fantastic4News.Controllers
 		public IActionResult Index()
         {
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var articles = _ias.GetArticlesWithJournalist().Where(a=>a.UserId==userId).ToList();
+			var articles = _ias.GetArticlesWithJournalist().Where(a=>a.UserId==userId).OrderByDescending(a=>a.Id).ToList();
 			return View(articles);
 		}
 		[HttpPost]

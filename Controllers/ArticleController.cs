@@ -83,12 +83,13 @@ namespace Fantastic4News.Controllers
             
             var currSubscription=_iss.GetCurrentSubscriptionById(usrId);
 
+
             if(obj.EditorsChoice==true&&currSubscription.SubscriptionTypeId!=3)
             {
                 //redirect to other page
                 return RedirectToAction("SubscriptionMessage");
             }
-            if(obj.DateStamp==DateTime.Now && currSubscription.SubscriptionTypeId ==1)
+            if(obj.DateStamp.Value.Date==DateTime.Now.Date && currSubscription.SubscriptionTypeId ==1)
             {
 				//redirect to other page
 				return RedirectToAction("SubscriptionMessage");

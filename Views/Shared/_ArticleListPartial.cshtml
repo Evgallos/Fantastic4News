@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Fantastic4News.Models.Db.Article>
+﻿@model IEnumerable<Fantastic4News.Models.Db.Article>
 
 @using Microsoft.AspNetCore.Identity
 @using Fantastic4News.Models.Db
@@ -9,140 +8,152 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 <style>
-    /*List Article View CSS Bellow Keep this CSS code in here, if transfer it to CSS file then the home Page
-    will effect also because i use the same names (card, container and etc i will update the names but for now keep it here.*/
-    body {
-    font-family: 'Times New Roman', Times, serif;
-    background-color: #f4f4f9;
-    }
+	/*List Article View CSS Bellow Keep this CSS code in here, if transfer it to CSS file then the home Page
+	will effect also because i use the same names (card, container and etc i will update the names but for now keep it here.*/
+	body {
+	font-family: 'Times New Roman', Times, serif;
+	background-color: #f4f4f9;
+	}
 
-    .content-wrapper {
-    margin-top: 20px;
-    }
+	.content-wrapper {
+	margin-top: 20px;
+	}
 
-    .article-image {
-    width: 100%;
-    height: auto;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-    }
+	.article-image {
+	width: 100%;
+	height: auto;
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+	}
 
-    .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    }
+	.card-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	}
 
-    .card {
-    width: 100%;
-    max-width: 900px; /* Card width - Larger than default -Evangelos*/
-    margin: 15px 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px white;
-    border-radius: 10px;
-    }
+	.card {
+	/* 		width: 100%;
+	*/ max-width: 900px; /* Card width - Larger than default -Evangelos*/
+	margin: 15px 0;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	border: 2px white;
+	border-radius: 10px;
 
-    .card-body {
-    padding: 20px;
-    }
+	}
 
-    .card-footer {
-    padding: 10px;
-    text-align: right;
-    }
+	.card-body {
+	padding: 20px;
+	height:800px;
+	}
 
-    .card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    }
+	.card-footer {
+	padding: 10px;
+	text-align: right;
+	}
 
-    .card-text {
-    font-size: 1rem;
-    color: #555;
-    }
+	.card-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	}
 
-    .small-text {
-    font-size: 0.85rem;
-    color: #777;
-    }
+	.card-text {
+	font-size: 1rem;
+	color: #555;
+	}
 
-    .date-journalist {
-    font-size: 0.85rem;
-    color: #aaa;
-    }
+	.small-text {
+	font-size: 0.85rem;
+	color: #777;
+	}
 
-    .article-card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    }
+	.date-journalist {
+	font-size: 0.85rem;
+	color: #aaa;
+	}
 
-    .article-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    }
+	.article-card {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+	}
 
-    .article-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    }
+	.article-card img {
+	max-width: 100%;
+	border-radius: 8px;
+	}
 
-    /* Responsive Design */
+	.article-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	}
 
-    .article-card {
-    flex-direction: column;
-    max-width: 767px;
-    }
+	/* Responsive Design */
 
-    .article-content {
-    padding-left: 0;
-    padding-right: 0;
-    max-width: 767px;
-    }
+	.article-card {
+	flex-direction: column;
+	max-width: 767px;
+	}
+
+	.article-content {
+	padding-left: 0;
+	padding-right: 0;
+	max-width: 767px;
+	}
 </style>
 
-<div class="container content-wrapper">
-    <div class="card-container">
-        @foreach (var item in Model)
-        {
-                <div class="card article-card">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="@item.ImageLink" alt="Article Image" class="article-image">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="article-content">
-                                <h5 class="card-title">@item.HeadLine</h5>
-                                <p class="card-text"><strong>Category:</strong><i>@item.Category.Name</i></p>
-                                <p class="card-text">@item.ContentSummary</p>
-                                <p class="card-text">@Html.Raw(item.Content.Substring(0, item.Content.IndexOf("</p>", 0) + 10)) </p>
-                            <div class="mt-0 text-center" style="box-shadow: 10px;">                             
-                                <a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-primary btn-sm shadow-btn" alt="Button View Article">View Article</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid">
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class=" col-md-6">
+				<div class=" card article-card my-2">
+					<div class="row">
+						<div class="col-md-4">
+							<img src="@item.ImageLink" alt="Article Image" class="article-image">
+						</div>
+						<div class="col-md-8">
+							<div class="article-content">
+								<h5 class="card-title">@item.HeadLine</h5>
+								<p class="card-text"><strong>Category:</strong><i>@item.Category.Name</i></p>
+								@{
+										if (item.ContentSummary.Length > 100)
+											item.ContentSummary = item.ContentSummary.Substring(0, 101);
 
-                <!-- Actions (Details, Edit, Delete) -Evangelos -->
-                <div class="card-footer text-center">
-                    @if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin"))
-                    {
-                        <div>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary effect-border">Details</a>
-                            @if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
-                            {
-                                <span>
-                                    | <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning effect-border">Edit</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger effect-border">Delete</a>
-                                </span>
-                            }
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-    </div>
+											
+									
+								<p class="card-text">@item.ContentSummary...</p>
+								}
+@* 								<p class="card-text">@Html.Raw(item.Content.Substring(0, item.Content.IndexOf("</p>", 0) + 10)) </p>
+ *@								
+							</div>
+						</div>
+					</div>
+					<div class="my-2 text-center pb-3" style="box-shadow: 10px;">
+						<a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-primary btn-sm shadow-btn" alt="Button View Article">View Article</a>
+
+
+						@if (User.IsInRole("Journalist") || User.IsInRole("Editor") || User.IsInRole("Admin"))
+						{
+
+							@if ((User.IsInRole("Journalist") && (item.UserId == ViewBag.UserIdLoggedIn)) || (User.IsInRole("Admin")))
+							{
+								<span>
+									| <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm shadow-btn effect-border">Edit</a> |
+									<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm shadow-btn effect-border">Delete</a>
+								</span>
+							}
+
+						}
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Actions (Details, Edit, Delete) -Evangelos -->
+		}
+	</div>
+</div>

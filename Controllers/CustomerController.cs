@@ -36,9 +36,9 @@ namespace Fantastic4News.Controllers
 
             var cusIndexVm = new CustomerIndexViewModel()
             {
-                DailyNews = articles.Where(a => a.EditorsChoice == false).OrderByDescending(a => a.DateStamp).ThenBy(a=>a.Priority).Take(5).ToList(),
+                DailyNews = articles.Where(a => a.EditorsChoice == false).OrderByDescending(a => a.DateStamp.Value.Date).ThenBy(a=>a.Priority).Take(5).ToList(),
                 PopularNews = articles.OrderByDescending(a => a.Views).ThenByDescending(a=>a.Like).Take(4).ToList(),
-                EditorsChoice = articles.Where(a => a.EditorsChoice == true).OrderByDescending(a => a.DateStamp).ThenBy(a => a.Priority).Take(3).ToList(),
+                EditorsChoice = articles.Where(a => a.EditorsChoice == true).OrderByDescending(a => a.DateStamp.Value.Date).ThenBy(a => a.Priority).Take(3).ToList(),
             };
 
             return View(cusIndexVm);
