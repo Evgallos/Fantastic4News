@@ -2,23 +2,33 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div class="row mt-5">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4">
-            <div class="card py-2 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@item.TypeName</h5>
-                    @item.Description <br />
-                    @item.Price kr/month<br />
-                    <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-primary">Choose</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container d-flex justify-content-center align-items-center" >
+	<div class="row ">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-4">
+				<div class="card py-2 mb-4" style="width: 18rem;">
+					<div class="card-body my-3 ">
+                        <div class="ps-3 my-2 text-center bg-danger-subtle">
+                            <h4 class="card-title">@item.TypeName</h4>
 
-        @* <div class="cold-md-4">
+                        </div>
+                        <div class="ps-3 my-2">
+                            <p class="card-text ">
+                                @item.Description <br />
+                                @item.Price kr/month<br />
+                            </p>
+                        </div>
+                       
+						
+						<div class="btn-group btn-group-sm">
+							<button type="button" class="btn btn-primary">Choose</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			@* <div class="cold-md-4">
             <div class="flip-card py-2 mb-4">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -41,5 +51,6 @@
                 </div>
             </div>
         </div> *@
-    }
+		}
+</div>
 </div>

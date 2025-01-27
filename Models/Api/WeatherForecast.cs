@@ -4,7 +4,7 @@ namespace Fantastic4News.Models.Api
 {
     public class WeatherForecast
     {
-        [JsonProperty("Description")]
+       
         public string Summary { get; set; }
         public string City { get; set; }
         public string Lang { get; set; }

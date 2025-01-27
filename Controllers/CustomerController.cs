@@ -216,7 +216,7 @@ namespace Fantastic4News.Controllers
                 //     var userId1 = user.Id;
                 //}
             }
-            var subscription = _subscriptionService.GetSubscriptionById(userId);
+            var subscription = _subscriptionService.GetSubscriptionById(userId).ToList().OrderByDescending(s=>s.Created);
             return View(subscription);
 
 
