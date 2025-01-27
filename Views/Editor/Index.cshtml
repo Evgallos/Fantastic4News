@@ -79,14 +79,25 @@
 											<div class="mb-3">
 
 												<input type="hidden" name="Id" value="@item.Id" />
-												<label for="publishDate-@item.Id" class="form-label">Publish Date</label>
-												<input type="datetime" class="form-control" id="publishDate-@item.Id" name="publishDate" value="@item.DateStamp">
+												<label for="DateStamp" class="form-label">Publish Date</label>
+												<input type="datetime" class="form-control" id="DateStamp" name="DateStamp" value="@item.DateStamp">
 											</div>
+
+											<div class="form-group">
+												<label for="Priority">Priority</label>
+												<select class="form-control" id="Priority" name="Priority" value="@item.Priority">
+													<option value="3" >Low</option>
+													<option value="2" >Medium</option>
+													<option value="1">High</option>
+												</select>
+											</div>
+
+
 											<div class="mb-3">
-												<label class="form-check-label" for="editorsChoice">
-														Editor's Choice
+												<label class="form-check-label" for="EditorsChoice">
+													Editor's Choice
 												</label> &emsp;
-												<input type="checkbox" class="form-check-input" value=true name="editorsChoice"> 
+												<input type="checkbox" class="form-check-input" value=true name="EditorsChoice">
 											</div>
 
 
