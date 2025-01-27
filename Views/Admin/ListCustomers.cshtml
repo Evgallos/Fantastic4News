@@ -1,10 +1,17 @@
-﻿@model IEnumerable<Fantastic4News.Models.Db.User>
+﻿@model Fantastic4News.Models.ViewModels.CustomerInfoViewModel
 
 @{
     ViewData["Title"] = "ListCustomers";
 }
 
 <h1>Customers</h1>
+
+
+<div>
+    <partial name="_ShowCharPartial" model="Model.Chart" />
+</div>
+
+<hr />
 
 <p>
     <a asp-action="ListCustomer"></a>
@@ -13,19 +20,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                FirstName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                LastName
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Customers)
         {
             <tr>
                 <td>
