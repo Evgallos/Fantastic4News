@@ -18,98 +18,104 @@ using ImageMagick;
 
 namespace Fantastic4News.Controllers
 {
-    public class ArticleController : Controller
-    {
-        // Injections
+	public class ArticleController : Controller
+	{
+		// Injections
 
-        private readonly IArticleService _articleService;
-        private readonly ICategoryService _categoryService;
-        private readonly ISubscriptionService _iss;
-        private readonly UserManager<User> _userManager;
-        private readonly IFileService _fileService;
+		private readonly IArticleService _articleService;
+		private readonly ICategoryService _categoryService;
+		private readonly ISubscriptionService _iss;
+		private readonly UserManager<User> _userManager;
+		private readonly IFileService _fileService;
+		private readonly IUserService _ius;
 
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService,ISubscriptionService iss)
-        {
-            _articleService = articleService;
-            _categoryService = categoryService;
-            _userManager = userManager;
-            _fileService = fileService;
-            _iss = iss;
-        }
+		public ArticleController(IArticleService articleService, ICategoryService categoryService, UserManager<User> userManager, IFileService fileService, ISubscriptionService iss, IUserService ius)
+		{
+			_articleService = articleService;
+			_categoryService = categoryService;
+			_userManager = userManager;
+			_fileService = fileService;
+			_iss = iss;
+			_ius = ius;
+		}
 
-        // Actions
+		// Actions
 
 
-        public IActionResult Index(int categoryId, string search)
-        {
-            var articles = _articleService.GetArticles().OrderByDescending(a => a.DateStamp).AsEnumerable();
+		public IActionResult Index(int categoryId, string search)
+		{
+			var articles = _articleService.GetArticles().OrderByDescending(a => a.DateStamp).AsEnumerable();
 
-            if (categoryId != 0)
-            {
-                articles = articles.Where(a => a.CategoryId == categoryId);
+			if (categoryId != 0)
+			{
+				articles = articles.Where(a => a.CategoryId == categoryId);
 
-                ViewBag.CategoryName = _categoryService.GetCategoryById(categoryId).Name;
-            }
+				ViewBag.CategoryName = _categoryService.GetCategoryById(categoryId).Name;
+			}
 
-            if (search != null)
-            {
-                search = search.Trim();
-                articles = articles.Where(a => a.Content.ToUpper().Contains(search.ToUpper()) || a.HeadLine.ToUpper().Contains(search.ToUpper()) || a.LinkText.ToUpper().Contains(search.ToUpper()));
-            }
+			if (search != null)
+			{
+				search = search.Trim();
+				articles = articles.Where(a => a.IsPublished == true && a.Content.ToUpper().Contains(search.ToUpper()) || a.HeadLine.ToUpper().Contains(search.ToUpper()) || a.LinkText.ToUpper().Contains(search.ToUpper()));
+			}
 
-            var articlesVM = new ArticleIndexVM()
-            {
-                Articles = articles
-            };
+			var articlesVM = new ArticleIndexVM()
+			{
+				Articles = articles
+			};
 
-            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (!string.IsNullOrEmpty(usrId))
-            {
-                ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            }
+			if (!string.IsNullOrEmpty(usrId))
+			{
+				ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			}
 
-            return View(articlesVM);
-        }
+			return View(articlesVM);
+		}
 
-        [Authorize]
-        public IActionResult Details(int id)
-        {
-            string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+		[Authorize]
+		public IActionResult Details(int id)
+		{
+			string usrId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			var obj = _articleService.GetArticleById(id);
 
 			//checking if customer can read article with thier current subscription plan
 			//if not redirecting to different page which says not allowed to read it
-            
-            var currSubscription=_iss.GetCurrentSubscriptionById(usrId);
+
+			var user = _ius.GetUserById(usrId);
+			if (_ius.FindRole(user).Result == "Customer")
+			{
+				var currSubscription = _iss.GetCurrentSubscriptionById(usrId);
 
 
-            if(obj.EditorsChoice==true&&currSubscription.SubscriptionTypeId!=3)
-            {
-                //redirect to other page
-                return RedirectToAction("SubscriptionMessage");
-            }
-            if(obj.DateStamp.Value.Date==DateTime.Now.Date && currSubscription.SubscriptionTypeId ==1)
-            {
-				//redirect to other page
-				return RedirectToAction("SubscriptionMessage");
+				if (obj.EditorsChoice == true && currSubscription.SubscriptionTypeId != 3)
+				{
+					//redirect to other page
+					return RedirectToAction("SubscriptionMessage");
+				}
+				if (obj.DateStamp.Value.Date == DateTime.Now.Date && currSubscription.SubscriptionTypeId == 1)
+				{
+					//redirect to other page
+					return RedirectToAction("SubscriptionMessage");
 
 
+				}
 			}
-  			//**********************
+			//**********************
 
 
 			obj.Views = obj.Views + 1;
-            _articleService.UpdateArticle(obj);
+			_articleService.UpdateArticle(obj);
 
 
-            if (!string.IsNullOrEmpty(usrId))
-            {
-                ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            }
+			if (!string.IsNullOrEmpty(usrId))
+			{
+				ViewBag.UserIdLoggedIn = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			}
 
-            return View(obj);
-        }
+			return View(obj);
+		}
 
 		public IActionResult SubscriptionMessage()
 		{
@@ -118,155 +124,155 @@ namespace Fantastic4News.Controllers
 		}
 
 		[Authorize(Roles = "Journalist,Admin")]
-        public IActionResult Create()
-        {
-            Article obj = new Article();
-            obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";
+		public IActionResult Create()
+		{
+			Article obj = new Article();
+			obj.UserId = _userManager.GetUserId(HttpContext.User) ?? "";
 
-            SelectList categoriesSl = new SelectList(
-                _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
-                "Id",
-                "Name"
-                );
+			SelectList categoriesSl = new SelectList(
+				_categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+				"Id",
+				"Name"
+				);
 
-            ArticleIndexVM vmObj = new ArticleIndexVM()
-            {
-                Article = obj,
-                CategoriesSelectList = categoriesSl,
-            };
+			ArticleIndexVM vmObj = new ArticleIndexVM()
+			{
+				Article = obj,
+				CategoriesSelectList = categoriesSl,
+			};
 
-            return View(vmObj);
-        }
+			return View(vmObj);
+		}
 
-        [HttpPost]
-        public IActionResult Create(ArticleIndexVM vmObj)
-        {
-            if (vmObj.Article.ImageFile == null || string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
-            {
-                ModelState.AddModelError("", "Please upload a valid image file.");
-                return View(vmObj);
-            }
+		[HttpPost]
+		public IActionResult Create(ArticleIndexVM vmObj)
+		{
+			if (vmObj.Article.ImageFile == null || string.IsNullOrEmpty(vmObj.Article.ImageFile.FileName))
+			{
+				ModelState.AddModelError("", "Please upload a valid image file.");
+				return View(vmObj);
+			}
 
-            string uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
-            string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
+			string uniqueFileName = AddGuidToFile(vmObj.Article.ImageFile.FileName);
+			string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+			string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
 
-            try
-            {
-                if (!Directory.Exists(uploadFolder))
-                {
-                    Directory.CreateDirectory(uploadFolder);
-                }
+			try
+			{
+				if (!Directory.Exists(uploadFolder))
+				{
+					Directory.CreateDirectory(uploadFolder);
+				}
 
-                // Save image to folder
+				// Save image to folder
 
-                using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
-                {
-                    vmObj.Article.ImageFile.CopyTo(fileStream);
+				using (var fileStream = new FileStream(uniqueFilePath, FileMode.Create))
+				{
+					vmObj.Article.ImageFile.CopyTo(fileStream);
 
-                }
+				}
 
-                // ImageMagick 
+				// ImageMagick 
 
-                /// Read from file
-                using var image = new MagickImage(uniqueFilePath);
+				/// Read from file
+				using var image = new MagickImage(uniqueFilePath);
 
-                var size = new MagickGeometry(900, 500);
-                size.IgnoreAspectRatio = true;
+				var size = new MagickGeometry(900, 500);
+				size.IgnoreAspectRatio = true;
 
-                image.Resize(size);
-                image.Write("tempImage.JPG");
+				image.Resize(size);
+				image.Write("tempImage.JPG");
 
-                FileStream newStream = new FileStream("tempImage.JPG", FileMode.Open);
+				FileStream newStream = new FileStream("tempImage.JPG", FileMode.Open);
 
-                // Logic for sending image to Azure blob storage
+				// Logic for sending image to Azure blob storage
 
-                _fileService.UploadFileToContainer(uniqueFileName, newStream);
+				_fileService.UploadFileToContainer(uniqueFileName, newStream);
 
-                if (System.IO.File.Exists(uniqueFilePath))
-                {
-                    System.IO.File.Delete(uniqueFilePath);
-                }
+				if (System.IO.File.Exists(uniqueFilePath))
+				{
+					System.IO.File.Delete(uniqueFilePath);
+				}
 
-                vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
+				vmObj.Article.ImageLink = $"https://fantasticfourstorage.blob.core.windows.net/articleimages/{uniqueFileName}";
 
-                // Create article
+				// Create article
 
-                _articleService.CreateArticle(vmObj.Article);
+				_articleService.CreateArticle(vmObj.Article);
 
-                return RedirectToAction(nameof(Index));
-            }
+				return RedirectToAction(nameof(Index));
+			}
 
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", $"Error uploading the file: {ex.Message}");
-                return View(vmObj);
-            }
-        }
+			catch (Exception ex)
+			{
+				ModelState.AddModelError("", $"Error uploading the file: {ex.Message}");
+				return View(vmObj);
+			}
+		}
 
-        public IActionResult Edit(int id)
-        {
-            Article obj = _articleService.GetArticleById(id);
+		public IActionResult Edit(int id)
+		{
+			Article obj = _articleService.GetArticleById(id);
 
-            SelectList categoriesSl = new SelectList(
-    _categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
-    "Id",
-    "Name"
-    );
+			SelectList categoriesSl = new SelectList(
+	_categoryService.GetCategories().OrderBy(c => c.Name).ToList(),
+	"Id",
+	"Name"
+	);
 
-            ArticleIndexVM vmObj = new ArticleIndexVM()
-            {
-                Article = obj,
-                CategoriesSelectList = categoriesSl
-            };
+			ArticleIndexVM vmObj = new ArticleIndexVM()
+			{
+				Article = obj,
+				CategoriesSelectList = categoriesSl
+			};
 
-            return View(vmObj);
-        }
+			return View(vmObj);
+		}
 
-        [HttpPost]
-        public IActionResult Edit(ArticleIndexVM vmObj)
-        {
-            _articleService.UpdateArticle(vmObj.Article);
+		[HttpPost]
+		public IActionResult Edit(ArticleIndexVM vmObj)
+		{
+			_articleService.UpdateArticle(vmObj.Article);
 
-            return RedirectToAction(nameof(Index));
-        }
+			return RedirectToAction(nameof(Index));
+		}
 
-        [Authorize(Roles = "Admin, Journalist")]
-        public IActionResult Delete(int id)
-        {
-            Article obj = _articleService.GetArticleById(id);
-            return View(obj);
-        }
+		[Authorize(Roles = "Admin, Journalist")]
+		public IActionResult Delete(int id)
+		{
+			Article obj = _articleService.GetArticleById(id);
+			return View(obj);
+		}
 
-        [HttpPost]
-        public IActionResult Delete(Article obj)
-        {
-            _articleService.DeleteArticle(obj.Id);
-            return RedirectToAction(nameof(Index));
-        }
+		[HttpPost]
+		public IActionResult Delete(Article obj)
+		{
+			_articleService.DeleteArticle(obj.Id);
+			return RedirectToAction(nameof(Index));
+		}
 
-        public IActionResult LikeArticle(int id)
-        {
-            Article obj = _articleService.GetArticleById(id);
-            obj.Like++;
-            _articleService.UpdateArticle(obj);
+		public IActionResult LikeArticle(int id)
+		{
+			Article obj = _articleService.GetArticleById(id);
+			obj.Like++;
+			_articleService.UpdateArticle(obj);
 
-            return Json(obj.Like);
-        }
+			return Json(obj.Like);
+		}
 
-        // Private actions
+		// Private actions
 
-        private string AddGuidToFile(string fileName)
-        {
-            string extention = Path.GetExtension(fileName);
-            string fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
-            string uniqueFileName = fileNameWithoutExtention + "_" + Guid.NewGuid().ToString() + extention;
-            uniqueFileName = uniqueFileName.Replace(" ", "_");
+		private string AddGuidToFile(string fileName)
+		{
+			string extention = Path.GetExtension(fileName);
+			string fileNameWithoutExtention = Path.GetFileNameWithoutExtension(fileName);
+			string uniqueFileName = fileNameWithoutExtention + "_" + Guid.NewGuid().ToString() + extention;
+			uniqueFileName = uniqueFileName.Replace(" ", "_");
 
-            return uniqueFileName;
-        }
+			return uniqueFileName;
+		}
 
 
 
-    }
+	}
 }

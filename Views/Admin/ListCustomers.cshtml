@@ -4,22 +4,24 @@
     ViewData["Title"] = "ListCustomers";
 }
 
-<h1>Customers</h1>
+<h1>Our Customers Information</h1>
 
 
 
-<div>
+<div class="my-3">
     <partial name="_ShowCharPartial" model="Model.Chart" />
 </div>
 
 <hr />
 
+<div class="my-5">
 
-<h4>
+<h3>
     Customers List
-</h4>
-<table class="table">
-    <thead>
+</h3>
+</div>
+<table class="table table-hover">
+    <thead class="table-secondary py-2">
         <tr>
             <th>
                 FirstName
@@ -35,7 +37,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
 
         @foreach (var item in Model.Customers)
 
