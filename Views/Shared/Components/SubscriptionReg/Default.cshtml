@@ -17,22 +17,29 @@
 	<div class="row mt-4">
 		@foreach (var item in Model.SubsType)
 		{
-			<div class="col-sm-4">
-				<div  class="card py-2 mb-4" >
-					<div class="card-body">
-						<h5 class="card-title">@item.TypeName</h5>
-						@item.Description <br />
-						@item.Price kr/month<br />
+			<div class="col-sm-4  mt-5 py-2 ">
+				<div  class="card glass2 py-2 mb-4" >
+					<div class="card-body ">
+                        <div class="ps-3 py-3 text-center bg-danger-subtle">
+                            <h4 class="card-title">@item.TypeName</h4>
+                        </div>
+
+                        <div class="ps-3 my-2">
+                            <p class="card-text ">
+                                @item.Description <br />
+                                @item.Price kr/month<br />
+                            </p>
+                        </div>
 						@{
 							if (@item.TypeName.ToLower() == "free")
 							{
-								<div class="btn-group btn-group-sm">
+								<div class="btn-group btn-group-sm ps-3">
 									<button type="button" onclick='chooseFreeSubscription(@item.Id)' class="btn btn-primary">Choose</button>
 								</div>
 							}
 							else
 							{
-								<div class="btn-group btn-group-sm">
+								<div class="btn-group btn-group-sm ps-3">
 									<button type="button" onclick="chooseDateTimepartial(@item.Id ,'@item.TypeName',@item.Price)" class="btn btn-primary">Choose</button>
 								</div>
 								subtpid = item.Id;
