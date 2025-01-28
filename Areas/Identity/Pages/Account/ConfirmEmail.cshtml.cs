@@ -53,6 +53,8 @@ namespace Fantastic4News.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 StatusMessage = "Thank you for confirming your email.";
+				HttpContext.Session.SetString("Reg", "True");
+
 
 				//SignInAsync method on a confirmation mail page to sign in the user without requiring them to go through an external sign-in process again.
 				await _signInManager.SignInAsync(user, isPersistent: false);

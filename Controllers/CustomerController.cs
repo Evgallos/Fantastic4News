@@ -127,25 +127,33 @@ namespace Fantastic4News.Controllers
                 Subs = subs,
             };
 
+            //use tempdata to change the regis or not so we get result correct
+           
 
-            var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
+
+			var subsTpc = _subscriptionService.GetSubscriptionTypeById(subs.SubscriptionTypeId);
 
             if (subs == null) { return Content("subs is null"); }
             else
             {
-                var previousSubs = _subscriptionService.GetPreviousSubs(userId);
+				if (HttpContext.Session.GetString("Reg") != "True")
+				{
+					var previousSubs = _subscriptionService.GetPreviousSubs(userId);
 
-                if (previousSubs.SubscriptionTypeId == 1)
-                {
-                    if(previousSubs.Created>=subs.Created)
-                    { previousSubs.Expired=subs.Created; }
-                    else
-                    {
-                    previousSubs.Expired = subs.Created.AddDays(-1);
-                    }
+					if (previousSubs.SubscriptionTypeId == 1)
+					{
+						if (previousSubs.Created >= subs.Created)
+						{ previousSubs.Expired = subs.Created; }
+						else
+						{
+							previousSubs.Expired = subs.Created.AddDays(-1);
+						}
 
-                    _subscriptionService.UpdateSubs(previousSubs);
-                }
+						_subscriptionService.UpdateSubs(previousSubs);
+					}
+
+				}
+				
                 var subscription = new Subscription
                 {
                     SubscriptionTypeId = subs.SubscriptionTypeId,
@@ -157,8 +165,9 @@ namespace Fantastic4News.Controllers
                 };
 
                 _subscriptionService.AddSubscription(subscription);
+				HttpContext.Session.Remove("Reg");
 
-            }
+			}
             TempData["payobj"] = JsonConvert.SerializeObject(payobj); 
 
 			return RedirectToAction("PaymentD");
