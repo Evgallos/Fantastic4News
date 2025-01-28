@@ -225,7 +225,7 @@ namespace Fantastic4News.Controllers
                     //    return View("DeleteCategory",id);
 
                     string msg = "You can not delete this category .";
-                    return RedirectToAction("ViewMsg","Admin", msg);
+                    return RedirectToAction("ViewMsg", "Admin",msg);
 
 				        }
 
@@ -235,7 +235,12 @@ namespace Fantastic4News.Controllers
             return RedirectToAction("ViewCategories");
         }
 
-        public IActionResult ListCustomers()
+        public IActionResult ViewMsg(string msg)
+        {
+            return View();
+        }
+
+		public IActionResult ListCustomers()
         {
 			var customers = _ius.ListCustomers();
 
