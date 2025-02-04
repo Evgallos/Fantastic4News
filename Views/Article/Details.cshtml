@@ -33,6 +33,18 @@
                 <p>@Html.Raw(Model.Content)</p>
             </div>
 
+            <div>
+                <form asp-action="ReadText" asp-controller="Customer" method="post">
+                    <div>
+                       <input type="number" name="articleid"  value="@Model.Id" hidden/>
+                        <textarea id="text" name="text" rows="4" cols="50" hidden>@Model.HeadLine+@Model.Content</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-info" aria-label="Read Article">
+                        <i class="bi bi-volume-up fs-3"></i>
+                    </button>
+                </form>
+            </div>
+
 
         </div>
 

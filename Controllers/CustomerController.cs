@@ -18,15 +18,17 @@ namespace Fantastic4News.Controllers
         private readonly IArticleService _articleService;
         private readonly IApiService _apiService;
         private readonly UserManager<User> _userManager;
+        private readonly ITextToSpeechAiService _tts;
 
 
-		public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager, IApiService apiService)
+		public CustomerController(ICustomerService customerService, ISubscriptionService subscriptionService, IArticleService articleService, UserManager<User> userManager, IApiService apiService,ITextToSpeechAiService tts)
         {
             _customerService = customerService;
             _subscriptionService = subscriptionService;
             _articleService = articleService;
             _userManager = userManager;
             _apiService = apiService;
+            _tts = tts;
         }
 
 
@@ -44,8 +46,19 @@ namespace Fantastic4News.Controllers
             return View(cusIndexVm);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ReadText(string text,int articleid)
+		{
+			var res = await _tts.SynthesizeSpeech(text);
 
-        [HttpGet]
+			
+			ViewBag.Message = $"Speech synthesized for text";
+
+            return RedirectToAction("Details","Article", new { id = articleid });
+		}
+
+
+		[HttpGet]
         public IActionResult CheckDate(string date)
         {
             string userId = "", res = "";

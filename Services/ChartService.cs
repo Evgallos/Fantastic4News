@@ -46,7 +46,9 @@ namespace Fantastic4News.Services
 				if (DateTime.Now.Year == item.Created.Year)
 				{
 					if (DateTime.Now.Month == item.Created.Month) countFree++;
-					else if (currMon > item.Created.Month && currMon < item.Expired.Value.Month) countFree++; ;
+					else if (item.Expired == null) countFree++; 
+					else if(item.Expired.Value != null)
+					{ if(currMon > item.Created.Month && currMon < item.Expired.Value.Month ) countFree++; }
 
 				}
 				else if (Yr != curryear)
